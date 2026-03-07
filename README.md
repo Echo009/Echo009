@@ -102,7 +102,12 @@
 <!-- AI Philosophy Section -->
 <div align="center">
 
+
 ### 🤖 My AI Development Philosophy
+</div>
+
+<div>
+
 
 ```java
 void main() {
@@ -110,32 +115,33 @@ void main() {
 
     while (developer.hasIdeas()) {
         Idea idea = developer.brainstorm()
-            .map(Idea::refine)
-            .orElseThrow();
+                .map(Idea::refine)
+                .orElseThrow();
 
         Code code = AI.pairProgram(idea)
-            .generate();
+                .generate();
 
         developer.review(code)
-            .refine()
-            .ship();
+                .refine()
+                .ship();
     }
 }
 
 record Developer(String name, AICompanion ai) {
     String philosophy() {
         return """
-            AI doesn't replace developers;
-            it amplifies their capabilities.
-            Code faster, think deeper, build better.
-            """;
+                AI doesn't replace developers;
+                it amplifies their capabilities.
+                Code faster, think deeper, build better.
+                """;
     }
 }
 
-enum AICompanion { CLAUDE_CODE, CURSOR, COPILOT }
+enum AICompanion {CLAUDE_CODE, CURSOR, COPILOT}
 ```
 
 </div>
+
 
 <!-- Quote -->
 <div align="center">
