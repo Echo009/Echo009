@@ -1,1 +1,11 @@
-.idea.worktrees
+.idea
+.worktrees
+.vscode
+.DS_Store
+.env
+node_modules
+dist
+.output
+.logs
+.astro
+docs

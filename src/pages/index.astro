@@ -1,0 +1,134 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import SystemProfile from '../components/SystemProfile.astro';
+import TechArsenal from '../components/TechArsenal.astro';
+import CoreProtocol from '../components/CoreProtocol.astro';
+import NetworkNode from '../components/NetworkNode.astro';
+import Signal from '../components/Signal.astro';
+---
+
+<Layout>
+  <!-- Navigation -->
+  <nav id="nav" class="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#hero" class="font-display font-bold text-sm tracking-widest neon-cyan hover:opacity-80 transition-opacity">
+      Echo009
+    </a>
+
+    <!-- Nav links -->
+    <div class="hidden md:flex items-center gap-8">
+      {[
+        { href: '#profile', label: 'PROFILE' },
+        { href: '#arsenal', label: 'ARSENAL' },
+        { href: '#protocol', label: 'PROTOCOL' },
+        { href: '#network', label: 'NETWORK' },
+        { href: '#signal', label: 'SIGNAL' },
+      ].map(({ href, label }) => (
+        <a
+          href={href}
+          class="font-mono text-xs tracking-widest text-white/50 hover:text-white transition-colors relative nav-link"
+        >
+          {label}
+        </a>
+      ))}
+    </div>
+
+    <!-- Status indicator -->
+    <div class="flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full" style="background: var(--cyber-cyan); animation: pulseNeon 2s ease-in-out infinite;"></span>
+      <span class="font-mono text-xs opacity-40 hidden sm:block">SYS::ONLINE</span>
+    </div>
+  </nav>
+
+  <!-- Nav backdrop blur -->
+  <div id="nav-backdrop" class="fixed top-0 left-0 right-0 h-16 z-40 opacity-0 pointer-events-none" style="
+    background: linear-gradient(180deg, rgba(5,5,16,0.9) 0%, transparent 100%);
+    backdrop-filter: blur(8px);
+  "></div>
+
+  <!-- Main sections -->
+  <main>
+    <Hero />
+    <SystemProfile />
+    <TechArsenal />
+    <CoreProtocol />
+    <NetworkNode />
+    <Signal />
+  </main>
+</Layout>
+
+<style>
+  #nav {
+    background: transparent;
+    transition: background 0.3s ease;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--cyber-cyan);
+    box-shadow: var(--glow-cyan);
+    transition: width 0.3s ease;
+  }
+  .nav-link:hover::after {
+    width: 100%;
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Nav backdrop on scroll
+  ScrollTrigger.create({
+    start: 'top -80',
+    onUpdate: (self) => {
+      const backdrop = document.getElementById('nav-backdrop');
+      if (backdrop) {
+        backdrop.style.opacity = self.direction === 1 ? '1' : '0';
+      }
+    },
+  });
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', (e) => {
+      const target = anchor.getAttribute('href');
+      if (!target || target === '#') return;
+      const el = document.querySelector(target);
+      if (el) {
+        e.preventDefault();
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Active nav link highlight
+  const sections = ['hero', 'profile', 'arsenal', 'protocol', 'network', 'signal'];
+  sections.forEach((id) => {
+    ScrollTrigger.create({
+      trigger: `#${id}`,
+      start: 'top 50%',
+      end: 'bottom 50%',
+      onEnter: () => highlightNav(id),
+      onEnterBack: () => highlightNav(id),
+    });
+  });
+
+  function highlightNav(activeId: string) {
+    document.querySelectorAll('.nav-link').forEach((link) => {
+      const href = link.getAttribute('href');
+      if (href === `#${activeId}`) {
+        (link as HTMLElement).style.color = 'var(--cyber-cyan)';
+      } else {
+        (link as HTMLElement).style.color = '';
+      }
+    });
+  }
+</script>

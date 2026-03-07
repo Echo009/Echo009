@@ -1,0 +1,170 @@
+---
+const techGroups = [
+  {
+    id: 'ai',
+    label: 'AI TOOLS',
+    accent: '#00FFFF',
+    icon: '🤖',
+    items: [
+      { name: 'Claude Code', icon: '⚡' },
+      { name: 'Cursor', icon: '🎯' },
+      { name: 'GitHub Copilot', icon: '🐙' },
+      { name: 'ChatGPT', icon: '🧠' },
+    ],
+  },
+  {
+    id: 'lang',
+    label: 'LANGUAGES',
+    accent: '#FF006E',
+    icon: '⌨️',
+    items: [
+      { name: 'Java', icon: '☕' },
+      { name: 'TypeScript', icon: '🔷' },
+      { name: 'Python', icon: '🐍' },
+      { name: 'Go', icon: '🐹' },
+    ],
+  },
+  {
+    id: 'frontend',
+    label: 'FRONTEND',
+    accent: '#7B2FFF',
+    icon: '🎨',
+    items: [
+      { name: 'React', icon: '⚛️' },
+      { name: 'Vue.js', icon: '💚' },
+      { name: 'Next.js', icon: '▲' },
+      { name: 'Tailwind CSS', icon: '🌊' },
+    ],
+  },
+  {
+    id: 'backend',
+    label: 'BACKEND & INFRA',
+    accent: '#F5FF00',
+    icon: '⚙️',
+    items: [
+      { name: 'Node.js', icon: '🟢' },
+      { name: 'Spring', icon: '🌱' },
+      { name: 'PostgreSQL', icon: '🐘' },
+      { name: 'Redis', icon: '🔴' },
+      { name: 'Docker', icon: '🐳' },
+      { name: 'Kubernetes', icon: '⎈' },
+    ],
+  },
+];
+---
+
+<section id="arsenal" class="py-24 px-6 relative">
+  <div class="max-w-6xl mx-auto">
+    <!-- Section header -->
+    <div class="mb-16 gsap-reveal">
+      <p class="section-label mb-2">// SECTION_03</p>
+      <h2 class="font-display font-bold text-4xl md:text-5xl text-white">
+        TECH <span class="neon-pink">ARSENAL</span>
+      </h2>
+      <div class="mt-3 h-px w-48" style="background: linear-gradient(90deg, var(--cyber-pink), transparent);"></div>
+    </div>
+
+    <!-- Tech groups grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {techGroups.map((group) => (
+        <div
+          class="arsenal-card hud-panel p-6 group cursor-default"
+          style={`--card-accent: ${group.accent}; border-color: ${group.accent}40; box-shadow: 0 0 15px ${group.accent}15;`}
+        >
+          <!-- Card header -->
+          <div class="flex items-center gap-2 mb-5">
+            <span class="text-2xl">{group.icon}</span>
+            <span
+              class="section-label text-xs tracking-widest"
+              style={`color: ${group.accent};`}
+            >
+              [ {group.label} ]
+            </span>
+          </div>
+
+          <!-- Divider -->
+          <div
+            class="h-px mb-5"
+            style={`background: linear-gradient(90deg, ${group.accent}, transparent);`}
+          ></div>
+
+          <!-- Items -->
+          <ul class="space-y-3">
+            {group.items.map((item) => (
+              <li class="flex items-center gap-3 font-mono text-sm text-white/80 group-hover:text-white transition-colors duration-300">
+                <span class="text-base">{item.icon}</span>
+                <span>{item.name}</span>
+              </li>
+            ))}
+          </ul>
+
+          <!-- Hover glow strip -->
+          <div
+            class="absolute bottom-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            style={`background: linear-gradient(90deg, transparent, ${group.accent}, transparent);`}
+          ></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .arsenal-card {
+    position: relative;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease,
+      border-color 0.3s ease;
+    overflow: hidden;
+  }
+  .arsenal-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--card-accent, #00FFFF) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .arsenal-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--card-accent, #00FFFF) !important;
+    box-shadow: 0 0 30px color-mix(in srgb, var(--card-accent, #00FFFF) 30%, transparent) !important;
+  }
+  .arsenal-card:hover::before {
+    opacity: 0.05;
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.fromTo(
+    '#arsenal .gsap-reveal',
+    { opacity: 0, y: 40 },
+    {
+      opacity: 1, y: 0, duration: 0.7, ease: 'power2.out',
+      scrollTrigger: { trigger: '#arsenal', start: 'top 80%' },
+    },
+  );
+
+  gsap.fromTo(
+    '#arsenal .arsenal-card',
+    { opacity: 0, y: 50, scale: 0.96 },
+    {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 0.7,
+      stagger: 0.1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '#arsenal',
+        start: 'top 75%',
+      },
+    },
+  );
+</script>

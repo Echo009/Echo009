@@ -1,0 +1,173 @@
+---
+function highlight(text: string): string {
+  // Escape HTML first
+  let s = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  // Strings (must come before other patterns)
+  s = s.replace(/&quot;([^&]*)&quot;/g, '<span class="hl-str">&quot;$1&quot;</span>');
+
+  // Keywords
+  s = s.replace(/\b(void|var|while|new|return|record|enum)\b/g, '<span class="hl-kw">$1</span>');
+
+  // Types / class names (PascalCase)
+  s = s.replace(/\b(Developer|Idea|Code|AICompanion)\b/g, '<span class="hl-type">$1</span>');
+
+  // Constants (ALL_CAPS)
+  s = s.replace(/\b(CLAUDE_CODE|CURSOR|COPILOT)\b/g, '<span class="hl-const">$1</span>');
+
+  // Variable names after type declarations
+  s = s.replace(/\b(developer|idea|code|AI)\b/g, '<span class="hl-var">$1</span>');
+
+  // Method calls (.methodName)
+  s = s.replace(/\.([a-z][a-zA-Z]+)\(/g, '.<span class="hl-fn">$1</span>(');
+
+  // Method references (::method)
+  s = s.replace(/::([a-zA-Z]+)/g, '::<span class="hl-fn">$1</span>');
+
+  return s;
+}
+
+const rawLines = [
+  'void main() {',
+  '    var developer = new Developer("Echo", AICompanion.CLAUDE_CODE);',
+  '',
+  '    while (developer.hasIdeas()) {',
+  '        Idea idea = developer.brainstorm()',
+  '                .map(Idea::refine)',
+  '                .orElseThrow();',
+  '',
+  '        Code code = AI.pairProgram(idea)',
+  '                .generate();',
+  '',
+  '        developer.review(code)',
+  '                .refine()',
+  '                .ship();',
+  '    }',
+  '}',
+];
+
+const codeLines = rawLines.map((text) => ({ text, html: highlight(text) }));
+---
+
+<section id="protocol" class="py-24 px-6 relative overflow-hidden">
+  <!-- Decorative vertical line -->
+  <div
+    class="absolute left-0 top-0 bottom-0 w-px hidden lg:block"
+    style="background: linear-gradient(180deg, transparent, var(--cyber-purple), transparent); left: 8%;"
+    aria-hidden="true"
+  ></div>
+
+  <div class="max-w-6xl mx-auto">
+    <!-- Section header -->
+    <div class="mb-16 gsap-reveal">
+      <p class="section-label mb-2">// SECTION_04</p>
+      <h2 class="font-display font-bold text-4xl md:text-5xl text-white">
+        CORE <span class="neon-yellow">PROTOCOL</span>
+      </h2>
+      <div class="mt-3 h-px w-48" style="background: linear-gradient(90deg, var(--cyber-yellow), transparent);"></div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 items-start">
+      <!-- Philosophy text (left, narrower) -->
+      <div class="lg:col-span-2 space-y-8">
+        <!-- Main quote -->
+        <div
+          class="hud-panel hud-corner p-8 gsap-reveal"
+          style="border-color: var(--cyber-purple); box-shadow: 0 0 20px rgba(123,47,255,0.2);"
+        >
+          <div class="section-label mb-4" style="color: var(--cyber-purple);">[ PHILOSOPHY ]</div>
+          <blockquote class="font-mono text-sm leading-loose text-white/80 space-y-3">
+            <p class="text-white">"AI doesn't replace developers;</p>
+            <p>it amplifies their capabilities.</p>
+            <p>Code faster, think deeper,</p>
+            <p class="neon-purple" style="color: var(--cyber-purple); text-shadow: 0 0 10px var(--cyber-purple);">build better."</p>
+          </blockquote>
+          <div class="mt-6 pt-4 border-t border-white/10">
+            <p class="font-mono text-xs opacity-50">— Echo, 2024</p>
+          </div>
+        </div>
+
+        <!-- Signature quote -->
+        <div class="gsap-reveal font-mono text-xs leading-relaxed opacity-50 border-l-2 border-cyber-yellow pl-4" style="border-color: var(--cyber-yellow);">
+          "The best code is the code that writes itself... with AI"
+        </div>
+      </div>
+
+      <!-- Code block (right, wider) -->
+      <div class="lg:col-span-3 gsap-reveal">
+        <div
+          class="hud-panel overflow-hidden"
+          style="border-color: var(--cyber-cyan)40; background: rgba(0,10,20,0.9);"
+        >
+          <!-- Code editor header bar -->
+          <div
+            class="flex items-center justify-between px-4 py-2 border-b"
+            style="border-color: var(--cyber-cyan)20; background: rgba(0,255,255,0.03);"
+          >
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full" style="background: #FF5F56;"></span>
+              <span class="w-3 h-3 rounded-full" style="background: #FFBD2E;"></span>
+              <span class="w-3 h-3 rounded-full" style="background: #27C93F;"></span>
+            </div>
+            <span class="font-mono text-xs opacity-40">Main.java</span>
+            <span class="font-mono text-xs opacity-30">Java 21</span>
+          </div>
+
+          <!-- Code content -->
+          <div class="p-6 overflow-x-auto">
+            <pre class="font-mono text-sm leading-relaxed"><code id="code-block">{codeLines.map(({ html, text }, i) => (
+  text === ''
+    ? <span class="code-line block" style="height:1.4em;" data-index={i}><span class="select-none opacity-20 mr-4 text-xs">{String(i + 1).padStart(2, '0')}</span></span>
+    : <span class="code-line block" data-index={i}>
+        <span class="select-none opacity-20 mr-4 text-xs">{String(i + 1).padStart(2, '0')}</span><span set:html={html} />
+      </span>
+))}</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Syntax highlight classes (used by set:html output) */
+  :global(.hl-kw)    { color: #7B2FFF; }
+  :global(.hl-type)  { color: #FF006E; }
+  :global(.hl-const) { color: #FF006E; font-style: italic; }
+  :global(.hl-var)   { color: #00FFFF; }
+  :global(.hl-fn)    { color: #00DDCC; }
+  :global(.hl-str)   { color: #F5FF00; }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.fromTo(
+    '#protocol .gsap-reveal',
+    { opacity: 0, y: 40 },
+    {
+      opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: 'power2.out',
+      scrollTrigger: { trigger: '#protocol', start: 'top 80%' },
+    },
+  );
+
+  // Animate code lines appearing one by one
+  ScrollTrigger.create({
+    trigger: '#protocol',
+    start: 'top 70%',
+    onEnter: () => {
+      const lines = document.querySelectorAll('.code-line');
+      gsap.fromTo(
+        lines,
+        { opacity: 0, x: -10 },
+        { opacity: 1, x: 0, duration: 0.04, stagger: 0.06, ease: 'none', delay: 0.4 },
+      );
+    },
+  });
+</script>

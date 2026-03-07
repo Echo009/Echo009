@@ -1,0 +1,83 @@
+---
+---
+
+<section id="network" class="py-24 px-6 relative">
+  <!-- Background decoration -->
+  <div
+    class="absolute inset-0 opacity-[0.03] pointer-events-none"
+    aria-hidden="true"
+    style="
+      background-image: radial-gradient(var(--cyber-cyan) 1px, transparent 1px);
+      background-size: 30px 30px;
+    "
+  ></div>
+
+  <div class="max-w-6xl mx-auto relative z-10">
+    <!-- Section header -->
+    <div class="mb-16 gsap-reveal">
+      <p class="section-label mb-2">// SECTION_05</p>
+      <h2 class="font-display font-bold text-4xl md:text-5xl text-white">
+        NETWORK <span class="neon-cyan">NODE</span>
+      </h2>
+      <div class="mt-3 h-px w-48" style="background: linear-gradient(90deg, var(--cyber-cyan), transparent);"></div>
+    </div>
+
+    <!-- Stats grid -->
+    <div class="space-y-8">
+      <!-- GitHub Streak Stats -->
+      <div class="hud-panel hud-corner p-2 gsap-reveal overflow-hidden">
+        <div class="section-label px-4 pt-4 pb-3">[ COMMIT_STREAK ]</div>
+        <div class="px-4 pb-4 overflow-x-auto">
+          <img
+            src="https://streak-stats.demolab.com?user=Echo009&theme=tokyonight&hide_border=true&background=050510&stroke=00FFFF&ring=FF006E&fire=FF006E&currStreakLabel=00FFFF&dates=7B2FFF&sideLabels=00FFFF"
+            alt="GitHub Streak Stats"
+            class="max-w-full mx-auto block"
+            style="min-height: 140px;"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <!-- Contribution Snake -->
+      <div class="hud-panel hud-corner p-2 gsap-reveal overflow-hidden" style="border-color: var(--cyber-pink)40;">
+        <div class="section-label px-4 pt-4 pb-3" style="color: var(--cyber-pink);">[ CONTRIBUTION_MATRIX ]</div>
+        <div class="px-4 pb-4 overflow-x-auto">
+          <picture>
+            <source
+              media="(prefers-color-scheme: dark)"
+              srcset="https://raw.githubusercontent.com/Echo009/Echo009/output/github-contribution-grid-snake-dark.svg"
+            />
+            <source
+              media="(prefers-color-scheme: light)"
+              srcset="https://raw.githubusercontent.com/Echo009/Echo009/output/github-contribution-grid-snake.svg"
+            />
+            <img
+              src="https://raw.githubusercontent.com/Echo009/Echo009/output/github-contribution-grid-snake-dark.svg"
+              alt="GitHub contribution grid snake animation"
+              class="max-w-full mx-auto block"
+              loading="lazy"
+            />
+          </picture>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.fromTo(
+    '#network .gsap-reveal',
+    { opacity: 0, y: 40 },
+    {
+      opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: 'power2.out',
+      scrollTrigger: { trigger: '#network', start: 'top 80%' },
+    },
+  );
+
+</script>
