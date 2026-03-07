@@ -3,7 +3,7 @@ import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
   output: 'static',
-  outDir: './docs',
+  outDir: './dist',
   integrations: [tailwind()],
   site: 'https://echo009.github.io',
 });
