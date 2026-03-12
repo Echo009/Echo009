@@ -12,7 +12,7 @@
 
 <!-- Typing Animation -->
 <p align="center">
-  <a href="https://github.com/Echo009">
+  <a href="https://me.echo0.cn">
     <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&duration=3000&pause=1000&color=4ECDC4&center=true&vCenter=true&multiline=true&repeat=true&width=800&height=100&lines=Hello%2C+I'm+Echo+%F0%9F%91%8B;AI-First+Developer+%7C+Building+the+Future" alt="Typing SVG" />
   </a>
 </p>
