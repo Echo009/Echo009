@@ -24,6 +24,7 @@ import Signal from '../components/Signal.astro';
         { href: '#protocol', label: 'PROTOCOL' },
         { href: '#network', label: 'NETWORK' },
         { href: '#signal', label: 'SIGNAL' },
+        { href: '/slides', label: 'SLIDES' },
       ].map(({ href, label }) => (
         <a
           href={href}
@@ -100,7 +101,7 @@ import Signal from '../components/Signal.astro';
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', (e) => {
       const target = anchor.getAttribute('href');
-      if (!target || target === '#') return;
+      if (!target || target === '#' || !target.startsWith('#')) return;
       const el = document.querySelector(target);
       if (el) {
         e.preventDefault();
