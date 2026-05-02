@@ -1,0 +1,158 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SlidesList from '../../components/SlidesList.astro';
+
+import fs from 'node:fs';
+import path from 'node:path';
+
+interface SlideMeta {
+  title: string;
+  date: string;
+  description: string;
+  cover: string;
+  slug: string;
+}
+
+const slidesDir = path.join(process.cwd(), 'public', 'slides');
+const slides: SlideMeta[] = [];
+
+if (fs.existsSync(slidesDir)) {
+  const entries = fs.readdirSync(slidesDir, { withFileTypes: true });
+  for (const entry of entries) {
+    if (!entry.isDirectory()) continue;
+
+    const slug = entry.name;
+    const metaPath = path.join(slidesDir, slug, 'meta.json');
+
+    if (fs.existsSync(metaPath)) {
+      const meta = JSON.parse(fs.readFileSync(metaPath, 'utf-8'));
+      slides.push({
+        slug,
+        title: meta.title || slug,
+        date: meta.date || '',
+        description: meta.description || '',
+        cover: meta.cover || '',
+      });
+    } else {
+      slides.push({ slug, title: slug, date: '', description: '', cover: '' });
+    }
+  }
+
+  slides.sort((a, b) => (a.date > b.date ? -1 : a.date < b.date ? 1 : 0));
+}
+---
+
+<Layout title="Slides // Echo009" description="Echo009 的演示文稿集合">
+  <nav id="nav" class="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between">
+    <a href="/" class="font-display font-bold text-sm tracking-widest neon-cyan hover:opacity-80 transition-opacity">
+      Echo009
+    </a>
+    <div class="flex items-center gap-8">
+      <a href="/" class="font-mono text-xs tracking-widest text-white/50 hover:text-white transition-colors relative nav-link">
+        HOME
+      </a>
+      <a href="/slides" class="font-mono text-xs tracking-widest neon-cyan transition-colors relative nav-link active">
+        SLIDES
+      </a>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full" style="background: var(--cyber-cyan); animation: pulseNeon 2s ease-in-out infinite;"></span>
+      <span class="font-mono text-xs opacity-40 hidden sm:block">SYS::ONLINE</span>
+    </div>
+  </nav>
+
+  <div id="nav-backdrop" class="fixed top-0 left-0 right-0 h-16 z-40 opacity-100 pointer-events-none" style="
+    background: linear-gradient(180deg, rgba(5,5,16,0.9) 0%, transparent 100%);
+    backdrop-filter: blur(8px);
+  "></div>
+
+  <main class="pt-24 pb-32">
+    <section class="text-center mb-16 px-6">
+      <p class="section-label mb-4">// TRANSMISSIONS //</p>
+      <h1
+        class="font-display font-black text-5xl md:text-7xl text-white mb-6"
+        style="letter-spacing: -0.02em; line-height: 1;"
+      >
+        SLIDE
+        <span
+          class="block"
+          style="
+            background: linear-gradient(90deg, var(--cyber-cyan), var(--cyber-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px rgba(0,255,255,0.4));
+          "
+        >
+          DECK
+        </span>
+      </h1>
+      <p class="font-mono text-white/40 text-sm tracking-widest">
+        PRESENTATIONS // TALKS // KNOWLEDGE_SHARES
+      </p>
+    </section>
+
+    {slides.length > 0 ? (
+      <SlidesList slides={slides} />
+    ) : (
+      <div class="text-center py-20">
+        <p class="font-mono text-white/30 text-sm tracking-widest">NO_SIGNAL_DETECTED</p>
+        <p class="font-mono text-white/20 text-xs mt-2">暂无幻灯片，敬请期待...</p>
+      </div>
+    )}
+  </main>
+
+  <footer class="py-8 px-6 border-t" style="border-color: rgba(0,255,255,0.1);">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <span class="font-mono text-xs opacity-30 tracking-widest">
+        © 2024-2026 Echo009 // ALL_SYSTEMS_NOMINAL
+      </span>
+      <div class="flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full" style="background: var(--cyber-cyan); animation: pulseNeon 2s ease-in-out infinite;"></span>
+        <span class="font-mono text-xs opacity-30 tracking-widest">ONLINE</span>
+      </div>
+    </div>
+  </footer>
+</Layout>
+
+<style>
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--cyber-cyan);
+    box-shadow: var(--glow-cyan);
+    transition: width 0.3s ease;
+  }
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    width: 100%;
+  }
+  .nav-link.active {
+    color: var(--cyber-cyan) !important;
+    text-shadow: var(--glow-cyan);
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.fromTo(
+    '.slide-card',
+    { opacity: 0, y: 40 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      stagger: 0.12,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: '.slides-grid', start: 'top 80%' },
+    },
+  );
+</script>
