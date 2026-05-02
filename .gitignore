@@ -9,3 +9,7 @@ dist
 .logs
 .astro
 docs
+
+# Slidev build output
+public/slides/
+slides-source/node_modules/

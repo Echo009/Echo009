@@ -1,0 +1,13 @@
+{
+  "name": "echo009-slides",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev:example": "slidev content/example-slide.md --open",
+    "build:example": "slidev build content/example-slide.md --out ../public/slides/example-slide --base /slides/example-slide/"
+  },
+  "dependencies": {
+    "@slidev/cli": "^0.50.0",
+    "@slidev/types": "^0.50.0"
+  }
+}
