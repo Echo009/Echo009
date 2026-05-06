@@ -1,0 +1,472 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+SC:wght@400;700&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+
+:root {
+  --cyber-black: #050510;
+  --cyber-deep: #0a0a1a;
+  --cyber-cyan: #00ffff;
+  --cyber-pink: #ff006e;
+  --cyber-yellow: #f5ff00;
+  --cyber-purple: #7b2fff;
+  --cyber-dim-cyan: #00ffff33;
+  --cyber-dim-pink: #ff006e33;
+
+  --glow-cyan: 0 0 8px #00ffff66, 0 0 24px #00ffff44, 0 0 48px #00ffff22;
+  --glow-pink: 0 0 8px #ff006e66, 0 0 24px #ff006e44, 0 0 48px #ff006e22;
+  --glow-yellow: 0 0 8px #f5ff0066, 0 0 24px #f5ff0044;
+
+  --font-display: 'Orbitron', monospace;
+  --font-heading: 'Inter', 'Noto Sans SC', sans-serif;
+  --font-body: 'Inter', 'Noto Sans SC', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+}
+
+.slidev-layout {
+  background-color: var(--cyber-black);
+  color: #d0d0d8;
+  font-family: var(--font-body);
+  padding: 2.5rem 3.5rem;
+  position: relative;
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+}
+
+/* 扫描线叠加 */
+.slidev-layout::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.04) 2px,
+    rgba(0, 0, 0, 0.04) 4px
+  );
+}
+
+/* ========== 标题层次 ========== */
+
+.slidev-layout h1 {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: var(--cyber-cyan);
+  text-shadow:
+    0 0 6px #00ffff88,
+    0 0 20px #00ffff55,
+    0 0 40px #00ffff33,
+    0 0 80px #00ffff18;
+  letter-spacing: 0.03em;
+  line-height: 1.25;
+  margin-bottom: 1em;
+}
+
+.slidev-layout h2 {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--cyber-cyan);
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  margin-bottom: 0.8em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid transparent;
+  background-image: linear-gradient(90deg, rgba(0, 255, 255, 0.3), rgba(123, 47, 255, 0.3), transparent);
+  background-size: 100% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+}
+
+.slidev-layout h3 {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--cyber-pink);
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  margin-bottom: 0.5em;
+}
+
+/* ========== 正文与段落 ========== */
+
+.slidev-layout p {
+  line-height: 1.8;
+  font-size: 1rem;
+  margin: 0.6em 0;
+}
+
+/* 链接 */
+.slidev-layout a {
+  color: var(--cyber-cyan);
+  text-decoration: none;
+  text-shadow: 0 0 6px #00ffff66;
+  position: relative;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.slidev-layout a::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--cyber-cyan);
+  box-shadow: 0 0 6px #00ffff;
+  transition: width 0.3s ease;
+}
+
+.slidev-layout a:hover {
+  color: var(--cyber-pink);
+  text-shadow: 0 0 8px #ff006e88;
+}
+
+.slidev-layout a:hover::after {
+  width: 100%;
+  background: var(--cyber-pink);
+  box-shadow: 0 0 6px #ff006e;
+}
+
+/* 行内代码 */
+.slidev-layout code {
+  font-family: var(--font-mono);
+  background: rgba(0, 255, 255, 0.06);
+  border: 1px solid rgba(0, 255, 255, 0.12);
+  padding: 0.15em 0.45em;
+  border-radius: 3px;
+  color: var(--cyber-cyan);
+  font-size: 0.88em;
+}
+
+/* 代码块 */
+.slidev-layout pre {
+  background: var(--cyber-deep) !important;
+  border: 1px solid rgba(0, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4), 0 0 1px rgba(0, 255, 255, 0.2);
+}
+
+.slidev-layout pre::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cyber-cyan), var(--cyber-purple), var(--cyber-pink));
+  opacity: 0.8;
+}
+
+.slidev-layout pre code {
+  background: none;
+  border: none;
+  padding: 1.2rem;
+  display: block;
+}
+
+/* ========== 列表 ========== */
+
+.slidev-layout ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.slidev-layout ul li {
+  position: relative;
+  padding-left: 1.6em;
+  margin: 0.5em 0;
+  line-height: 1.7;
+}
+
+.slidev-layout ul li::before {
+  content: '\25C6';
+  position: absolute;
+  left: 0;
+  color: var(--cyber-cyan);
+  font-size: 0.55em;
+  top: 0.65em;
+  text-shadow: 0 0 6px #00ffff66;
+  transition: text-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.slidev-layout ul li:hover::before {
+  text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff88;
+  transform: scale(1.3);
+}
+
+.slidev-layout ol {
+  padding-left: 1.5rem;
+}
+
+.slidev-layout ol li {
+  margin: 0.5em 0;
+  line-height: 1.7;
+}
+
+.slidev-layout ol li::marker {
+  color: var(--cyber-cyan);
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+/* 强调文字 */
+.slidev-layout strong {
+  color: var(--cyber-yellow);
+  text-shadow: 0 0 8px #f5ff0066, 0 0 20px #f5ff0033;
+  font-weight: 700;
+}
+
+/* 引用块 */
+.slidev-layout blockquote {
+  border-left: 2px solid var(--cyber-pink);
+  padding: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  color: #a0a0a8;
+  font-style: italic;
+  background: linear-gradient(90deg, rgba(255, 0, 110, 0.04) 0%, transparent 100%);
+  border-radius: 0 4px 4px 0;
+}
+
+/* HUD 面板 */
+.slidev-layout .hud-panel {
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.03) 0%, rgba(0, 10, 30, 0.8) 100%);
+  box-shadow:
+    0 0 20px var(--cyber-dim-cyan),
+    inset 0 0 30px rgba(0, 255, 255, 0.015);
+  padding: 1.5rem;
+  border-radius: 4px;
+  position: relative;
+}
+
+/* ========== 表格 ========== */
+
+.slidev-layout table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 255, 255, 0.12);
+}
+
+.slidev-layout th {
+  background: linear-gradient(180deg, rgba(0, 255, 255, 0.1) 0%, rgba(0, 255, 255, 0.04) 100%);
+  border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+  padding: 0.7rem 1.2rem;
+  text-align: left;
+  color: var(--cyber-cyan);
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.slidev-layout td {
+  padding: 0.6rem 1.2rem;
+  border-bottom: 1px solid rgba(0, 255, 255, 0.06);
+  transition: background 0.2s ease;
+}
+
+.slidev-layout tr {
+  transition: background 0.2s ease;
+}
+
+.slidev-layout tbody tr:hover {
+  background: rgba(0, 255, 255, 0.06);
+}
+
+.slidev-layout tr:nth-child(even) {
+  background: rgba(0, 255, 255, 0.02);
+}
+
+/* kbd 按键 */
+.slidev-layout kbd {
+  font-family: var(--font-mono);
+  background: rgba(0, 255, 255, 0.08);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-bottom-width: 2px;
+  padding: 0.1em 0.5em;
+  border-radius: 4px;
+  font-size: 0.85em;
+  color: var(--cyber-cyan);
+}
+
+/* 分隔线 */
+.slidev-layout hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyber-cyan), transparent);
+  margin: 1.5rem 0;
+  opacity: 0.4;
+}
+
+/* ========== CSS 工具类 ========== */
+
+/* 双栏布局 */
+.slidev-layout .two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  position: relative;
+}
+
+.slidev-layout .two-col::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--cyber-cyan), var(--cyber-purple), transparent);
+  opacity: 0.3;
+  transform: translateX(-50%);
+}
+
+/* 三栏布局 */
+.slidev-layout .three-col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+/* 通用卡片 */
+.slidev-layout .card {
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.03) 0%, rgba(10, 10, 26, 0.9) 100%);
+  border: 1px solid rgba(0, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 1.2rem 1.4rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.slidev-layout .card:hover {
+  border-color: rgba(0, 255, 255, 0.3);
+  box-shadow: 0 0 16px rgba(0, 255, 255, 0.1);
+}
+
+/* 卡片强调色 — 顶部色条 */
+.slidev-layout .card.accent-cyan { border-top: 2px solid var(--cyber-cyan); }
+.slidev-layout .card.accent-pink { border-top: 2px solid var(--cyber-pink); }
+.slidev-layout .card.accent-purple { border-top: 2px solid var(--cyber-purple); }
+.slidev-layout .card.accent-yellow { border-top: 2px solid var(--cyber-yellow); }
+
+/* 注释/提示框 */
+.slidev-layout .note {
+  border-left: 3px solid var(--cyber-cyan);
+  background: linear-gradient(90deg, rgba(0, 255, 255, 0.04) 0%, transparent 60%);
+  padding: 1rem 1.4rem;
+  border-radius: 0 6px 6px 0;
+  margin: 1rem 0;
+}
+
+/* 药丸标签 */
+.slidev-layout .chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.8rem 0;
+}
+
+.slidev-layout .chip {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.25em 0.8em;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  background: rgba(0, 255, 255, 0.05);
+  color: var(--cyber-cyan);
+  letter-spacing: 0.05em;
+}
+
+/* 大号装饰数字 */
+.slidev-layout .big-number {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: rgba(0, 255, 255, 0.08);
+  line-height: 1;
+  user-select: none;
+  letter-spacing: -0.02em;
+}
+
+/* 简易流程图 */
+.slidev-layout .flow {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.slidev-layout .flow-step {
+  position: relative;
+  padding: 0.8rem 1rem 0.8rem 2.4rem;
+  margin: 0;
+}
+
+.slidev-layout .flow-step::before {
+  content: '';
+  position: absolute;
+  left: 0.5rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--cyber-cyan), var(--cyber-purple));
+  opacity: 0.4;
+}
+
+.slidev-layout .flow-step:last-child::before {
+  bottom: 50%;
+}
+
+.slidev-layout .flow-step::after {
+  content: '';
+  position: absolute;
+  left: 0.2rem;
+  top: 50%;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background: var(--cyber-cyan);
+  box-shadow: 0 0 8px var(--cyber-cyan);
+  transform: translateY(-50%);
+}
+
+/* ========== 动画 ========== */
+
+@keyframes borderFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes pulseNeon {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes scanMove {
+  0% { top: -10%; }
+  100% { top: 110%; }
+}
