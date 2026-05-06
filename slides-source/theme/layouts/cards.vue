@@ -7,7 +7,7 @@
     <div class="hud-top-line"></div>
 
     <!-- 内容区 -->
-    <div class="cards-content">
+    <div class="cards-content" :style="{ gridTemplateColumns: `repeat(${cols}, 1fr)` }">
       <slot />
     </div>
 
@@ -70,7 +70,9 @@ const cols = Number($attrs.cols || 3)
   flex: 1;
   position: relative;
   z-index: 5;
-  overflow: auto;
+  display: grid;
+  gap: 1.5rem;
+  align-content: start;
 }
 
 /* 全局工具类在 cards 布局中的增强 */

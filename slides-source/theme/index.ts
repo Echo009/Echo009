@@ -1,5 +1,5 @@
 import { defineAppSetup } from '@slidev/types'
-import './styles'
+import './styles/index.css'
 
 export default defineAppSetup(({ app }) => {
 })
