@@ -12,7 +12,7 @@
     <div class="geo-deco hex-2"></div>
     <div class="geo-deco triangle"></div>
 
-    <!-- 内容 -->
+    <!-- 内容 — 左对齐 -->
     <div class="intro-content">
       <p v-if="$attrs.no" class="section-no">PART {{ $attrs.no }}</p>
       <h2><slot /></h2>
@@ -32,7 +32,6 @@
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
   background-color: #050510;
   overflow: hidden;
 }
@@ -90,7 +89,7 @@
   border-color: #00ffff;
   border-radius: 50%;
   top: 10%;
-  left: 8%;
+  right: 12%;
   animation: rotateSlow 25s linear infinite;
 }
 
@@ -101,7 +100,7 @@
   border-color: #7b2fff;
   border-radius: 50%;
   bottom: 15%;
-  right: 12%;
+  right: 20%;
   animation: rotateSlow 35s linear infinite reverse;
 }
 
@@ -111,15 +110,17 @@
   border-width: 0 40px 70px 40px;
   border-color: transparent transparent #ff006e22 transparent;
   top: 20%;
-  right: 18%;
+  right: 8%;
   animation: float 6s ease-in-out infinite;
 }
 
-/* 内容 */
+/* 内容 — 左对齐 */
 .intro-content {
   position: relative;
   z-index: 10;
-  text-align: center;
+  text-align: left;
+  padding-left: 10%;
+  max-width: 65%;
 }
 
 .section-no {
@@ -147,19 +148,19 @@
   letter-spacing: 0.04em;
 }
 
-/* 分割线 — 更宽、带发光动画 */
+/* 分割线 — 左对齐，向右淡出 */
 .divider-line {
   width: 160px;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #00ffff, #7b2fff, #ff006e, transparent);
+  background: linear-gradient(90deg, transparent, #00ffff, #7b2fff, #ff006e);
   background-size: 200% 100%;
-  margin: 1.2rem auto;
+  margin: 1.2rem 0;
   box-shadow: 0 0 12px #00ffff44, 0 0 24px #7b2fff22;
   animation: shimmer 3s ease-in-out infinite;
 }
 
 .section-subtitle {
-  font-family: 'Share Tech Mono', monospace;
+  font-family: 'Inter', 'Noto Sans SC', sans-serif;
   font-size: 1.05rem;
   color: #e0e0e077;
   letter-spacing: 0.06em;

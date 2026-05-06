@@ -14,6 +14,8 @@ date: 2026-05-05
 
 ---
 
+section: 概述
+
 # 方案概述
 
 将 **Slidev** 幻灯片系统集成到 Astro 个人主页中
@@ -33,6 +35,7 @@ subtitle: 项目结构与文件组织
 
 ---
 
+section: 项目结构
 layout: two-col
 left: 1
 right: 1
@@ -85,6 +88,8 @@ subtitle: 赛博朋克主题与视觉设计
 
 ---
 
+section: 主题设计
+
 # 配色体系
 
 复用主页 CSS 变量，保持风格统一：
@@ -99,6 +104,8 @@ subtitle: 赛博朋克主题与视觉设计
 背景使用 `--cyber-black: #050510` 深黑底色
 
 ---
+
+section: 主题设计
 
 # 布局组件
 
@@ -134,6 +141,8 @@ subtitle: 赛博朋克主题与视觉设计
 
 ---
 
+section: 主题设计
+
 # CSS 工具类
 
 <div class="two-col">
@@ -167,6 +176,7 @@ subtitle: 从创建到部署的完整流程
 
 ---
 
+section: 使用流程
 layout: two-col
 left: 2
 right: 1
@@ -206,6 +216,7 @@ date: 2026-05-05
 
 ---
 
+section: 使用流程
 layout: two-col
 left: 1
 right: 1

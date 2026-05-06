@@ -12,7 +12,7 @@
     <div class="geo-deco circle-2"></div>
     <div class="geo-deco triangle"></div>
 
-    <!-- 内容 -->
+    <!-- 内容 (左对齐) -->
     <div class="section-content">
       <p v-if="$attrs.no" class="section-label">PART {{ $attrs.no }}</p>
       <h2><slot /></h2>
@@ -32,7 +32,6 @@
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
   background-color: #050510;
   overflow: hidden;
 }
@@ -88,7 +87,7 @@
   border: 1px solid #00ffff;
   border-radius: 50%;
   top: 8%;
-  left: 6%;
+  right: 10%;
   animation: rotateSlow 25s linear infinite;
 }
 
@@ -98,7 +97,7 @@
   border: 1px solid #7b2fff;
   border-radius: 50%;
   bottom: 12%;
-  right: 10%;
+  right: 18%;
   animation: rotateSlow 35s linear infinite reverse;
 }
 
@@ -109,16 +108,17 @@
   border-width: 0 40px 70px 40px;
   border-color: transparent transparent rgba(255, 0, 110, 0.15) transparent;
   top: 18%;
-  right: 16%;
+  right: 6%;
   animation: float 6s ease-in-out infinite;
 }
 
-/* 内容 */
+/* 内容 — 左对齐 */
 .section-content {
   position: relative;
   z-index: 10;
-  text-align: center;
-  padding: 0 4rem;
+  text-align: left;
+  padding-left: 10%;
+  max-width: 65%;
 }
 
 .section-label {
@@ -146,13 +146,13 @@
   letter-spacing: 0.04em;
 }
 
-/* 分割线 */
+/* 分割线 — 左对齐，渐变向右淡出 */
 .divider-line {
   width: 180px;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #00ffff, #7b2fff, #ff006e, transparent);
+  background: linear-gradient(90deg, #00ffff, #7b2fff, #ff006e, transparent);
   background-size: 200% 100%;
-  margin: 1.4rem auto;
+  margin: 1.4rem 0;
   box-shadow: 0 0 12px #00ffff44, 0 0 24px #7b2fff22;
   animation: shimmer 3s ease-in-out infinite;
 }

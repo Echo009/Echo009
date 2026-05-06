@@ -6,13 +6,22 @@
     <!-- 顶部 HUD 渐变线 -->
     <div class="hud-top-line"></div>
 
+    <!-- 左侧章节栏 -->
+    <div class="section-sidebar" v-if="$attrs.section">
+      <div class="sidebar-inner">
+        <div class="sidebar-no" v-if="$attrs.no">{{ $attrs.no }}</div>
+        <div class="sidebar-text">{{ $attrs.section }}</div>
+      </div>
+      <div class="sidebar-accent"></div>
+    </div>
+
     <!-- 内容区 -->
-    <div class="cards-content" :style="{ gridTemplateColumns: `repeat(${cols}, 1fr)` }">
+    <div class="cards-content" :class="{ 'with-sidebar': !!$attrs.section }" :style="{ gridTemplateColumns: `repeat(${cols}, 1fr)` }">
       <slot />
     </div>
 
     <!-- 底部 -->
-    <div class="bottom-section">
+    <div class="bottom-section" :class="{ 'with-sidebar': !!$attrs.section }">
       <div class="progress-track">
         <div
           class="progress-fill"
@@ -66,6 +75,53 @@ const cols = Number($attrs.cols || 3)
   z-index: 10;
 }
 
+/* ===== 左侧章节栏 ===== */
+.section-sidebar {
+  position: absolute;
+  left: 0;
+  top: 2rem;
+  bottom: 3rem;
+  width: 120px;
+  z-index: 6;
+  display: flex;
+}
+
+.sidebar-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.sidebar-no {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: rgba(0, 255, 255, 0.06);
+  line-height: 1;
+}
+
+.sidebar-text {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(0, 255, 255, 0.4);
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.15);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
+
+.sidebar-accent {
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(0, 255, 255, 0.35), rgba(123, 47, 255, 0.25), transparent);
+  box-shadow: 0 0 6px rgba(0, 255, 255, 0.1);
+}
+
+/* ===== 内容区 ===== */
 .cards-content {
   flex: 1;
   position: relative;
@@ -73,6 +129,10 @@ const cols = Number($attrs.cols || 3)
   display: grid;
   gap: 1.5rem;
   align-content: start;
+}
+
+.cards-content.with-sidebar {
+  margin-left: 120px;
 }
 
 /* 全局工具类在 cards 布局中的增强 */
@@ -96,12 +156,17 @@ const cols = Number($attrs.cols || 3)
 .cards-content :deep(.card.accent-purple) { border-top: 2px solid #7b2fff; }
 .cards-content :deep(.card.accent-yellow) { border-top: 2px solid #f5ff00; }
 
+/* ===== 底部 ===== */
 .bottom-section {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   padding: 0 4rem 10px;
+}
+
+.bottom-section.with-sidebar {
+  left: 120px;
 }
 
 .progress-track {

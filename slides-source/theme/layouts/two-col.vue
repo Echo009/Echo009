@@ -6,12 +6,17 @@
     <!-- 顶部 HUD 渐变线 -->
     <div class="hud-top-line"></div>
 
-    <!-- 左右竖线装饰 -->
-    <div class="vline vline-left"></div>
-    <div class="vline vline-right"></div>
+    <!-- 左侧章节栏 -->
+    <div class="section-sidebar" v-if="$attrs.section">
+      <div class="sidebar-inner">
+        <div class="sidebar-no" v-if="$attrs.no">{{ $attrs.no }}</div>
+        <div class="sidebar-text">{{ $attrs.section }}</div>
+      </div>
+      <div class="sidebar-accent"></div>
+    </div>
 
     <!-- 双栏内容 -->
-    <div class="twocol-content" :style="gridStyle">
+    <div class="twocol-content" :class="{ 'with-sidebar': !!$attrs.section }" :style="gridStyle">
       <div class="col col-left">
         <slot name="left" />
       </div>
@@ -22,7 +27,7 @@
     </div>
 
     <!-- 底部 -->
-    <div class="bottom-section">
+    <div class="bottom-section" :class="{ 'with-sidebar': !!$attrs.section }">
       <div class="progress-track">
         <div
           class="progress-fill"
@@ -80,18 +85,53 @@ const gridStyle = {
   z-index: 10;
 }
 
-.vline {
+/* ===== 左侧章节栏 ===== */
+.section-sidebar {
   position: absolute;
-  top: 40px;
-  bottom: 50px;
-  width: 1px;
-  background: linear-gradient(180deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.02), rgba(0, 255, 255, 0.1));
-  pointer-events: none;
+  left: 0;
+  top: 2rem;
+  bottom: 3rem;
+  width: 120px;
+  z-index: 6;
+  display: flex;
 }
 
-.vline-left { left: 28px; }
-.vline-right { right: 28px; }
+.sidebar-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
 
+.sidebar-no {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: rgba(0, 255, 255, 0.06);
+  line-height: 1;
+}
+
+.sidebar-text {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(0, 255, 255, 0.4);
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.15);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
+
+.sidebar-accent {
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(0, 255, 255, 0.35), rgba(123, 47, 255, 0.25), transparent);
+  box-shadow: 0 0 6px rgba(0, 255, 255, 0.1);
+}
+
+/* ===== 双栏内容 ===== */
 .twocol-content {
   flex: 1;
   position: relative;
@@ -101,6 +141,10 @@ const gridStyle = {
   gap: 0 1.5rem;
   align-items: start;
   overflow: auto;
+}
+
+.twocol-content.with-sidebar {
+  margin-left: 120px;
 }
 
 .col {
@@ -114,12 +158,17 @@ const gridStyle = {
   opacity: 0.3;
 }
 
+/* ===== 底部 ===== */
 .bottom-section {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   padding: 0 4rem 10px;
+}
+
+.bottom-section.with-sidebar {
+  left: 120px;
 }
 
 .progress-track {

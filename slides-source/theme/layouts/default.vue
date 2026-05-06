@@ -7,22 +7,26 @@
     <div class="hud-top-line"></div>
     <div class="hud-top-glow"></div>
 
-    <!-- 侧边 section 标签 -->
-    <div class="side-label" v-if="$attrs.section">
-      <span>{{ $attrs.section }}</span>
+    <!-- 左侧章节栏 -->
+    <div class="section-sidebar" v-if="$attrs.section">
+      <div class="sidebar-inner">
+        <div class="sidebar-no" v-if="$attrs.no">{{ $attrs.no }}</div>
+        <div class="sidebar-text">{{ $attrs.section }}</div>
+      </div>
+      <div class="sidebar-accent"></div>
     </div>
 
-    <!-- 左右竖线装饰 -->
-    <div class="vline vline-left"></div>
-    <div class="vline vline-right"></div>
+    <!-- 竖线装饰 (无 sidebar 时显示) -->
+    <div class="vline vline-left" v-if="!$attrs.section"></div>
+    <div class="vline vline-right" v-if="!$attrs.section"></div>
 
     <!-- 内容区 -->
-    <div class="content-area">
+    <div class="content-area" :class="{ 'with-sidebar': !!$attrs.section }">
       <slot />
     </div>
 
     <!-- 底部进度条 + 页码 -->
-    <div class="bottom-section">
+    <div class="bottom-section" :class="{ 'with-sidebar': !!$attrs.section }">
       <div class="progress-track">
         <div
           class="progress-fill"
@@ -89,20 +93,53 @@
   z-index: 9;
 }
 
-/* 侧边 section 标签 */
-.side-label {
+/* ===== 左侧章节栏 ===== */
+.section-sidebar {
   position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%) rotate(-90deg);
+  left: 0;
+  top: 2rem;
+  bottom: 3rem;
+  width: 120px;
+  z-index: 6;
+  display: flex;
+}
+
+.sidebar-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.sidebar-no {
   font-family: 'Orbitron', monospace;
-  font-size: 0.5rem;
-  letter-spacing: 0.5em;
-  color: #00ffff33;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: rgba(0, 255, 255, 0.06);
+  line-height: 1;
+}
+
+.sidebar-text {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(0, 255, 255, 0.4);
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.15);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
   white-space: nowrap;
 }
 
-/* 竖线装饰 */
+.sidebar-accent {
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(0, 255, 255, 0.35), rgba(123, 47, 255, 0.25), transparent);
+  box-shadow: 0 0 6px rgba(0, 255, 255, 0.1);
+}
+
+/* ===== 竖线装饰 (无 sidebar 时) ===== */
 .vline {
   position: absolute;
   top: 40px;
@@ -115,7 +152,7 @@
 .vline-left { left: 28px; }
 .vline-right { right: 28px; }
 
-/* 内容区 */
+/* ===== 内容区 ===== */
 .content-area {
   flex: 1;
   position: relative;
@@ -123,7 +160,11 @@
   overflow: auto;
 }
 
-/* 底部区域 */
+.content-area.with-sidebar {
+  margin-left: 120px;
+}
+
+/* ===== 底部区域 ===== */
 .bottom-section {
   position: absolute;
   bottom: 0;
@@ -132,26 +173,25 @@
   padding: 0 4rem 10px;
 }
 
-/* 进度条轨道 */
+.bottom-section.with-sidebar {
+  left: 120px;
+}
+
 .progress-track {
   width: 100%;
   height: 1px;
   background: rgba(0, 255, 255, 0.06);
-  border-radius: 1px;
   margin-bottom: 8px;
   overflow: hidden;
 }
 
-/* 进度条填充 */
 .progress-fill {
   height: 100%;
   background: linear-gradient(90deg, #00ffff, #7b2fff);
-  border-radius: 1px;
   box-shadow: 0 0 6px #00ffff44;
   transition: width 0.4s ease;
 }
 
-/* 底部信息栏 */
 .bottom-bar {
   display: flex;
   justify-content: space-between;
