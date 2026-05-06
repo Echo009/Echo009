@@ -1,6 +1,18 @@
 <template>
   <div class="intro-root">
+    <!-- 背景层 -->
     <div class="grid-bg"></div>
+    <div class="radial-glow"></div>
+
+    <!-- 大号水印 section 编号 -->
+    <div v-if="$attrs.no" class="watermark-no">{{ $attrs.no }}</div>
+
+    <!-- 旋转几何装饰 -->
+    <div class="geo-deco hex-1"></div>
+    <div class="geo-deco hex-2"></div>
+    <div class="geo-deco triangle"></div>
+
+    <!-- 内容 -->
     <div class="intro-content">
       <p v-if="$attrs.no" class="section-no">PART {{ $attrs.no }}</p>
       <h2><slot /></h2>
@@ -24,48 +36,147 @@
   background-color: #050510;
   overflow: hidden;
 }
+
+/* 网格背景 */
 .grid-bg {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px) 0 0 / 50px 50px,
-    linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px) 0 0 / 50px 50px;
+    linear-gradient(90deg, rgba(0, 255, 255, 0.025) 1px, transparent 1px) 0 0 / 44px 44px,
+    linear-gradient(rgba(0, 255, 255, 0.025) 1px, transparent 1px) 0 0 / 44px 44px;
   pointer-events: none;
 }
+
+/* 径向发光 */
+.radial-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 50% 40% at 50% 50%,
+    rgba(123, 47, 255, 0.06) 0%,
+    rgba(0, 255, 255, 0.03) 50%,
+    transparent 80%
+  );
+  pointer-events: none;
+}
+
+/* 大号水印编号 */
+.watermark-no {
+  position: absolute;
+  font-family: 'Orbitron', monospace;
+  font-size: 20rem;
+  font-weight: 900;
+  color: rgba(0, 255, 255, 0.03);
+  letter-spacing: -0.02em;
+  user-select: none;
+  pointer-events: none;
+  right: 3%;
+  bottom: -5%;
+  line-height: 1;
+}
+
+/* 几何装饰 */
+.geo-deco {
+  position: absolute;
+  border-style: solid;
+  pointer-events: none;
+  opacity: 0.12;
+}
+
+.hex-1 {
+  width: 120px;
+  height: 120px;
+  border-width: 1px;
+  border-color: #00ffff;
+  border-radius: 50%;
+  top: 10%;
+  left: 8%;
+  animation: rotateSlow 25s linear infinite;
+}
+
+.hex-2 {
+  width: 80px;
+  height: 80px;
+  border-width: 1px;
+  border-color: #7b2fff;
+  border-radius: 50%;
+  bottom: 15%;
+  right: 12%;
+  animation: rotateSlow 35s linear infinite reverse;
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-width: 0 40px 70px 40px;
+  border-color: transparent transparent #ff006e22 transparent;
+  top: 20%;
+  right: 18%;
+  animation: float 6s ease-in-out infinite;
+}
+
+/* 内容 */
 .intro-content {
   position: relative;
   z-index: 10;
   text-align: center;
 }
+
 .section-no {
   font-family: 'Orbitron', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.5em;
-  color: #ff006e88;
+  font-size: 0.65rem;
+  letter-spacing: 0.6em;
+  color: #ff006eaa;
   margin-bottom: 1rem;
+  text-shadow: 0 0 10px #ff006e44;
 }
+
 .intro-content h2 {
   font-family: 'Orbitron', monospace;
-  font-size: 2.2rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, #00ffff, #ff006e);
+  font-size: 2.5rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, #00ffff, #7b2fff, #ff006e);
+  background-size: 200% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.3));
+  animation: shimmer 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 24px rgba(0, 255, 255, 0.3));
   line-height: 1.3;
   margin: 0;
+  letter-spacing: 0.04em;
 }
+
+/* 分割线 — 更宽、带发光动画 */
 .divider-line {
-  width: 80px;
+  width: 160px;
   height: 2px;
-  background: linear-gradient(90deg, #00ffff, #ff006e);
+  background: linear-gradient(90deg, transparent, #00ffff, #7b2fff, #ff006e, transparent);
+  background-size: 200% 100%;
   margin: 1.2rem auto;
-  box-shadow: 0 0 10px #00ffff66;
+  box-shadow: 0 0 12px #00ffff44, 0 0 24px #7b2fff22;
+  animation: shimmer 3s ease-in-out infinite;
 }
+
 .section-subtitle {
   font-family: 'Share Tech Mono', monospace;
-  font-size: 0.9rem;
-  color: #e0e0e088;
+  font-size: 1.05rem;
+  color: #e0e0e077;
+  letter-spacing: 0.06em;
+}
+
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
 }
 </style>
