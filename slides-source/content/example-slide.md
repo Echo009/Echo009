@@ -4,17 +4,15 @@ title: Slides 方案介绍
 date: 2026-05-05
 description: 基于 Slidev + Astro 的赛博朋克风格幻灯片集成方案
 transition: slide-left
----
-
 layout: cover
 info: Slidev + Astro 集成方案
-date: 2026-05-05
+---
 
 # Slides 方案介绍
 
 ---
-
 section: 概述
+---
 
 # 方案概述
 
@@ -26,19 +24,19 @@ section: 概述
 - **一键构建** — `bash scripts/build-slides.sh` 完成全部构建
 
 ---
-
-no: 01
+no: "01"
 layout: section-header
 subtitle: 项目结构与文件组织
+---
 
 # 项目结构
 
 ---
-
 section: 项目结构
 layout: two-col
 left: 1
 right: 1
+---
 
 ::left::
 
@@ -79,16 +77,16 @@ public/slides/            # Slidev 构建产物
 构建产物放入 `public/slides/`，Astro 直接作为静态资源服务
 
 ---
-
-no: 02
+no: "02"
 layout: section-header
 subtitle: 赛博朋克主题与视觉设计
+---
 
 # 主题设计
 
 ---
-
 section: 主题设计
+---
 
 # 配色体系
 
@@ -104,8 +102,8 @@ section: 主题设计
 背景使用 `--cyber-black: #050510` 深黑底色
 
 ---
-
 section: 主题设计
+---
 
 # 布局组件
 
@@ -140,8 +138,8 @@ section: 主题设计
 </div>
 
 ---
-
 section: 主题设计
+---
 
 # CSS 工具类
 
@@ -167,19 +165,19 @@ section: 主题设计
 </div>
 
 ---
-
-no: 03
+no: "03"
 layout: section-header
 subtitle: 从创建到部署的完整流程
+---
 
 # 使用流程
 
 ---
-
 section: 使用流程
 layout: two-col
 left: 2
 right: 1
+---
 
 ::left::
 
@@ -193,11 +191,9 @@ theme: ../theme
 title: 我的分享
 date: 2026-05-05
 description: 一份关于 XX 的分享
----
-
 layout: cover
 info: 副标题
-date: 2026-05-05
+---
 
 # 我的分享
 
@@ -215,11 +211,11 @@ date: 2026-05-05
 </div>
 
 ---
-
 section: 使用流程
 layout: two-col
 left: 1
 right: 1
+---
 
 ::left::
 
@@ -248,8 +244,8 @@ npm run build                     # 构建 Astro 站点
 </div>
 
 ---
-
 layout: cover
+---
 
 # 感谢观看
 

@@ -8,11 +8,13 @@
 
     <!-- 左侧章节栏 -->
     <div class="section-sidebar" v-if="$attrs.section">
-      <div class="sidebar-inner">
-        <div class="sidebar-no" v-if="$attrs.no">{{ $attrs.no }}</div>
-        <div class="sidebar-text">{{ $attrs.section }}</div>
+      <div class="sidebar-section-name">{{ $attrs.section }}</div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-page">
+        {{ String($slidev.nav.currentPage).padStart(2, '0') }}
+        <span class="sidebar-page-sep">/</span>
+        {{ String($slidev.nav.total).padStart(2, '0') }}
       </div>
-      <div class="sidebar-accent"></div>
     </div>
 
     <!-- 内容区 -->
@@ -41,7 +43,10 @@
 </template>
 
 <script setup lang="ts">
-const cols = Number($attrs.cols || 3)
+import { useAttrs } from 'vue'
+
+const attrs = useAttrs()
+const cols = Number(attrs.cols || 3)
 </script>
 
 <style scoped>
@@ -79,46 +84,46 @@ const cols = Number($attrs.cols || 3)
 .section-sidebar {
   position: absolute;
   left: 0;
-  top: 2rem;
-  bottom: 3rem;
-  width: 120px;
+  top: 0;
+  bottom: 0;
+  width: 180px;
   z-index: 6;
   display: flex;
-}
-
-.sidebar-inner {
-  flex: 1;
-  display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  gap: 1rem;
+  padding: 3rem 1.2rem;
+  border-right: 1px solid rgba(0, 255, 255, 0.12);
+  background: linear-gradient(90deg, rgba(0, 255, 255, 0.02) 0%, transparent 100%);
 }
 
-.sidebar-no {
-  font-family: 'Orbitron', monospace;
-  font-size: 1.8rem;
-  font-weight: 900;
-  color: rgba(0, 255, 255, 0.06);
-  line-height: 1;
-}
-
-.sidebar-text {
-  font-family: 'Orbitron', monospace;
-  font-size: 0.55rem;
+.sidebar-section-name {
+  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+  font-size: 1rem;
   font-weight: 700;
-  letter-spacing: 0.2em;
-  color: rgba(0, 255, 255, 0.4);
-  text-shadow: 0 0 8px rgba(0, 255, 255, 0.15);
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  white-space: nowrap;
+  color: rgba(0, 255, 255, 0.7);
+  text-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
+  line-height: 1.5;
+  letter-spacing: 0.08em;
 }
 
-.sidebar-accent {
-  width: 1px;
-  background: linear-gradient(180deg, transparent, rgba(0, 255, 255, 0.35), rgba(123, 47, 255, 0.25), transparent);
-  box-shadow: 0 0 6px rgba(0, 255, 255, 0.1);
+.sidebar-divider {
+  width: 36px;
+  height: 2px;
+  margin: 1rem 0;
+  background: linear-gradient(90deg, #00ffff, #7b2fff);
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+}
+
+.sidebar-page {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.7rem;
+  color: rgba(0, 255, 255, 0.35);
+  letter-spacing: 0.1em;
+}
+
+.sidebar-page-sep {
+  margin: 0 2px;
+  opacity: 0.5;
 }
 
 /* ===== 内容区 ===== */
@@ -132,7 +137,7 @@ const cols = Number($attrs.cols || 3)
 }
 
 .cards-content.with-sidebar {
-  margin-left: 120px;
+  margin-left: 180px;
 }
 
 /* 全局工具类在 cards 布局中的增强 */
@@ -166,7 +171,7 @@ const cols = Number($attrs.cols || 3)
 }
 
 .bottom-section.with-sidebar {
-  left: 120px;
+  left: 180px;
 }
 
 .progress-track {

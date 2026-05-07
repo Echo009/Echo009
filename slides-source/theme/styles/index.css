@@ -439,6 +439,46 @@
   transform: translateY(-50%);
 }
 
+/* ========== 隐藏 Slidev 右侧导航列表 ========== */
+.select-list {
+  display: none !important;
+}
+
+.autocomplete-list {
+  display: none !important;
+}
+
+/* ========== 滚动条 ========== */
+
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--cyber-cyan), var(--cyber-purple));
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--cyber-cyan), var(--cyber-pink));
+  box-shadow: 0 0 6px rgba(0, 255, 255, 0.4);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--cyber-cyan) transparent;
+}
+
 /* ========== 动画 ========== */
 
 @keyframes borderFlow {
