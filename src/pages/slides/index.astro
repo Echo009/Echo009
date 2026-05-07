@@ -143,16 +143,76 @@ if (fs.existsSync(slidesDir)) {
 
   gsap.registerPlugin(ScrollTrigger);
 
-  gsap.fromTo(
-    '.slide-card',
-    { opacity: 0, y: 40 },
-    {
-      opacity: 1,
-      y: 0,
-      duration: 0.7,
-      stagger: 0.12,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: '.slides-grid', start: 'top 80%' },
-    },
-  );
+  const container = document.querySelector('.slides-container');
+  if (container) {
+    const pages = container.querySelectorAll('.slides-page');
+    const pagination = container.querySelector('.slides-pagination');
+    const pageBtns = container.querySelectorAll('.page-btn');
+    const prevBtn = container.querySelector('.page-arrow.prev') as HTMLButtonElement | null;
+    const nextBtn = container.querySelector('.page-arrow.next') as HTMLButtonElement | null;
+    const pageInfo = container.querySelector('.page-info');
+    const totalPages = parseInt(container.getAttribute('data-total-pages') || '1', 10);
+    let currentPage = 0;
+
+    function showPage(index: number) {
+      if (index < 0 || index >= totalPages || index === currentPage) return;
+
+      const oldPage = pages[currentPage] as HTMLElement;
+      const newPage = pages[index] as HTMLElement;
+
+      gsap.to(oldPage, {
+        opacity: 0,
+        duration: 0.25,
+        ease: 'power2.in',
+        onComplete: () => {
+          oldPage.classList.remove('active');
+          newPage.classList.add('active');
+          gsap.fromTo(newPage, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: 'power2.out' });
+
+          gsap.fromTo(
+            newPage.querySelectorAll('.slide-card'),
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out' },
+          );
+        },
+      });
+
+      currentPage = index;
+
+      pageBtns.forEach((btn, i) => {
+        btn.classList.toggle('active', i === index);
+      });
+
+      if (prevBtn) prevBtn.disabled = index === 0;
+      if (nextBtn) nextBtn.disabled = index === totalPages - 1;
+      if (pageInfo) pageInfo.textContent = `PAGE ${index + 1} / ${totalPages}`;
+    }
+
+    pageBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const target = parseInt(btn.getAttribute('data-page') || '0', 10);
+        showPage(target);
+      });
+    });
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => showPage(currentPage - 1));
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => showPage(currentPage + 1));
+    }
+
+    gsap.fromTo(
+      '.slides-page.active .slide-card',
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        stagger: 0.12,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: '.slides-container', start: 'top 80%' },
+      },
+    );
+  }
 </script>
