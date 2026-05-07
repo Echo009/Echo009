@@ -12,53 +12,99 @@ interface Props {
 }
 
 const { slides } = Astro.props;
+
+const PAGE_SIZE = 3;
+const totalPages = Math.max(1, Math.ceil(slides.length / PAGE_SIZE));
+
+const pages: SlideMeta[][] = [];
+for (let p = 0; p < totalPages; p++) {
+  pages.push(slides.slice(p * PAGE_SIZE, (p + 1) * PAGE_SIZE));
+}
+
+const tagColors = ['pink', 'purple', 'cyan'] as const;
 ---
 
-<div class="slides-grid">
-  {slides.map((slide) => (
-    <a href={`/slides/${slide.slug}/index.html`} class="slide-card group">
-      <div class="slide-cover">
-        {slide.cover ? (
-          <img src={slide.cover} alt={slide.title} loading="lazy" />
-        ) : (
-          <div class="slide-cover-gradient">
-            <div class="gradient-inner">
-              <span class="gradient-title">{slide.title}</span>
-            </div>
-          </div>
-        )}
-      </div>
+<div class="slides-container" data-total-pages={totalPages}>
+  {pages.map((pageSlides, pageIndex) => (
+    <div class={`slides-page ${pageIndex === 0 ? 'active' : ''}`} data-page={pageIndex}>
+      <div class="slides-grid">
+        {pageSlides.map((slide, i) => {
+          const isFeatured = i === 0;
+          const tagColor = (pageIndex === 0 && i === 0) ? 'pink' : tagColors[(i % 2 === 0) ? 1 : 2];
+          const tagLabel = (pageIndex === 0 && i === 0) ? '// LATEST //' : (tagColor === 'purple' ? '// DECK //' : '// SLIDES //');
 
-      <div class="slide-info">
-        <h3 class="slide-title">{slide.title}</h3>
-        <div class="slide-meta">
-          {slide.date && (
-            <time class="slide-date">{slide.date}</time>
-          )}
-        </div>
-        {slide.description && (
-          <p class="slide-desc">{slide.description}</p>
-        )}
-      </div>
+          return (
+            <a href={`/slides/${slide.slug}/index.html`} class={`slide-card ${isFeatured ? 'featured' : ''}`}>
+              <div class="slide-cover">
+                {slide.cover ? (
+                  <img src={slide.cover} alt={slide.title} loading="lazy" />
+                ) : (
+                  <div class="slide-cover-gradient" />
+                )}
+                <div class="cover-grid-overlay" />
+              </div>
 
-      <div class="corner-deco top-left"></div>
-      <div class="corner-deco top-right"></div>
-      <div class="corner-deco bottom-left"></div>
-      <div class="corner-deco bottom-right"></div>
-    </a>
+              <div class="slide-info">
+                <span class={`slide-tag ${tagColor}`}>{tagLabel}</span>
+                <h3 class="slide-title">{slide.title}</h3>
+                {slide.description && (
+                  <p class="slide-desc">{slide.description}</p>
+                )}
+                {slide.date && (
+                  <time class="slide-date">{slide.date}</time>
+                )}
+              </div>
+
+              <div class="corner-deco top-left" />
+              <div class="corner-deco top-right" />
+              <div class="corner-deco bottom-left" />
+              <div class="corner-deco bottom-right" />
+              <div class="slide-progress" />
+            </a>
+          );
+        })}
+      </div>
+    </div>
   ))}
+
+  {totalPages > 1 && (
+    <nav class="slides-pagination">
+      <button class="page-arrow prev" aria-label="Previous page">&laquo;</button>
+      {Array.from({ length: totalPages }, (_, i) => (
+        <button class={`page-btn ${i === 0 ? 'active' : ''}`} data-page={i}>
+          {String(i + 1).padStart(2, '0')}
+        </button>
+      ))}
+      <span class="page-info">PAGE 1 / {totalPages}</span>
+      <button class="page-arrow next" aria-label="Next page">&raquo;</button>
+    </nav>
+  )}
 </div>
 
 <style>
-  .slides-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-    gap: 2rem;
+  /* ── Container & Page Visibility ── */
+  .slides-container {
     max-width: 80rem;
     margin: 0 auto;
     padding: 0 1.5rem;
   }
 
+  .slides-page {
+    display: none;
+  }
+
+  .slides-page.active {
+    display: block;
+  }
+
+  /* ── Grid ── */
+  .slides-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  /* ── Card Base ── */
   .slide-card {
     position: relative;
     display: flex;
@@ -73,17 +119,43 @@ const { slides } = Astro.props;
   }
 
   .slide-card:hover {
-    border-color: rgba(0, 255, 255, 0.5);
+    border-color: rgba(0, 255, 255, 0.4);
     box-shadow:
       0 0 20px rgba(0, 255, 255, 0.15),
       0 8px 32px rgba(0, 0, 0, 0.4);
-    transform: translateY(-3px);
+    transform: translateY(-2px);
   }
 
+  /* ── Featured Card ── */
+  .slide-card.featured {
+    grid-column: 1 / -1;
+    flex-direction: row;
+  }
+
+  .slide-card.featured .slide-cover {
+    width: 58%;
+    aspect-ratio: auto;
+    min-height: 220px;
+  }
+
+  .slide-card.featured .slide-info {
+    width: 42%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .slide-card.featured .slide-title {
+    font-size: 1.25rem;
+  }
+
+  /* ── Cover Area ── */
   .slide-cover {
     aspect-ratio: 16 / 9;
     background: var(--cyber-deep, #0a0a1a);
     overflow: hidden;
+    position: relative;
   }
 
   .slide-cover img {
@@ -102,53 +174,54 @@ const { slides } = Astro.props;
   .slide-cover-gradient {
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #050510 0%, #0a1628 40%, #0d0a1f 100%);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .slide-cover-gradient::before {
-    content: '';
-    position: absolute;
-    inset: 0;
     background:
       radial-gradient(ellipse 80% 60% at 30% 40%, rgba(0, 255, 255, 0.08) 0%, transparent 70%),
-      radial-gradient(ellipse 60% 80% at 70% 60%, rgba(123, 47, 255, 0.06) 0%, transparent 70%);
-    pointer-events: none;
-    transition: opacity 0.4s ease;
+      radial-gradient(ellipse 60% 80% at 70% 60%, rgba(123, 47, 255, 0.06) 0%, transparent 70%),
+      linear-gradient(135deg, #050510 0%, #0a1628 40%, #0d0a1f 100%);
+    transition: background 0.4s ease;
   }
 
-  .slide-card:hover .slide-cover-gradient::before {
+  .slide-card:hover .slide-cover-gradient {
     background:
       radial-gradient(ellipse 80% 60% at 30% 40%, rgba(0, 255, 255, 0.14) 0%, transparent 70%),
-      radial-gradient(ellipse 60% 80% at 70% 60%, rgba(123, 47, 255, 0.10) 0%, transparent 70%);
+      radial-gradient(ellipse 60% 80% at 70% 60%, rgba(123, 47, 255, 0.10) 0%, transparent 70%),
+      linear-gradient(135deg, #050510 0%, #0a1628 40%, #0d0a1f 100%);
   }
 
-  .gradient-inner {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    padding: 1rem 2rem;
+  .cover-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
   }
 
-  .gradient-title {
-    font-family: 'Orbitron', monospace;
-    font-size: 1rem;
-    font-weight: 700;
-    color: rgba(0, 255, 255, 0.5);
-    letter-spacing: 0.05em;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+  .slide-card:hover .cover-grid-overlay {
+    opacity: 1;
   }
 
+  /* ── Info Area ── */
   .slide-info {
     padding: 1.1rem 1.3rem 1.3rem;
   }
+
+  .slide-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+  }
+
+  .slide-tag.pink   { color: var(--cyber-pink, #ff006e); }
+  .slide-tag.cyan   { color: var(--cyber-cyan, #00ffff); }
+  .slide-tag.purple { color: var(--cyber-purple, #7b2fff); }
+  .slide-tag.yellow { color: var(--cyber-yellow, #f5ff00); }
 
   .slide-title {
     font-family: 'Orbitron', monospace;
@@ -161,8 +234,12 @@ const { slides } = Astro.props;
     line-height: 1.4;
   }
 
-  .slide-meta {
-    margin-bottom: 0.5rem;
+  .slide-desc {
+    font-family: 'Inter', 'Noto Sans SC', sans-serif;
+    font-size: 0.82rem;
+    color: rgba(224, 224, 224, 0.55);
+    line-height: 1.6;
+    margin: 0 0 0.5rem;
   }
 
   .slide-date {
@@ -172,19 +249,11 @@ const { slides } = Astro.props;
     letter-spacing: 0.1em;
   }
 
-  .slide-desc {
-    font-family: 'Inter', 'Noto Sans SC', sans-serif;
-    font-size: 0.82rem;
-    color: rgba(224, 224, 224, 0.55);
-    line-height: 1.6;
-    margin: 0;
-  }
-
+  /* ── Corner Decorations (dual-color) ── */
   .corner-deco {
     position: absolute;
     width: 10px;
     height: 10px;
-    border-color: var(--cyber-cyan, #00ffff);
     border-style: solid;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -194,8 +263,133 @@ const { slides } = Astro.props;
     opacity: 1;
   }
 
-  .corner-deco.top-left { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
-  .corner-deco.top-right { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
-  .corner-deco.bottom-left { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
-  .corner-deco.bottom-right { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+  .corner-deco.top-left {
+    top: -1px;
+    left: -1px;
+    border-width: 2px 0 0 2px;
+    border-color: var(--cyber-cyan, #00ffff);
+  }
+
+  .corner-deco.top-right {
+    top: -1px;
+    right: -1px;
+    border-width: 2px 2px 0 0;
+    border-color: var(--cyber-cyan, #00ffff);
+  }
+
+  .corner-deco.bottom-left {
+    bottom: -1px;
+    left: -1px;
+    border-width: 0 0 2px 2px;
+    border-color: #ff006e;
+  }
+
+  .corner-deco.bottom-right {
+    bottom: -1px;
+    right: -1px;
+    border-width: 0 2px 2px 0;
+    border-color: #ff006e;
+  }
+
+  /* ── Bottom Progress Bar ── */
+  .slide-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 0;
+    background: linear-gradient(90deg, var(--cyber-cyan, #00ffff), var(--cyber-pink, #ff006e));
+    transition: width 0.4s ease;
+  }
+
+  .slide-card:hover .slide-progress {
+    width: 100%;
+  }
+
+  /* ── Pagination ── */
+  .slides-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2.5rem;
+    padding: 1rem 0;
+  }
+
+  .page-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 255, 255, 0.25);
+    border-radius: 4px;
+    background: transparent;
+    color: rgba(224, 224, 224, 0.5);
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .page-btn:hover {
+    border-color: rgba(0, 255, 255, 0.5);
+    color: var(--cyber-cyan, #00ffff);
+  }
+
+  .page-btn.active {
+    border-color: var(--cyber-cyan, #00ffff);
+    color: var(--cyber-cyan, #00ffff);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.2), inset 0 0 8px rgba(0, 255, 255, 0.08);
+  }
+
+  .page-arrow {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(224, 224, 224, 0.15);
+    border-radius: 4px;
+    background: transparent;
+    color: rgba(224, 224, 224, 0.4);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .page-arrow:hover {
+    border-color: rgba(0, 255, 255, 0.4);
+    color: var(--cyber-cyan, #00ffff);
+  }
+
+  .page-info {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.5rem;
+    color: rgba(224, 224, 224, 0.35);
+    letter-spacing: 0.15em;
+    margin: 0 0.5rem;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .slides-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .slide-card.featured {
+      flex-direction: column;
+    }
+
+    .slide-card.featured .slide-cover {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      min-height: auto;
+    }
+
+    .slide-card.featured .slide-info {
+      width: 100%;
+      padding: 1.1rem 1.3rem 1.3rem;
+    }
+  }
 </style>
