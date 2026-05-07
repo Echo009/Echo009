@@ -69,14 +69,14 @@ const tagColors = ['pink', 'purple', 'cyan'] as const;
 
   {totalPages > 1 && (
     <nav class="slides-pagination">
-      <button class="page-arrow prev" aria-label="Previous page">&laquo;</button>
+      <button class="page-arrow prev" disabled aria-label="Previous page">‹</button>
       {Array.from({ length: totalPages }, (_, i) => (
         <button class={`page-btn ${i === 0 ? 'active' : ''}`} data-page={i}>
           {String(i + 1).padStart(2, '0')}
         </button>
       ))}
       <span class="page-info">PAGE 1 / {totalPages}</span>
-      <button class="page-arrow next" aria-label="Next page">&raquo;</button>
+      <button class="page-arrow next" aria-label="Next page">›</button>
     </nav>
   )}
 </div>
