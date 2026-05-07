@@ -3,8 +3,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev:example": "slidev content/example-slide.md --open",
-    "build:example": "slidev build content/example-slide.md --out ../../public/slides/example-slide --base /slides/example-slide/"
+    "dev:arch": "slidev content/echo009-architecture.md --open",
+    "build:arch": "slidev build content/echo009-architecture.md --out ../../public/slides/echo009-architecture --base /slides/echo009-architecture/"
   },
   "dependencies": {
     "@slidev/cli": "^0.50.0",

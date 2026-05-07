@@ -8,15 +8,23 @@ function slidevSpaFallback() {
     name: 'slidev-spa-fallback',
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        const url = req.url?.split('?')[0] || '';
+        const url = req.url?.split('?')[0]?.split('#')[0] || '';
         if (path.extname(url)) return next();
-        const match = url.match(/^\/slides\/([^/]+)\/\d+$/);
-        if (match) {
-          const slideName = match[1];
-          const indexPath = path.resolve('public', 'slides', slideName, 'index.html');
+        const exactMatch = url.match(/^\/slides\/([^/]+)\/?$/);
+        if (exactMatch) {
+          const indexPath = path.resolve('public', 'slides', exactMatch[1], 'index.html');
           if (fs.existsSync(indexPath)) {
             res.setHeader('Content-Type', 'text/html');
             fs.createReadStream(indexPath).pipe(res);
+            return;
+          }
+        }
+        const pageMatch = url.match(/^\/slides\/([^/]+)\/(\d+)$/);
+        if (pageMatch) {
+          const indexPath = path.resolve('public', 'slides', pageMatch[1], 'index.html');
+          if (fs.existsSync(indexPath)) {
+            res.writeHead(302, { Location: `/slides/${pageMatch[1]}/#/${pageMatch[2]}` });
+            res.end();
             return;
           }
         }
