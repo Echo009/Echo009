@@ -102,7 +102,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  height: 80px;
+  height: 60px;
   pointer-events: none;
   z-index: 997;
   background: linear-gradient(
@@ -113,32 +113,32 @@
     rgba(0, 255, 255, 0.03) 60%,
     transparent 100%
   );
-  animation: scanMove 8s linear infinite;
+  animation: scanMove 6s linear infinite;
 }
 
 /* 旋转圆环 — 视觉焦点 */
 .orbit-ring {
   position: absolute;
-  width: 340px;
-  height: 340px;
-  border: 1px dashed rgba(0, 255, 255, 0.12);
+  width: 280px;
+  height: 280px;
+  border: 1px dashed rgba(0, 255, 255, 0.08);
   border-radius: 50%;
   animation: rotateSlow 30s linear infinite;
   pointer-events: none;
 }
 
 .orbit-ring.outer {
-  width: 420px;
-  height: 420px;
-  border: 1px solid rgba(0, 255, 255, 0.05);
+  width: 360px;
+  height: 360px;
+  border: 1px solid rgba(0, 255, 255, 0.04);
   animation: rotateSlow 45s linear infinite reverse;
 }
 
 /* 四角装饰 — 带脉冲 */
 .corner-deco {
   position: absolute;
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
   border-color: #00ffff;
   border-style: solid;
   z-index: 10;
@@ -165,7 +165,7 @@
 
 .cover-tag {
   font-family: 'Share Tech Mono', monospace;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   letter-spacing: 0.4em;
   color: #00ffff66;
   margin-bottom: 1.2rem;
@@ -173,7 +173,7 @@
 
 /* 标题装饰横线 */
 .title-line {
-  width: 180px;
+  width: 240px;
   height: 1px;
   margin: 0 auto;
   background: linear-gradient(90deg, transparent, #00ffff88, transparent);
@@ -190,7 +190,7 @@
 
 .cover-content h1 {
   font-family: 'Orbitron', monospace;
-  font-size: 2.8rem;
+  font-size: 3.2rem;
   font-weight: 900;
   color: #00ffff;
   text-shadow:
@@ -205,8 +205,8 @@
 
 .cover-info {
   font-family: 'Share Tech Mono', monospace;
-  font-size: 1.15rem;
-  color: #ff006e;
+  font-size: 1rem;
+  color: #ff006ecc;
   text-shadow: 0 0 10px #ff006e88, 0 0 30px #ff006e44;
   margin-top: 1.4rem;
   letter-spacing: 0.04em;
@@ -230,8 +230,8 @@
   align-items: center;
   gap: 12px;
   font-family: 'Share Tech Mono', monospace;
-  font-size: 0.55rem;
-  color: #00ffff55;
+  font-size: 0.5rem;
+  color: #00ffff44;
   letter-spacing: 0.15em;
 }
 
