@@ -27,8 +27,8 @@ for md_file in "$CONTENT_DIR"/*.md; do
   slug="$(basename "$md_file" .md)"
   echo "  Building: $slug..."
 
-  # 使用绝对路径避免路径解析问题
-  npx slidev build "$md_file" --out "$OUTPUT_BASE/$slug" --base "/slides/$slug/"
+  # MSYS_NO_PATHCONV=1 阻止 Git Bash 将 /slides/... 转为 Windows 路径
+  MSYS_NO_PATHCONV=1 npx slidev build "$md_file" --out "$OUTPUT_BASE/$slug" --base "/slides/$slug/"
 
   # 从 frontmatter 提取元数据生成 meta.json
   meta_file="$OUTPUT_BASE/$slug/meta.json"
