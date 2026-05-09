@@ -56,7 +56,7 @@
   width: 100%;
   height: 100%;
   background-color: #050510;
-  padding: 3rem 4rem 4rem;
+  padding: 2.5rem 3.5rem 4.5rem;
   display: flex;
   flex-direction: column;
 }
@@ -66,7 +66,7 @@
   position: absolute;
   inset: 0;
   background-image: radial-gradient(circle, rgba(0, 255, 255, 0.06) 1px, transparent 1px);
-  background-size: 24px 24px;
+  background-size: 28px 28px;
   pointer-events: none;
 }
 
@@ -89,7 +89,7 @@
   top: 2px;
   left: 0;
   right: 0;
-  height: 20px;
+  height: 12px;
   background: linear-gradient(180deg, rgba(0, 255, 255, 0.08) 0%, transparent 100%);
   pointer-events: none;
   z-index: 9;
@@ -101,7 +101,7 @@
   left: 0;
   top: 0;
   bottom: 0;
-  width: 180px;
+  width: 140px;
   z-index: 6;
   display: flex;
   flex-direction: column;
@@ -147,7 +147,7 @@
   top: 40px;
   bottom: 50px;
   width: 1px;
-  background: linear-gradient(180deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.02), rgba(0, 255, 255, 0.1));
+  background: linear-gradient(180deg, rgba(0, 255, 255, 0.06), rgba(0, 255, 255, 0.01), rgba(0, 255, 255, 0.06));
   pointer-events: none;
 }
 
@@ -163,7 +163,7 @@
 }
 
 .content-area.with-sidebar {
-  margin-left: 180px;
+  margin-left: 140px;
 }
 
 /* ===== 底部区域 ===== */
@@ -172,16 +172,16 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 0 4rem 10px;
+  padding: 0 3.5rem 10px;
 }
 
 .bottom-section.with-sidebar {
-  left: 180px;
+  left: 140px;
 }
 
 .progress-track {
   width: 100%;
-  height: 1px;
+  height: 2px;
   background: rgba(0, 255, 255, 0.06);
   margin-bottom: 8px;
   overflow: hidden;
