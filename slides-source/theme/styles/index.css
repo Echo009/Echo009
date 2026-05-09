@@ -22,12 +22,12 @@
 
 .slidev-layout {
   background-color: var(--cyber-black);
-  color: #d0d0d8;
+  color: #d8d8e0;
   font-family: var(--font-body);
   padding: 2.5rem 3.5rem;
   position: relative;
-  line-height: 1.8;
-  letter-spacing: 0.01em;
+  line-height: 1.85;
+  letter-spacing: 0.015em;
 }
 
 /* 扫描线叠加 */
@@ -50,7 +50,7 @@
 
 .slidev-layout h1 {
   font-family: var(--font-display);
-  font-size: 2.8rem;
+  font-size: 2.6rem;
   font-weight: 900;
   color: var(--cyber-cyan);
   text-shadow:
@@ -65,7 +65,7 @@
 
 .slidev-layout h2 {
   font-family: var(--font-heading);
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--cyber-cyan);
   letter-spacing: 0.02em;
@@ -81,7 +81,7 @@
 
 .slidev-layout h3 {
   font-family: var(--font-heading);
-  font-size: 1.3rem;
+  font-size: 1.15rem;
   font-weight: 600;
   color: var(--cyber-pink);
   letter-spacing: 0.02em;
@@ -93,7 +93,7 @@
 
 .slidev-layout p {
   line-height: 1.8;
-  font-size: 1rem;
+  font-size: 1.05rem;
   margin: 0.6em 0;
 }
 
@@ -137,7 +137,7 @@
   padding: 0.15em 0.45em;
   border-radius: 3px;
   color: var(--cyber-cyan);
-  font-size: 0.88em;
+  font-size: 0.92em;
 }
 
 /* 代码块 */
@@ -157,15 +157,15 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
+  height: 3px;
   background: linear-gradient(90deg, var(--cyber-cyan), var(--cyber-purple), var(--cyber-pink));
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .slidev-layout pre code {
   background: none;
   border: none;
-  padding: 1.2rem;
+  padding: 1.4rem;
   display: block;
 }
 
@@ -196,7 +196,7 @@
 
 .slidev-layout ul li:hover::before {
   text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff88;
-  transform: scale(1.3);
+  transform: scale(1.2);
 }
 
 .slidev-layout ol {
@@ -385,6 +385,14 @@
   background: rgba(0, 255, 255, 0.05);
   color: var(--cyber-cyan);
   letter-spacing: 0.05em;
+}
+
+/* 滑块描述文字 */
+.slide-desc {
+  color: rgba(224, 224, 224, 0.7);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  font-style: italic;
 }
 
 /* 大号装饰数字 */
