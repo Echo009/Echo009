@@ -65,7 +65,7 @@ const gridStyle = {
   width: 100%;
   height: 100%;
   background-color: #050510;
-  padding: 3rem 4rem 4rem;
+  padding: 2.5rem 3.5rem 4.5rem;
   display: flex;
   flex-direction: column;
 }
@@ -96,7 +96,7 @@ const gridStyle = {
   left: 0;
   top: 0;
   bottom: 0;
-  width: 180px;
+  width: 140px;
   z-index: 6;
   display: flex;
   flex-direction: column;
@@ -143,13 +143,13 @@ const gridStyle = {
   z-index: 5;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  gap: 0 1.5rem;
+  gap: 0 2rem;
   align-items: start;
   overflow: auto;
 }
 
 .twocol-content.with-sidebar {
-  margin-left: 180px;
+  margin-left: 140px;
 }
 
 .col {
@@ -159,8 +159,8 @@ const gridStyle = {
 .divider-line {
   width: 2px;
   align-self: stretch;
-  background: linear-gradient(180deg, transparent, #00ffff, #7b2fff, transparent);
-  opacity: 0.3;
+  background: linear-gradient(180deg, transparent, rgba(0, 255, 255, 0.6), rgba(123, 47, 255, 0.4), transparent);
+  opacity: 0.25;
 }
 
 /* ===== 底部 ===== */
@@ -169,11 +169,11 @@ const gridStyle = {
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 0 4rem 10px;
+  padding: 0 3.5rem 10px;
 }
 
 .bottom-section.with-sidebar {
-  left: 180px;
+  left: 140px;
 }
 
 .progress-track {
