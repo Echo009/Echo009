@@ -55,7 +55,7 @@ const cols = Number(attrs.cols || 3)
   width: 100%;
   height: 100%;
   background-color: #050510;
-  padding: 3rem 4rem 4rem;
+  padding: 2.5rem 3.5rem 4.5rem;
   display: flex;
   flex-direction: column;
 }
@@ -86,7 +86,7 @@ const cols = Number(attrs.cols || 3)
   left: 0;
   top: 0;
   bottom: 0;
-  width: 180px;
+  width: 140px;
   z-index: 6;
   display: flex;
   flex-direction: column;
@@ -132,12 +132,12 @@ const cols = Number(attrs.cols || 3)
   position: relative;
   z-index: 5;
   display: grid;
-  gap: 1.5rem;
+  gap: 1.2rem;
   align-content: start;
 }
 
 .cards-content.with-sidebar {
-  margin-left: 180px;
+  margin-left: 140px;
 }
 
 /* 全局工具类在 cards 布局中的增强 */
@@ -145,7 +145,7 @@ const cols = Number(attrs.cols || 3)
   background: linear-gradient(135deg, rgba(0, 255, 255, 0.03) 0%, rgba(10, 10, 26, 0.9) 100%);
   border: 1px solid rgba(0, 255, 255, 0.12);
   border-radius: 6px;
-  padding: 1.2rem 1.4rem;
+  padding: 1rem 1.2rem;
   position: relative;
   overflow: hidden;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -167,11 +167,11 @@ const cols = Number(attrs.cols || 3)
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 0 4rem 10px;
+  padding: 0 3.5rem 10px;
 }
 
 .bottom-section.with-sidebar {
-  left: 180px;
+  left: 140px;
 }
 
 .progress-track {
