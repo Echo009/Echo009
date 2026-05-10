@@ -13,6 +13,7 @@ docs
 # Slidev build output
 public/slides/
 slides-source/node_modules/
+slides-source/.screenshots/**
 .superpowers
 .claude
 .cursor

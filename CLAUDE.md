@@ -71,7 +71,7 @@ Slidev 布局组件（如 `two-col.vue`）内的内容区域（如 `.twocol-cont
 使用 Chrome DevTools MCP 验证样式修改：
 
 1. **导航到目标页面**：`navigate_page` → `url`
-2. **截图查看**：`take_screenshot` → 保存到本地 → 用 `Read` 工具查看图片
+2. **截图查看**：`take_screenshot` → 统一保存到 `slides-source/.screenshots/` 目录（已加入 .gitignore） → 用 `Read` 工具查看图片
 3. **检查计算样式**：`evaluate_script` → 通过 `getComputedStyle()` 获取实际渲染值
 4. **定位问题元素**：`evaluate_script` → 遍历 DOM 查找溢出/滚动元素
 5. **确认 CSS 规则生效**：`evaluate_script` → 遍历 `document.styleSheets` 检查规则是否被加载
