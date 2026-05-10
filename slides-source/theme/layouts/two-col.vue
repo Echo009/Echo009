@@ -1,5 +1,5 @@
 <template>
-  <div class="twocol-root">
+  <div class="twocol-root slidev-layout">
     <!-- 点阵背景 -->
     <div class="dot-grid"></div>
 

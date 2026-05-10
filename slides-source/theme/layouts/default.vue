@@ -1,5 +1,5 @@
 <template>
-  <div class="default-root">
+  <div class="default-root slidev-layout">
     <!-- 点阵背景 -->
     <div class="dot-grid"></div>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="cover-root">
+  <div class="cover-root slidev-layout">
     <!-- 背景层 -->
     <div class="grid-bg"></div>
     <div class="radial-glow"></div>

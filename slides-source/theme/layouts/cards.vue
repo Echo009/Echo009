@@ -1,5 +1,5 @@
 <template>
-  <div class="cards-root">
+  <div class="cards-root slidev-layout">
     <!-- 点阵背景 -->
     <div class="dot-grid"></div>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="section-root">
+  <div class="section-root slidev-layout">
     <!-- 网格背景 -->
     <div class="grid-bg"></div>
     <div class="radial-glow"></div>
