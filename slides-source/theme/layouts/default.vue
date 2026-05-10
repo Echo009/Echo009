@@ -76,21 +76,19 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #00ffff, #ff006e, #7b2fff, #00ffff);
-  background-size: 200% 100%;
-  animation: borderFlow 4s linear infinite;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 5%, rgba(0, 255, 255, 0.6), rgba(123, 47, 255, 0.4), rgba(255, 0, 110, 0.3), transparent 95%);
   z-index: 10;
 }
 
 /* 顶部线下方发光 */
 .hud-top-glow {
   position: absolute;
-  top: 2px;
+  top: 1px;
   left: 0;
   right: 0;
-  height: 12px;
-  background: linear-gradient(180deg, rgba(0, 255, 255, 0.08) 0%, transparent 100%);
+  height: 20px;
+  background: linear-gradient(180deg, rgba(0, 255, 255, 0.04) 0%, transparent 100%);
   pointer-events: none;
   z-index: 9;
 }

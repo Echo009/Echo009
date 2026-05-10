@@ -5,6 +5,7 @@
 
     <!-- 顶部 HUD 渐变线 -->
     <div class="hud-top-line"></div>
+    <div class="hud-top-glow"></div>
 
     <!-- 左侧章节栏 -->
     <div class="section-sidebar" v-if="$attrs.section">
@@ -83,11 +84,20 @@ const gridStyle = {
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #00ffff, #ff006e, #7b2fff, #00ffff);
-  background-size: 200% 100%;
-  animation: borderFlow 4s linear infinite;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 5%, rgba(0, 255, 255, 0.6), rgba(123, 47, 255, 0.4), rgba(255, 0, 110, 0.3), transparent 95%);
   z-index: 10;
+}
+
+.hud-top-glow {
+  position: absolute;
+  top: 1px;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(180deg, rgba(0, 255, 255, 0.04) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 9;
 }
 
 /* ===== 左侧章节栏 ===== */
@@ -146,6 +156,7 @@ const gridStyle = {
   gap: 0 2rem;
   align-items: start;
   overflow: auto;
+  padding-right: 0.8rem;
 }
 
 .twocol-content.with-sidebar {
