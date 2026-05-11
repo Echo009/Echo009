@@ -7,6 +7,9 @@
     <div class="hud-top-line"></div>
     <div class="hud-top-glow"></div>
 
+    <!-- 扫描线 -->
+    <div class="scan-line"></div>
+
     <!-- 左侧章节栏 -->
     <div class="section-sidebar" v-if="$attrs.section">
       <div class="sidebar-section-name">{{ $attrs.section }}</div>
@@ -155,7 +158,7 @@ const gridStyle = {
   grid-template-columns: 1fr auto 1fr;
   gap: 0 2rem;
   align-items: start;
-  overflow: auto;
+  overflow: visible;
   padding-right: 0.8rem;
 }
 
@@ -168,10 +171,24 @@ const gridStyle = {
 }
 
 .divider-line {
-  width: 2px;
+  width: 1px;
   align-self: stretch;
-  background: linear-gradient(180deg, transparent, rgba(0, 255, 255, 0.6), rgba(123, 47, 255, 0.4), transparent);
-  opacity: 0.25;
+  background: linear-gradient(180deg, transparent, rgba(0, 255, 255, 0.5), rgba(123, 47, 255, 0.35), transparent);
+  opacity: 0.3;
+  box-shadow: 0 0 6px rgba(0, 255, 255, 0.08);
+}
+
+/* ===== 扫描线 ===== */
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 10%, rgba(0, 255, 255, 0.12) 50%, transparent 90%);
+  z-index: 8;
+  pointer-events: none;
+  animation: scanMove 8s linear infinite;
+  opacity: 0.4;
 }
 
 /* ===== 底部 ===== */
@@ -230,5 +247,12 @@ const gridStyle = {
 @keyframes borderFlow {
   0% { background-position: 0% 50%; }
   100% { background-position: 200% 50%; }
+}
+
+@keyframes scanMove {
+  0% { top: -5%; opacity: 0; }
+  10% { opacity: 0.4; }
+  90% { opacity: 0.4; }
+  100% { top: 105%; opacity: 0; }
 }
 </style>

@@ -22,6 +22,9 @@
     <div class="vline vline-left" v-if="!$attrs.section"></div>
     <div class="vline vline-right" v-if="!$attrs.section"></div>
 
+    <!-- 扫描线 -->
+    <div class="scan-line"></div>
+
     <!-- 内容区 -->
     <div class="content-area" :class="{ 'with-sidebar': !!$attrs.section }">
       <slot />
@@ -152,12 +155,25 @@
 .vline-left { left: 28px; }
 .vline-right { right: 28px; }
 
+/* ===== 扫描线 ===== */
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 10%, rgba(0, 255, 255, 0.15) 50%, transparent 90%);
+  z-index: 8;
+  pointer-events: none;
+  animation: scanMove 8s linear infinite;
+  opacity: 0.5;
+}
+
 /* ===== 内容区 ===== */
 .content-area {
   flex: 1;
   position: relative;
   z-index: 5;
-  overflow: auto;
+  overflow: visible;
 }
 
 .content-area.with-sidebar {
@@ -220,5 +236,12 @@
 @keyframes borderFlow {
   0% { background-position: 0% 50%; }
   100% { background-position: 200% 50%; }
+}
+
+@keyframes scanMove {
+  0% { top: -5%; opacity: 0; }
+  10% { opacity: 0.5; }
+  90% { opacity: 0.5; }
+  100% { top: 105%; opacity: 0; }
 }
 </style>

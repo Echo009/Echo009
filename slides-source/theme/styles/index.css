@@ -54,10 +54,11 @@
   font-size: 1.6rem;
   font-weight: 900;
   color: var(--cyber-cyan);
+  -webkit-text-fill-color: currentColor;
   text-shadow:
-    0 0 4px #00ffff66,
-    0 0 12px #00ffff44,
-    0 0 28px #00ffff22;
+    0 0 6px #00ffff88,
+    0 0 16px #00ffff55,
+    0 0 32px #00ffff33;
   letter-spacing: 0.03em;
   line-height: 1.25;
   margin-bottom: 0.6em;
@@ -69,14 +70,14 @@
   font-weight: 700;
   color: var(--cyber-cyan);
   text-shadow:
-    0 0 3px #00ffff44,
-    0 0 10px #00ffff22;
+    0 0 4px #00ffff66,
+    0 0 14px #00ffff33;
   letter-spacing: 0.04em;
   line-height: 1.3;
   margin-bottom: 0.6em;
   padding-bottom: 0.35em;
   border-bottom: 1px solid transparent;
-  background-image: linear-gradient(90deg, rgba(0, 255, 255, 0.25), rgba(123, 47, 255, 0.2), transparent);
+  background-image: linear-gradient(90deg, rgba(0, 255, 255, 0.35), rgba(123, 47, 255, 0.25), transparent);
   background-size: 100% 1px;
   background-position: 0 100%;
   background-repeat: no-repeat;
@@ -87,11 +88,26 @@
   font-size: 1rem;
   font-weight: 700;
   color: var(--cyber-pink);
-  text-shadow: 0 0 4px #ff006e33;
+  text-shadow: 0 0 6px #ff006e44;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   line-height: 1.4;
   margin-bottom: 0.4em;
+  padding-left: 0.6em;
+  position: relative;
+}
+
+.slidev-layout h3::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 70%;
+  background: linear-gradient(180deg, var(--cyber-pink), var(--cyber-purple));
+  box-shadow: 0 0 6px #ff006e66;
+  border-radius: 2px;
 }
 
 /* ========== 正文与段落 ========== */
@@ -148,12 +164,15 @@
 /* 代码块 */
 .slidev-layout pre {
   background: var(--cyber-deep) !important;
-  border: 1px solid rgba(0, 255, 255, 0.1);
-  border-radius: 8px;
+  border: 1px solid rgba(0, 255, 255, 0.15);
+  border-radius: 6px;
   padding: 0;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4), 0 0 1px rgba(0, 255, 255, 0.2);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.5),
+    0 0 1px rgba(0, 255, 255, 0.3),
+    inset 0 0 40px rgba(0, 255, 255, 0.01);
 }
 
 .slidev-layout pre::before {
@@ -162,9 +181,21 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
+  height: 2px;
   background: linear-gradient(90deg, var(--cyber-cyan), var(--cyber-purple), var(--cyber-pink));
   opacity: 0.9;
+}
+
+.slidev-layout pre::after {
+  content: '◆ SYS::CODE';
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: rgba(0, 255, 255, 0.2);
+  letter-spacing: 0.1em;
+  pointer-events: none;
 }
 
 .slidev-layout pre code {
@@ -240,13 +271,37 @@
 /* HUD 面板 */
 .slidev-layout .hud-panel {
   border: 1px solid rgba(0, 255, 255, 0.2);
-  background: linear-gradient(135deg, rgba(0, 255, 255, 0.03) 0%, rgba(0, 10, 30, 0.8) 100%);
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.04) 0%, rgba(0, 10, 30, 0.85) 100%);
   box-shadow:
-    0 0 20px var(--cyber-dim-cyan),
-    inset 0 0 30px rgba(0, 255, 255, 0.015);
+    0 0 24px rgba(0, 255, 255, 0.08),
+    inset 0 0 40px rgba(0, 255, 255, 0.02);
   padding: 1.5rem;
   border-radius: 4px;
   position: relative;
+}
+
+.slidev-layout .hud-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid var(--cyber-cyan);
+  border-left: 2px solid var(--cyber-cyan);
+  opacity: 0.6;
+}
+
+.slidev-layout .hud-panel::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  border-bottom: 2px solid var(--cyber-cyan);
+  border-right: 2px solid var(--cyber-cyan);
+  opacity: 0.6;
 }
 
 /* ========== 表格 ========== */
@@ -257,25 +312,28 @@
   border-spacing: 0;
   overflow: hidden;
   border-radius: 4px;
-  border: 1px solid rgba(0, 255, 255, 0.15);
-  box-shadow: 0 0 12px rgba(0, 255, 255, 0.04), inset 0 0 20px rgba(0, 255, 255, 0.01);
+  border: 1px solid rgba(0, 255, 255, 0.18);
+  box-shadow:
+    0 0 16px rgba(0, 255, 255, 0.06),
+    inset 0 0 30px rgba(0, 255, 255, 0.01);
+  position: relative;
 }
 
 .slidev-layout th {
-  background: linear-gradient(180deg, rgba(0, 255, 255, 0.12) 0%, rgba(0, 255, 255, 0.04) 100%);
-  border-bottom: 1px solid rgba(0, 255, 255, 0.25);
-  padding: 0.5rem 1rem;
+  background: linear-gradient(180deg, rgba(0, 255, 255, 0.14) 0%, rgba(0, 255, 255, 0.05) 100%);
+  border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+  padding: 0.55rem 1rem;
   text-align: left;
   color: var(--cyber-cyan);
   font-family: var(--font-heading);
   font-size: 0.78rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  text-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
 }
 
 .slidev-layout td {
-  padding: 0.45rem 1rem;
+  padding: 0.5rem 1rem;
   border-bottom: 1px solid rgba(0, 255, 255, 0.06);
   font-size: 0.82rem;
   transition: background 0.2s ease;
@@ -286,7 +344,8 @@
 }
 
 .slidev-layout tbody tr:hover {
-  background: rgba(0, 255, 255, 0.06);
+  background: rgba(0, 255, 255, 0.08);
+  box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.03);
 }
 
 .slidev-layout tr:nth-child(even) {
@@ -330,10 +389,11 @@
   left: 50%;
   top: 0;
   bottom: 0;
-  width: 2px;
+  width: 1px;
   background: linear-gradient(180deg, transparent, var(--cyber-cyan), var(--cyber-purple), transparent);
   opacity: 0.3;
   transform: translateX(-50%);
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.1);
 }
 
 /* 三栏布局 */
@@ -345,33 +405,79 @@
 
 /* 通用卡片 */
 .slidev-layout .card {
-  background: linear-gradient(135deg, rgba(0, 255, 255, 0.03) 0%, rgba(10, 10, 26, 0.9) 100%);
-  border: 1px solid rgba(0, 255, 255, 0.12);
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.04) 0%, rgba(10, 10, 26, 0.95) 100%);
+  border: 1px solid rgba(0, 255, 255, 0.14);
   border-radius: 6px;
   padding: 1.2rem 1.4rem;
   position: relative;
   overflow: hidden;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.slidev-layout .card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(0, 255, 255, 0.03) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .slidev-layout .card:hover {
-  border-color: rgba(0, 255, 255, 0.3);
-  box-shadow: 0 0 16px rgba(0, 255, 255, 0.1);
+  border-color: rgba(0, 255, 255, 0.35);
+  box-shadow:
+    0 0 20px rgba(0, 255, 255, 0.12),
+    inset 0 0 30px rgba(0, 255, 255, 0.02);
+  transform: translateY(-1px);
 }
 
-/* 卡片强调色 — 顶部色条 */
-.slidev-layout .card.accent-cyan { border-top: 2px solid var(--cyber-cyan); }
-.slidev-layout .card.accent-pink { border-top: 2px solid var(--cyber-pink); }
-.slidev-layout .card.accent-purple { border-top: 2px solid var(--cyber-purple); }
-.slidev-layout .card.accent-yellow { border-top: 2px solid var(--cyber-yellow); }
+.slidev-layout .card:hover::before {
+  opacity: 1;
+}
+
+/* 卡片强调色 — 顶部色条 + 发光 */
+.slidev-layout .card.accent-cyan {
+  border-top: 2px solid var(--cyber-cyan);
+  box-shadow: 0 -2px 10px rgba(0, 255, 255, 0.1);
+}
+.slidev-layout .card.accent-pink {
+  border-top: 2px solid var(--cyber-pink);
+  box-shadow: 0 -2px 10px rgba(255, 0, 110, 0.1);
+}
+.slidev-layout .card.accent-purple {
+  border-top: 2px solid var(--cyber-purple);
+  box-shadow: 0 -2px 10px rgba(123, 47, 255, 0.1);
+}
+.slidev-layout .card.accent-yellow {
+  border-top: 2px solid var(--cyber-yellow);
+  box-shadow: 0 -2px 10px rgba(245, 255, 0, 0.1);
+}
 
 /* 注释/提示框 */
 .slidev-layout .note {
   border-left: 3px solid var(--cyber-cyan);
-  background: linear-gradient(90deg, rgba(0, 255, 255, 0.04) 0%, transparent 60%);
+  background: linear-gradient(90deg, rgba(0, 255, 255, 0.06) 0%, rgba(0, 255, 255, 0.02) 40%, transparent 80%);
   padding: 1rem 1.4rem;
   border-radius: 0 6px 6px 0;
   margin: 1rem 0;
+  position: relative;
+  box-shadow: inset 2px 0 12px rgba(0, 255, 255, 0.04);
+}
+
+.slidev-layout .note::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--cyber-cyan), var(--cyber-purple));
+  box-shadow: 0 0 8px var(--cyber-cyan);
+  opacity: 0.6;
 }
 
 /* 药丸标签 */
@@ -389,10 +495,19 @@
   font-size: 0.75rem;
   padding: 0.25em 0.8em;
   border-radius: 999px;
-  border: 1px solid rgba(0, 255, 255, 0.2);
-  background: rgba(0, 255, 255, 0.05);
+  border: 1px solid rgba(0, 255, 255, 0.25);
+  background: rgba(0, 255, 255, 0.06);
   color: var(--cyber-cyan);
   letter-spacing: 0.05em;
+  text-shadow: 0 0 6px rgba(0, 255, 255, 0.3);
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.06);
+  transition: all 0.3s ease;
+}
+
+.slidev-layout .chip:hover {
+  border-color: rgba(0, 255, 255, 0.5);
+  box-shadow: 0 0 14px rgba(0, 255, 255, 0.15);
+  background: rgba(0, 255, 255, 0.1);
 }
 
 /* 滑块描述文字 */
@@ -419,42 +534,62 @@
   display: flex;
   flex-direction: column;
   gap: 0;
+  position: relative;
+}
+
+/* 容器级连续竖线 — 一条渐变贯穿所有步骤 */
+.slidev-layout .flow::before {
+  content: '';
+  position: absolute;
+  left: 1px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, var(--cyber-pink), var(--cyber-cyan), var(--cyber-purple), transparent);
+  opacity: 0.5;
+}
+
+/* h3 与 flow 衔接：收紧间距 + 竖线向上延伸接住 h3 的 bar */
+.slidev-layout h3 + .flow {
+  margin-top: -0.15em;
+}
+
+.slidev-layout h3 + .flow::before {
+  top: -0.6em;
 }
 
 .slidev-layout .flow-step {
   position: relative;
-  padding: 0.5rem 1rem 0.5rem 1.8rem;
+  padding: 0.5rem 1rem 0.5rem 1.4rem;
   margin: 0;
   font-size: 0.9rem;
   line-height: 1.6;
+  transition: background 0.2s ease;
 }
 
+.slidev-layout .flow-step:hover {
+  background: rgba(0, 255, 255, 0.03);
+  border-radius: 0 4px 4px 0;
+}
+
+/* 圆点 — 居中于 1.5px 轴线（与 h3 bar 中心 + flow 竖线对齐） */
 .slidev-layout .flow-step::before {
   content: '';
   position: absolute;
-  left: 0.3rem;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: linear-gradient(180deg, var(--cyber-cyan), var(--cyber-purple));
-  opacity: 0.4;
-}
-
-.slidev-layout .flow-step:last-child::before {
-  bottom: 50%;
-}
-
-.slidev-layout .flow-step::after {
-  content: '';
-  position: absolute;
-  left: 0.08rem;
+  left: 1.5px;
   top: 50%;
-  width: 0.5rem;
-  height: 0.5rem;
+  width: 0.4rem;
+  height: 0.4rem;
   border-radius: 50%;
   background: var(--cyber-cyan);
-  box-shadow: 0 0 8px var(--cyber-cyan);
-  transform: translateY(-50%);
+  box-shadow: 0 0 8px var(--cyber-cyan), 0 0 2px var(--cyber-cyan);
+  transform: translate(-50%, -50%);
+  transition: box-shadow 0.3s ease;
+  z-index: 1;
+}
+
+.slidev-layout .flow-step:hover::before {
+  box-shadow: 0 0 12px var(--cyber-cyan), 0 0 24px rgba(0, 255, 255, 0.3);
 }
 
 /* ========== 隐藏 Slidev 右侧导航列表 ========== */

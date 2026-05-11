@@ -6,6 +6,9 @@
     <!-- 顶部 HUD 渐变线 -->
     <div class="hud-top-line"></div>
 
+    <!-- 扫描线 -->
+    <div class="scan-line"></div>
+
     <!-- 左侧章节栏 -->
     <div class="section-sidebar" v-if="$attrs.section">
       <div class="sidebar-section-name">{{ $attrs.section }}</div>
@@ -73,11 +76,22 @@ const cols = Number(attrs.cols || 3)
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #00ffff, #ff006e, #7b2fff, #00ffff);
-  background-size: 200% 100%;
-  animation: borderFlow 4s linear infinite;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 5%, rgba(0, 255, 255, 0.6), rgba(123, 47, 255, 0.4), rgba(255, 0, 110, 0.3), transparent 95%);
   z-index: 10;
+}
+
+/* ===== 扫描线 ===== */
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 10%, rgba(0, 255, 255, 0.12) 50%, transparent 90%);
+  z-index: 8;
+  pointer-events: none;
+  animation: scanMove 8s linear infinite;
+  opacity: 0.4;
 }
 
 /* ===== 左侧章节栏 ===== */
@@ -142,24 +156,25 @@ const cols = Number(attrs.cols || 3)
 
 /* 全局工具类在 cards 布局中的增强 */
 .cards-content :deep(.card) {
-  background: linear-gradient(135deg, rgba(0, 255, 255, 0.03) 0%, rgba(10, 10, 26, 0.9) 100%);
-  border: 1px solid rgba(0, 255, 255, 0.12);
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.04) 0%, rgba(10, 10, 26, 0.95) 100%);
+  border: 1px solid rgba(0, 255, 255, 0.14);
   border-radius: 6px;
   padding: 1rem 1.2rem;
   position: relative;
   overflow: hidden;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .cards-content :deep(.card:hover) {
-  border-color: rgba(0, 255, 255, 0.3);
-  box-shadow: 0 0 16px rgba(0, 255, 255, 0.1);
+  border-color: rgba(0, 255, 255, 0.4);
+  box-shadow: 0 0 24px rgba(0, 255, 255, 0.12), inset 0 0 30px rgba(0, 255, 255, 0.02);
+  transform: translateY(-2px);
 }
 
-.cards-content :deep(.card.accent-cyan) { border-top: 2px solid #00ffff; }
-.cards-content :deep(.card.accent-pink) { border-top: 2px solid #ff006e; }
-.cards-content :deep(.card.accent-purple) { border-top: 2px solid #7b2fff; }
-.cards-content :deep(.card.accent-yellow) { border-top: 2px solid #f5ff00; }
+.cards-content :deep(.card.accent-cyan) { border-top: 2px solid #00ffff; box-shadow: 0 -2px 12px rgba(0, 255, 255, 0.1); }
+.cards-content :deep(.card.accent-pink) { border-top: 2px solid #ff006e; box-shadow: 0 -2px 12px rgba(255, 0, 110, 0.1); }
+.cards-content :deep(.card.accent-purple) { border-top: 2px solid #7b2fff; box-shadow: 0 -2px 12px rgba(123, 47, 255, 0.1); }
+.cards-content :deep(.card.accent-yellow) { border-top: 2px solid #f5ff00; box-shadow: 0 -2px 12px rgba(245, 255, 0, 0.1); }
 
 /* ===== 底部 ===== */
 .bottom-section {
@@ -217,5 +232,12 @@ const cols = Number(attrs.cols || 3)
 @keyframes borderFlow {
   0% { background-position: 0% 50%; }
   100% { background-position: 200% 50%; }
+}
+
+@keyframes scanMove {
+  0% { top: -5%; opacity: 0; }
+  10% { opacity: 0.4; }
+  90% { opacity: 0.4; }
+  100% { top: 105%; opacity: 0; }
 }
 </style>
