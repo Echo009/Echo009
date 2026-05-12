@@ -58,6 +58,39 @@
 
 这样 Chrome 走 `::-webkit-scrollbar`（可精确控制像素），Firefox 走标准属性。
 
+### overflow 混合轴陷阱
+
+**CSS 规范限制**：`overflow-x: visible` + `overflow-y: auto` 无法并存。当任一轴设为非 `visible` 值时，浏览器会自动将另一轴也改为 `auto`，导致两个轴都变成滚动容器。
+
+**替代方案**：用 `padding` 给伪元素留出空间（如 `padding-left: 4px`），保持 `overflow: auto` 不变。伪元素在 padding 区域内可见，不会被裁剪，同时纵向滚动正常工作。
+
+### `:has()` 选择器实现条件布局
+
+当某些内容需要特殊布局时（如 mermaid 图表页需要纵向居中），用 `:has()` 按内容类型应用样式：
+
+```css
+.slidev-layout .content-area:has(.mermaid) {
+  display: flex;
+  flex-direction: column;
+}
+.slidev-layout .content-area:has(.mermaid) > .mermaid {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+```
+
+标题保持在顶部，mermaid 在剩余空间纵向居中。只影响 default 布局（`.content-area`），不影响 two-col 布局（`.twocol-content`）。
+
+### 流程图组件架构
+
+`.flow` + `.flow-step` 的装饰采用**容器级竖线 + 每步圆点**分离策略：
+
+- **竖线**：`.flow::before` 画一条贯穿容器的连续渐变线，色彩从 h3 的 bar 自然过渡
+- **圆点**：`.flow-step::before` 定位在每个步骤上，用 `translate(-50%, -50%)` 居中于竖线轴线
+- **衔接**：`h3 + .flow::before { top: -0.6em }` 让竖线向上延伸接住 h3 的 bar
+
+这条轴线（h3 bar + flow line + flow-step dots）统一对齐在 1.5px 中心。
+
 ### 内容溢出检测
 
 Slidev 布局组件（如 `two-col.vue`）内的内容区域（如 `.twocol-content`）设置 `overflow: auto`，当内容溢出时会显示滚动条。全局样式 `index.css` 中的滚动条规则会作用于这些元素。

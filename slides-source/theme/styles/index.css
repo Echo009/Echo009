@@ -529,6 +529,29 @@
   letter-spacing: -0.02em;
 }
 
+/* Mermaid 图表居中 */
+.slidev-layout .mermaid {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.slidev-layout .mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 含 mermaid 的内容区：标题置顶，图表在剩余空间纵向居中 */
+.slidev-layout .content-area:has(.mermaid) {
+  display: flex;
+  flex-direction: column;
+}
+
+.slidev-layout .content-area:has(.mermaid) > .mermaid {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 /* 简易流程图 */
 .slidev-layout .flow {
   display: flex;
