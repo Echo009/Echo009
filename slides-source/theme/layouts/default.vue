@@ -173,7 +173,8 @@
   flex: 1;
   position: relative;
   z-index: 5;
-  overflow: visible;
+  overflow: auto;
+  padding-left: 4px;
 }
 
 .content-area.with-sidebar {

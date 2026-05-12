@@ -158,8 +158,8 @@ const gridStyle = {
   grid-template-columns: 1fr auto 1fr;
   gap: 0 2rem;
   align-items: start;
-  overflow: visible;
-  padding-right: 0.8rem;
+  overflow: auto;
+  padding: 0 0.8rem 0 4px;
 }
 
 .twocol-content.with-sidebar {
