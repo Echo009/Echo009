@@ -66,8 +66,8 @@ if (fs.existsSync(slidesDir)) {
     backdrop-filter: blur(8px);
   "></div>
 
-  <main class="pt-24 pb-32">
-    <section class="slides-hero text-center mb-16 px-6">
+  <main class="pt-20 pb-20">
+    <section class="slides-hero text-center mb-10 px-6">
       <!-- 背景光晕 -->
       <div class="hero-glow" aria-hidden="true"></div>
 
@@ -150,7 +150,7 @@ if (fs.existsSync(slidesDir)) {
 
   .hero-title {
     font-family: 'Orbitron', sans-serif;
-    font-size: clamp(3rem, 10vw, 4.5rem);
+    font-size: clamp(2.8rem, 9vw, 4rem);
     font-weight: 900;
     line-height: 1;
     letter-spacing: -0.02em;
@@ -158,7 +158,7 @@ if (fs.existsSync(slidesDir)) {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    filter: drop-shadow(0 0 30px rgba(0, 255, 255, 0.15)) drop-shadow(0 0 20px rgba(255, 0, 110, 0.1));
+    filter: drop-shadow(0 0 24px rgba(0, 255, 255, 0.18)) drop-shadow(0 0 16px rgba(255, 0, 110, 0.12));
     white-space: nowrap;
   }
 
@@ -195,9 +195,9 @@ if (fs.existsSync(slidesDir)) {
   /* ── Divider ── */
   .hero-divider {
     position: relative;
-    width: 120px;
+    width: 180px;
     height: 2px;
-    margin: 0 auto 1rem;
+    margin: 0 auto 0.75rem;
     background: linear-gradient(90deg, rgba(0, 255, 255, 0.15), rgba(255, 0, 110, 0.15));
     border-radius: 1px;
     overflow: hidden;
@@ -221,11 +221,11 @@ if (fs.existsSync(slidesDir)) {
   /* ── Background Glow ── */
   .hero-glow {
     position: absolute;
-    top: 25%;
+    top: 20%;
     left: 50%;
     transform: translateX(-50%);
-    width: 600px;
-    height: 250px;
+    width: 500px;
+    height: 200px;
     background: radial-gradient(ellipse, rgba(0, 255, 255, 0.04) 0%, rgba(255, 0, 110, 0.03) 40%, transparent 70%);
     pointer-events: none;
   }
