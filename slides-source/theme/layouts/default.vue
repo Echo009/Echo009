@@ -175,6 +175,8 @@
   z-index: 5;
   overflow: auto;
   padding-left: 4px;
+  padding-right: 1.5rem;
+  margin-right: -2rem;
 }
 
 .content-area.with-sidebar {
