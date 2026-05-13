@@ -138,7 +138,7 @@ const gridStyle = {
 }
 
 .sidebar-page {
-  font-family: 'Orbitron', monospace;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 0.7rem;
   color: rgba(0, 255, 255, 0.35);
   letter-spacing: 0.1em;
@@ -231,7 +231,7 @@ const gridStyle = {
 }
 
 .page-indicator {
-  font-family: 'Orbitron', monospace;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 0.5rem;
   color: #00ffff55;
 }

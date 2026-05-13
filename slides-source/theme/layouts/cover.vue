@@ -189,7 +189,7 @@
 }
 
 .cover-content h1 {
-  font-family: 'Orbitron', monospace;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 3.2rem;
   font-weight: 900;
   color: #00ffff;

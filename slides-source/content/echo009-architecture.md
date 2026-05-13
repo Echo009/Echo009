@@ -1,7 +1,7 @@
 ---
 theme: ../theme
 title: 赛博朋克个人主页架构解析
-date: 2026-05-07
+date: 2026-05-13
 description: 基于 Astro + Slidev 的赛博朋克风格静态站点技术架构全景解析
 transition: slide-left
 routerMode: hash
@@ -17,20 +17,20 @@ section: 全景概览
 
 # 项目定位
 
-**Echo009** — 赛博朋克风格的静态个人主页，托管于 GitHub Pages
+**Echo009** — 赛博朋克美学 × 前端工程实践，托管于 GitHub Pages
 
 <div class="two-col">
   <div>
-    <h3>核心特性</h3>
+    <h3>工程亮点</h3>
     <div class="flow">
-      <div class="flow-step"><strong>纯静态</strong> — Astro SSG，零运行时开销</div>
-      <div class="flow-step"><strong>赛博风格</strong> — 统一的 neon-glow 视觉语言</div>
-      <div class="flow-step"><strong>幻灯片集成</strong> — Slidev 独立构建，嵌入主站</div>
-      <div class="flow-step"><strong>自动部署</strong> — push 即发布，CI 全自动</div>
+      <div class="flow-step"><strong>零运行时</strong> — Astro SSG 预渲染，首屏无 JS</div>
+      <div class="flow-step"><strong>双系统集成</strong> — Astro 主站 + Slidev 演示，独立构建无缝衔接</div>
+      <div class="flow-step"><strong>自研主题</strong> — 6 种布局 + 统一 CSS 变量体系</div>
+      <div class="flow-step"><strong>全自动链路</strong> — git push → CI → CDN，零人工干预</div>
     </div>
   </div>
   <div>
-    <h3>线上地址</h3>
+    <h3>访问地址</h3>
     <div class="flow">
       <div class="flow-step"><strong>主页</strong> — echo009.github.io</div>
       <div class="flow-step"><strong>幻灯片列表</strong> — /slides</div>
@@ -82,6 +82,10 @@ graph LR
   GHA -->|build + deploy| GHP
 ```
 
+<div class="note" style="margin-top: 1rem;">
+  <strong>核心选型</strong>：Astro（零 JS 默认，非 Next.js 的全量 hydration） · Slidev（Markdown 即演示，非 reveal.js 的命令式 API） · GSAP（ScrollTrigger 专业级滚动动画）
+</div>
+
 ---
 section: 技术栈
 layout: two-col
@@ -93,22 +97,21 @@ right: 1
 
 # 主站依赖
 
-| 包 | 版本 | 职责 |
+| 包 | 版本 | 选型理由 |
 |---|---|---|
-| `astro` | ^5.4 | 静态站点生成 |
-| `@astrojs/tailwind` | ^5.1 | Tailwind 集成 |
-| `tailwindcss` | ^3.4 | 原子化 CSS |
-| `gsap` | ^3.12 | 滚动触发动画 |
-| `three` | ^0.173 | 3D 视觉效果 |
+| `astro` | ^5.4 | 零 JS 默认，构建产物纯 HTML |
+| `@astrojs/tailwind` | ^5.1 | 原子化样式，快速原型开发 |
+| `gsap` | ^3.12 | 专业级动画，ScrollTrigger |
+| `three` | ^0.173 | 粒子背景，鼠标交互反馈 |
 
 ::right::
 
 # 幻灯片依赖
 
-| 包 | 版本 | 职责 |
+| 包 | 版本 | 选型理由 |
 |---|---|---|
-| `@slidev/cli` | ^0.50 | Slidev 构建引擎 |
-| `@slidev/types` | ^0.50 | TypeScript 类型 |
+| `@slidev/cli` | ^0.50 | Markdown 驱动，开发者友好 |
+| `@slidev/types` | ^0.50 | Vue 组件布局，类型安全 |
 
 <div class="note" style="margin-top: 1.5rem;">
   两套依赖<strong>独立管理</strong>：<br/>
@@ -136,18 +139,13 @@ graph TD
   Root --> Public["public/<br/>静态资源"]
   Root --> Scripts["scripts/<br/>构建脚本"]
   Root --> GH[".github/workflows/<br/>CI 配置"]
-  Root --> Config["astro.config.mjs<br/>tailwind.config.mjs"]
 
   Src --> Pages["pages/<br/>路由"]
   Src --> Comps["components/<br/>组件"]
   Src --> Layouts["layouts/<br/>全局布局"]
 
-  Pages --> Home["index.astro<br/>首页"]
-  Pages --> SlidesPage["slides/index.astro<br/>幻灯片列表"]
-
-  SS --> SContent["content/<br/>Markdown 源文件"]
+  SS --> SContent["content/*.md<br/>幻灯片源文件"]
   SS --> STheme["theme/<br/>自定义主题"]
-  SS --> SPkg["package.json<br/>独立依赖"]
 
   Public --> PSlides["slides/<br/>构建产物"]
 ```
@@ -289,42 +287,33 @@ section: 集成机制
 ```mermaid
 flowchart TD
   subgraph Astro["Astro 主站"]
-    Index["/slides/index.astro<br/>列表页"]
+    List["/slides/index.astro<br/>列表页"]
     Card["SlidesList.astro<br/>卡片组件"]
-    Index --> Card
   end
 
   subgraph Static["public/slides/"]
-    Meta1["slug-a/meta.json"]
-    HTML1["slug-a/index.html"]
-    Meta2["slug-b/meta.json"]
-    HTML2["slug-b/index.html"]
+    S1["slug-a/<br/>meta.json + index.html"]
+    S2["slug-b/<br/>meta.json + index.html"]
   end
 
-  subgraph Middleware["SPA 回退中间件"]
-    M1["/slides/slug → 返回 index.html"]
-    M2["/slides/slug/3 → 302 到 /#/3"]
-  end
-
-  Card -->|"读取 meta.json"| Meta1
-  Card -->|"读取 meta.json"| Meta2
-  Card -->|"链接跳转"| HTML1
-  Card -->|"链接跳转"| HTML2
-  Middleware -.->|"开发模式"| HTML1
-  Middleware -.->|"开发模式"| HTML2
+  List --> Card
+  Card -->|"读取 meta.json"| S1
+  Card -->|"读取 meta.json"| S2
+  Card -->|"链接跳转"| S1
+  Card -->|"链接跳转"| S2
 ```
 
 ---
 section: 集成机制
 ---
 
-# SPA 回退中间件
+# 集成难点：双系统路由桥接
 
-开发模式下 `astro.config.mjs` 中的 Vite 插件处理 Slidev 路由：
+**核心矛盾**：Astro dev server 不认识 Slidev SPA 的内部路由，两个独立系统如何共存？
 
 <div class="two-col">
   <div>
-    <h3>路径匹配</h3>
+    <h3>解决方案</h3>
     <div class="flow">
       <div class="flow-step"><code>/slides/{slug}</code> → 直接返回对应 <code>index.html</code></div>
       <div class="flow-step"><code>/slides/{slug}/{n}</code> → 302 重定向到 <code>/#/{n}</code></div>
@@ -332,17 +321,17 @@ section: 集成机制
     </div>
   </div>
   <div>
-    <h3>为什么需要？</h3>
+    <h3>为什么复杂？</h3>
     <div class="flow">
       <div class="flow-step">Slidev 使用 <strong>hash 路由</strong>（routerMode: hash）</div>
-      <div class="flow-step">Astro 开发服务器不认识 Slidev 的 SPA 路径</div>
-      <div class="flow-step">中间件桥接了两个独立系统的路由差异</div>
+      <div class="flow-step">Astro dev server 路由表里没有 Slidev 的 SPA 页面</div>
+      <div class="flow-step">需要 Vite 插件在中间件层手动拦截和分发</div>
     </div>
   </div>
 </div>
 
 <div class="note" style="margin-top: 1rem;">
-  生产环境不需要此中间件 — Slidev 产物作为纯静态文件由 GitHub Pages 直接服务。
+  仅开发模式需要 — 生产环境 Slidev 产物作为纯静态文件由 GitHub Pages 直接服务。
 </div>
 
 ---
@@ -401,16 +390,20 @@ section: 主题设计
 
 背景使用 `--cyber-black: #050510` 深黑底色
 
-```mermaid
-graph LR
-  Base["#050510<br/>深黑底色"] --> Cyan["#00ffff<br/>主强调色"]
-  Base --> Pink["#ff006e<br/>辅助强调色"]
-  Base --> Purple["#7b2fff<br/>装饰色"]
-  Base --> Yellow["#f5ff00<br/>高亮色"]
-  Cyan --> Glow["neon-glow<br/>发光效果"]
-  Pink --> Glow
-  Purple --> Glow
-```
+<div class="three-col" style="margin-top: 1rem;">
+  <div class="card accent-cyan">
+    <h3>主色调 #00ffff</h3>
+    <p>标题 · 链接 · 代码<br/>进度条 · 竖线 · 圆点</p>
+  </div>
+  <div class="card accent-pink">
+    <h3>辅助色 #ff006e</h3>
+    <p>小标题 · 引用边框<br/>装饰线 · 标签</p>
+  </div>
+  <div class="card accent-purple">
+    <h3>装饰色 #7b2fff</h3>
+    <p>渐变过渡 · 分割线<br/>发光效果 · 悬停</p>
+  </div>
+</div>
 
 ---
 section: 主题设计
@@ -472,6 +465,32 @@ section: 主题设计
       <div class="flow-step"><strong>.big-number</strong> — 大号装饰数字</div>
       <div class="flow-step"><strong>.flow + .flow-step</strong> — 流程图</div>
     </div>
+  </div>
+</div>
+
+---
+section: 主题设计
+---
+
+# CSS 工程实战
+
+开发主题过程中踩过的坑与解决方案：
+
+<div class="three-col">
+  <div class="card accent-cyan">
+    <h3>滚动条兼容</h3>
+    <p>Chrome 121+ 的 <code>scrollbar-width</code> 会覆盖 <code>::-webkit-scrollbar</code></p>
+    <p><strong>解法</strong>：<code>@supports not selector</code> 分流，两套方案互不干扰</p>
+  </div>
+  <div class="card accent-pink">
+    <h3>overflow 混合轴</h3>
+    <p><code>overflow-x: visible</code> + <code>overflow-y: auto</code> 无法并存</p>
+    <p><strong>解法</strong>：用 padding 给伪元素留空间，保持 <code>overflow: auto</code></p>
+  </div>
+  <div class="card accent-purple">
+    <h3>:has() 条件布局</h3>
+    <p>Mermaid 图表页需要纵向居中，但不能影响其他页面</p>
+    <p><strong>解法</strong>：<code>.content-area:has(.mermaid)</code> 纯 CSS 实现，零 JS</p>
   </div>
 </div>
 

@@ -122,7 +122,7 @@
 /* 大号背景编号 — 偏右，作为视觉锚点 */
 .bg-number {
   position: absolute;
-  font-family: 'Orbitron', monospace;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 26rem;
   font-weight: 900;
   color: rgba(0, 255, 255, 0.06);
@@ -260,7 +260,7 @@
 }
 
 .badge-text {
-  font-family: 'Orbitron', monospace;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 0.65rem;
   letter-spacing: 0.5em;
   color: rgba(0, 255, 255, 0.45);
@@ -268,7 +268,7 @@
 }
 
 .section-content h2 {
-  font-family: 'Orbitron', monospace;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 3rem;
   font-weight: 900;
   background: linear-gradient(90deg, #00ffff, #7b2fff, #ff006e);
@@ -322,7 +322,7 @@
 }
 
 .page-indicator {
-  font-family: 'Orbitron', monospace;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 0.5rem;
   color: #00ffff55;
 }

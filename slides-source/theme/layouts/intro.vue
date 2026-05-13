@@ -62,7 +62,7 @@
 /* 大号水印编号 */
 .watermark-no {
   position: absolute;
-  font-family: 'Orbitron', monospace;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 20rem;
   font-weight: 900;
   color: rgba(0, 255, 255, 0.03);
@@ -124,7 +124,7 @@
 }
 
 .section-no {
-  font-family: 'Orbitron', monospace;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 0.65rem;
   letter-spacing: 0.6em;
   color: #ff006eaa;
@@ -133,7 +133,7 @@
 }
 
 .intro-content h2 {
-  font-family: 'Orbitron', monospace;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 2.5rem;
   font-weight: 900;
   background: linear-gradient(90deg, #00ffff, #7b2fff, #ff006e);

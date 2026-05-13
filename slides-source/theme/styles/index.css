@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+SC:wght@400;700&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+SC:wght@400;700&family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&family=Share+Tech+Mono&display=swap');
 
 :root {
   --cyber-black: #050510;
@@ -14,9 +14,9 @@
   --glow-pink: 0 0 8px #ff006e66, 0 0 24px #ff006e44, 0 0 48px #ff006e22;
   --glow-yellow: 0 0 8px #f5ff0066, 0 0 24px #f5ff0044;
 
-  --font-display: 'Orbitron', monospace;
+  --font-display: 'Space Grotesk', sans-serif;
   --font-heading: 'Inter', 'Noto Sans SC', sans-serif;
-  --font-body: 'Inter', 'Noto Sans SC', sans-serif;
+  --font-body: 'Space Mono', 'Noto Sans SC', sans-serif;
   --font-mono: 'Share Tech Mono', monospace;
 }
 
@@ -29,6 +29,20 @@
   line-height: 1.75;
   font-size: 0.85rem;
   letter-spacing: 0.015em;
+}
+
+/* 让容器背景与幻灯片一致，消除大屏两侧间隙 */
+html, body,
+#page-root,
+.slidev-slide-container,
+.slidev-slide-content {
+  background-color: var(--cyber-black) !important;
+}
+
+/* 外层容器也带上点阵纹理，与内容区无缝衔接 */
+.slidev-slide-container {
+  background-image: radial-gradient(circle, rgba(0, 255, 255, 0.06) 1px, transparent 1px) !important;
+  background-size: 28px 28px !important;
 }
 
 /* 扫描线叠加 */
