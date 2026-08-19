@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import fs from 'node:fs';
 import path from 'node:path';
+import { rehypeLogGallery } from './src/plugins/rehype-log-gallery.ts';
 
 function slidevSpaFallback() {
   return {
@@ -39,6 +40,9 @@ export default defineConfig({
   outDir: './dist',
   integrations: [tailwind()],
   site: 'https://echo009.github.io',
+  markdown: {
+    rehypePlugins: [rehypeLogGallery],
+  },
   vite: {
     plugins: [slidevSpaFallback()],
   },
