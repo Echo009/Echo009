@@ -38,9 +38,13 @@ const resolveTask = (taskRef: string): { stageId: string; name: string } | null 
       <div class:list={['entry', 'qst-entry', { sys: e.kind === 'system' }]}>
         <div class="entry-head">
           <span class="entry-date">{fmtDate(e.date)}</span>
-          {e.kind === 'log' && e.log?.data.task && resolveTask(e.log.data.task) && (
-            <a class="chip" href={`#task-${resolveTask(e.log.data.task)!.stageId}-${e.log.data.task}`}>↗ {resolveTask(e.log.data.task)!.name}</a>
-          )}
+          {e.kind === 'log' && e.log?.data.task ? (() => {
+  const taskRef = e.log!.data.task!;
+  const resolved = resolveTask(taskRef);
+  return resolved && (
+    <a class="chip" href={`#task-${resolved.stageId}-${taskRef}`}>↗ {resolved.name}</a>
+  );
+})() : null}
           {e.kind === 'system' && e.sysType === 'quest-start' && <span class="chip sys">◈ 副本开启</span>}
           {e.kind === 'system' && e.sysType === 'task-done' && <span class="chip sys">✓ 任务完成：{e.taskName}</span>}
         </div>

@@ -35,6 +35,7 @@ export function logFileStem(log: QuestLog): string {
 export function logDate(log: QuestLog): Date {
   if (log.data.date) return log.data.date;
   const m = logFileStem(log).match(/^(\d{4}-\d{2}-\d{2})/);
+  // 无法解析时回退 epoch，使该记录排在最前（时间线倒序末位）
   return m ? new Date(`${m[1]}T00:00:00`) : new Date(0);
 }
 
@@ -65,6 +66,7 @@ export function lastActivityDate(quest: Quest, logs: QuestLog[]): Date {
 export function logsOf(logs: QuestLog[], slug: string): QuestLog[] {
   return logs
     .filter((l) => logQuestSlug(l) === slug)
+    // 字典序：记录文件名建议以 YYYY-MM-DD 为前缀，确保与时间序一致
     .sort((a, b) => (logFileStem(a) < logFileStem(b) ? -1 : 1));
 }
 
