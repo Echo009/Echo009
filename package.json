@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "quest:new": "node scripts/quest.mjs new",
+    "quest:log": "node scripts/quest.mjs log"
   },
   "dependencies": {
     "astro": "^5.4.0",
