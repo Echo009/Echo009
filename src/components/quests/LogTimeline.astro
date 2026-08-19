@@ -1,0 +1,76 @@
+---
+/**
+ * @author Echo009
+ * @since 2026-08-19
+ */
+import { render } from 'astro:content';
+import type { Quest, QuestLog } from '../../lib/quests';
+import { buildTimeline, fmtDate } from '../../lib/quests';
+
+interface Props { quest: Quest; logs: QuestLog[]; }
+const { quest, logs } = Astro.props;
+
+const entries = buildTimeline(quest, logs);
+
+// 渲染视图模型：把 log 正文预渲染为 Content 组件
+const view = await Promise.all(entries.map(async (e) => ({
+  ...e,
+  Content: e.kind === 'log' && e.log ? (await render(e.log)).Content : null,
+})));
+
+// task 引用解析：无效时返回 null（渲染时静默忽略，spec 边界情况）
+const resolveTask = (taskRef: string): { stageId: string; name: string } | null => {
+  for (const stage of quest.data.stages ?? []) {
+    const task = stage.tasks.find((t) => t.id === taskRef);
+    if (task) return { stageId: stage.id, name: task.name };
+  }
+  return null;
+};
+---
+
+{view.length === 0 ? (
+  <div class="empty hud-panel p-6 text-center font-mono text-xs text-white/40 tracking-widest">
+    等待第一条记录…
+  </div>
+) : (
+  <div class="timeline">
+    {view.map((e) => (
+      <div class:list={['entry', 'qst-entry', { sys: e.kind === 'system' }]}>
+        <div class="entry-head">
+          <span class="entry-date">{fmtDate(e.date)}</span>
+          {e.kind === 'log' && e.log?.data.task && resolveTask(e.log.data.task) && (
+            <a class="chip" href={`#task-${resolveTask(e.log.data.task)!.stageId}-${e.log.data.task}`}>↗ {resolveTask(e.log.data.task)!.name}</a>
+          )}
+          {e.kind === 'system' && e.sysType === 'quest-start' && <span class="chip sys">◈ 副本开启</span>}
+          {e.kind === 'system' && e.sysType === 'task-done' && <span class="chip sys">✓ 任务完成：{e.taskName}</span>}
+        </div>
+        {e.kind === 'log' && e.Content && (() => { const C = e.Content; return <div class="entry-body"><C /></div>; })()}
+        {e.kind === 'system' && (
+          <div class="entry-body sys-body">
+            {e.sysType === 'quest-start'
+              ? `「${quest.data.title}」副本加载完成。${(quest.data.stages ?? []).length} 个阶段 · ${(quest.data.stages ?? []).reduce((n, s) => n + s.tasks.length, 0)} 个任务。`
+              : `系统记录：任务「${e.taskName}」标记完成。`}
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+)}
+<style>
+  .timeline { position: relative; padding-left: 20px; }
+  .timeline::before { content: ''; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 1px; background: linear-gradient(180deg, rgba(0,255,255,0.4), rgba(123,47,255,0.33), transparent); }
+  .entry { position: relative; padding: 0 0 20px 10px; }
+  .entry::before { content: ''; position: absolute; left: -19px; top: 5px; width: 9px; height: 9px; border-radius: 50%; background: var(--cyber-black); border: 1px solid var(--cyber-cyan); box-shadow: 0 0 8px rgba(0,255,255,0.6); }
+  .entry.sys::before { border-color: var(--cyber-purple); box-shadow: 0 0 8px rgba(123,47,255,0.6); }
+  .entry-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+  .entry-date { font-size: 0.7rem; color: var(--cyber-cyan); letter-spacing: 0.15em; }
+  .chip { font-size: 0.55rem; padding: 2px 8px; border-radius: 1px; letter-spacing: 0.1em; border: 1px solid rgba(0,255,255,0.4); color: rgba(0,255,255,0.8); text-decoration: none; }
+  .chip.sys { border-color: rgba(123,47,255,0.5); color: #b38aff; }
+  .entry-body { font-size: 0.75rem; color: rgba(255,255,255,0.65); line-height: 1.7; font-family: 'Noto Sans SC', sans-serif; }
+  .entry-body :global(video) { max-width: 100%; margin-top: 10px; border: 1px solid rgba(0,255,255,0.25); border-radius: 2px; }
+  .entry-body :global(.log-gallery) { display: grid; gap: 8px; margin: 10px 0; }
+  .entry-body :global(.log-gallery-1) { grid-template-columns: 1fr; }
+  .entry-body :global(.log-gallery-2) { grid-template-columns: 1fr 1fr; }
+  .entry-body :global(.log-gallery-3) { grid-template-columns: repeat(3, 1fr); }
+  .entry-body :global(.log-gallery img) { width: 100%; border: 1px solid rgba(0,255,255,0.25); border-radius: 2px; }
+</style>

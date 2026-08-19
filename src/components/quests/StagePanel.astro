@@ -1,0 +1,53 @@
+---
+/**
+ * @author Echo009
+ * @since 2026-08-19
+ */
+import type { Quest } from '../../lib/quests';
+import { fmtShort } from '../../lib/quests';
+
+interface Props { quest: Quest; }
+const { quest } = Astro.props;
+
+const stages = quest.data.stages ?? [];
+const stageStats = stages.map((s) => ({ done: s.tasks.filter((t) => t.done).length, total: s.tasks.length }));
+---
+
+{stages.length === 0 ? (
+  <div class="empty hud-panel p-6 text-center font-mono text-xs text-white/40 tracking-widest">
+    ◈ 待拆解——目标已立，任务未定
+  </div>
+) : (
+  <div class="space-y-3">
+    {stages.map((stage, i) => (
+      <div class:list={['stage', 'hud-panel', { done: stageStats[i].done === stageStats[i].total && stageStats[i].total > 0 }]}>
+        <div class="stage-head">
+          <span class="stage-name">{String(i + 1).padStart(2, '0')} / {stage.name}</span>
+          <span class:list={['stage-prog', { done: stageStats[i].done === stageStats[i].total }]}>{stageStats[i].done}/{stageStats[i].total}{stageStats[i].done === stageStats[i].total ? ' ✓' : ''}</span>
+        </div>
+        {stage.tasks.map((task) => (
+          <div class:list={['task', { done: task.done }]}>
+            <span class="check">{task.done ? '✓' : ''}</span>
+            <span class="task-name" id={`task-${stage.id}-${task.id}`}>{task.name}</span>
+            {task.done && task.doneAt && <span class="task-date">{fmtShort(task.doneAt)}</span>}
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+)}
+<style>
+  .stage { border-radius: 2px; }
+  .stage.done { border-color: rgba(0, 255, 255, 0.5); box-shadow: 0 0 12px rgba(0, 255, 255, 0.1); }
+  .stage-head { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid rgba(0, 255, 255, 0.15); font-size: 0.7rem; letter-spacing: 0.1em; }
+  .stage-name { font-weight: 700; color: rgba(255, 255, 255, 0.9); }
+  .stage-prog { font-size: 0.65rem; color: rgba(255, 255, 255, 0.5); }
+  .stage-prog.done { color: var(--cyber-cyan); text-shadow: 0 0 6px rgba(0, 255, 255, 0.4); }
+  .task { display: flex; align-items: center; gap: 10px; padding: 7px 12px; font-size: 0.75rem; }
+  .task + .task { border-top: 1px dashed rgba(255, 255, 255, 0.07); }
+  .check { width: 14px; height: 14px; border: 1px solid rgba(255, 255, 255, 0.35); display: inline-flex; align-items: center; justify-content: center; font-size: 0.6rem; border-radius: 1px; flex-shrink: 0; color: transparent; }
+  .task.done .check { border-color: var(--cyber-cyan); color: var(--cyber-cyan); box-shadow: 0 0 8px rgba(0, 255, 255, 0.4); }
+  .task-name { flex: 1; color: rgba(255, 255, 255, 0.45); }
+  .task.done .task-name { color: rgba(255, 255, 255, 0.85); }
+  .task-date { font-size: 0.6rem; color: rgba(0, 255, 255, 0.55); }
+</style>

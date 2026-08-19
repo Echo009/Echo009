@@ -1,0 +1,95 @@
+---
+/**
+ * @author Echo009
+ * @since 2026-08-19
+ */
+import Layout from '../../layouts/Layout.astro';
+import StagePanel from '../../components/quests/StagePanel.astro';
+import LogTimeline from '../../components/quests/LogTimeline.astro';
+import { getCollection, render } from 'astro:content';
+import { calcProgress, fmtDate, questSlug } from '../../lib/quests';
+
+export async function getStaticPaths() {
+  const quests = await getCollection('quests');
+  return quests.map((quest) => ({ params: { slug: questSlug(quest) }, props: { quest } }));
+}
+
+const { quest } = Astro.props;
+const logs = await getCollection('quest-logs');
+const d = quest.data;
+const prog = calcProgress(quest);
+const starFull = '★'.repeat(d.difficulty);
+const starEmpty = '☆'.repeat(5 - d.difficulty);
+const { Content: Declaration } = await render(quest);
+const statusLabel = { active: '● ACTIVE', dormant: '◌ DORMANT', cleared: '✓ CLEARED', abandoned: '✕ ABANDONED' } as const;
+---
+
+<Layout title={`${d.title} // Quests // Echo009`} description={d.summary ?? `${d.title} — 人生副本`}>
+  <nav id="nav" class="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between">
+    <a href="/quests/" class="font-mono text-xs tracking-widest text-white/50 hover:text-white transition-colors">← QUEST_LOG</a>
+    <a href="/" class="font-display font-bold text-sm tracking-widest neon-cyan hover:opacity-80 transition-opacity">Echo009</a>
+    <div class="flex items-center gap-8">
+      <a href="/" class="font-mono text-xs tracking-widest text-white/50 hover:text-white transition-colors">HOME</a>
+      <a href="/slides" class="font-mono text-xs tracking-widest text-white/50 hover:text-white transition-colors">SLIDES</a>
+      <a href="/quests" class="font-mono text-xs tracking-widest neon-cyan">QUESTS</a>
+    </div>
+  </nav>
+  <div id="nav-backdrop" class="fixed top-0 left-0 right-0 h-16 z-40 opacity-100 pointer-events-none" style="background: linear-gradient(180deg, rgba(5,5,16,0.9) 0%, transparent 100%); backdrop-filter: blur(8px);"></div>
+
+  <main class="pt-24 pb-20 max-w-6xl mx-auto px-6">
+    <article class="gsap-reveal">
+      <header class="detail-header hud-panel hud-corner p-8 mb-8">
+        <div class="flex items-center gap-4 mb-3">
+          <span class="stars">{starFull}<span class="stars-empty">{starEmpty}</span></span>
+          {d.category && <span class="cat font-mono text-xs tracking-[0.25em] text-white/50">{d.category}</span>}
+          <span class="status-badge font-mono text-[0.6rem] px-2 py-1 border border-cyan-400/50 text-cyan-300 rounded-sm">{statusLabel[d.status]}</span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold mb-2" style="font-family: 'Noto Sans SC', sans-serif;">{d.title}</h1>
+        <div class="declaration text-sm text-white/60 leading-relaxed mb-6"><Declaration /></div>
+        <div class="flex items-center gap-4">
+          <div class="prog-track flex-1"><div class="prog-fill" style={`width:${prog.pct}%`}></div></div>
+          <span class="prog-num font-mono text-cyan-300">{prog.pct}%</span>
+          <span class="dates font-mono text-xs text-white/40 whitespace-nowrap">{fmtDate(d.started)} → {d.cleared ? fmtDate(d.cleared) : (d.status === 'active' ? '攻略中' : statusLabel[d.status])}</span>
+        </div>
+      </header>
+
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+        <aside class="lg:col-span-2 lg:sticky lg:top-20">
+          <p class="section-label mb-4">// TASK_TREE 任务树</p>
+          <StagePanel quest={quest} />
+        </aside>
+        <section class="lg:col-span-3">
+          <p class="section-label mb-4">// QUEST_LOG 打卡记录</p>
+          <LogTimeline quest={quest} logs={logs} />
+        </section>
+      </div>
+    </article>
+  </main>
+
+  <footer class="py-8 px-6 border-t" style="border-color: rgba(0,255,255,0.1);">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <a href="/quests/" class="font-mono text-xs tracking-widest text-white/40 hover:text-cyan-300 transition-colors">← 返回 QUEST_LOG</a>
+      <span class="font-mono text-xs opacity-30 tracking-widest">© 2024-2026 Echo009</span>
+    </div>
+  </footer>
+</Layout>
+
+<style>
+  .detail-header { position: relative; }
+  .detail-header::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, var(--cyber-cyan), var(--cyber-purple), var(--cyber-pink)); box-shadow: 0 0 12px rgba(0,255,255,0.5); }
+  .stars { color: var(--cyber-yellow); text-shadow: 0 0 6px rgba(245,255,0,0.27); letter-spacing: 0.1em; }
+  .stars-empty { opacity: 0.3; }
+  .prog-track { height: 7px; border-radius: 3px; overflow: hidden; background: rgba(255,255,255,0.08); box-shadow: inset 0 0 4px rgba(0,0,0,0.6); }
+  .prog-fill { height: 100%; background: linear-gradient(90deg, var(--cyber-cyan), var(--cyber-purple)); box-shadow: 0 0 12px rgba(0,255,255,0.53); }
+  .prog-num { text-shadow: 0 0 8px rgba(0,255,255,0.4); }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.fromTo('article .gsap-reveal', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' });
+  gsap.utils.toArray<HTMLElement>('.timeline .entry').forEach((el, i) => {
+    gsap.fromTo(el, { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.4, delay: 0.3 + i * 0.08, ease: 'power1.out', scrollTrigger: { trigger: el, start: 'top 95%' } });
+  });
+</script>
