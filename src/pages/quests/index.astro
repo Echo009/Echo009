@@ -1,0 +1,271 @@
+---
+/**
+ * @author Echo009
+ * @since 2026-08-19
+ */
+import Layout from '../../layouts/Layout.astro';
+import QuestCard from '../../components/quests/QuestCard.astro';
+import { getCollection } from 'astro:content';
+import { groupByStatus } from '../../lib/quests';
+
+const quests = await getCollection('quests');
+const logs = await getCollection('quest-logs');
+const groups = groupByStatus(quests);
+---
+
+<Layout title="Quests // Echo009" description="Echo009 的人生副本：目标拆解与打卡记录">
+  <nav id="nav" class="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between">
+    <a href="/" class="font-display font-bold text-sm tracking-widest neon-cyan hover:opacity-80 transition-opacity">
+      Echo009
+    </a>
+    <div class="flex items-center gap-8">
+      <a href="/" class="font-mono text-xs tracking-widest text-white/50 hover:text-white transition-colors relative nav-link">
+        HOME
+      </a>
+      <a href="/slides" class="font-mono text-xs tracking-widest text-white/50 hover:text-white transition-colors relative nav-link">
+        SLIDES
+      </a>
+      <a href="/quests" class="font-mono text-xs tracking-widest neon-cyan transition-colors relative nav-link active">
+        QUESTS
+      </a>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full" style="background: var(--cyber-cyan); animation: pulseNeon 2s ease-in-out infinite;"></span>
+      <span class="font-mono text-xs opacity-40 hidden sm:block">SYS::ONLINE</span>
+    </div>
+  </nav>
+
+  <div id="nav-backdrop" class="fixed top-0 left-0 right-0 h-16 z-40 opacity-100 pointer-events-none" style="
+    background: linear-gradient(180deg, rgba(5,5,16,0.9) 0%, transparent 100%);
+    backdrop-filter: blur(8px);
+  "></div>
+
+  <main class="pt-20 pb-20">
+    <section class="text-center mb-10 px-6">
+      <!-- 背景光晕 -->
+      <div class="hero-glow" aria-hidden="true"></div>
+
+      <p class="section-label mb-4">// LIFE_DUNGEONS //</p>
+
+      <!-- Glitch 标题 -->
+      <div class="hero-title-wrapper">
+        <!-- 扫描线 -->
+        <div class="hero-scanline" aria-hidden="true"></div>
+
+        <h1
+          class="glitch-text hero-title"
+          data-text="QUEST LOG"
+        >
+          QUEST LOG
+        </h1>
+      </div>
+
+      <!-- 装饰分隔线 -->
+      <div class="hero-divider">
+        <div class="hero-divider-sweep" aria-hidden="true"></div>
+      </div>
+
+      <p class="font-mono text-white/40 text-sm tracking-widest">
+        人生副本 // 目标拆解 // 打卡记录 // 通关成就
+      </p>
+    </section>
+
+    <main class="pt-20 pb-20 max-w-6xl mx-auto px-6">
+      {quests.length === 0 ? (
+        <div class="text-center py-20">
+          <p class="font-mono text-white/30 text-sm tracking-widest">NO_QUEST_DETECTED</p>
+          <p class="font-mono text-white/20 text-xs mt-2">尚未开启任何人生副本…</p>
+        </div>
+      ) : (
+        <>
+          {([['active', '── // ACTIVE // 攻略中 ──', 'g-active'], ['cleared', '── // CLEARED // 已通关 ──', 'g-cleared']] as const).map(([key, label, cls]) => (
+            groups[key].length > 0 && (
+              <section class="mb-12">
+                <div class:list={['group-label', cls]}>
+                  <span class="g-text font-mono text-xs tracking-[0.35em]">{label}</span>
+                  <span class="g-line" />
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
+                  {groups[key].map((q) => <QuestCard quest={q} logs={logs} />)}
+                </div>
+              </section>
+            )
+          ))}
+          {(groups.dormant.length > 0 || groups.abandoned.length > 0) && (
+            <section class="mb-12">
+              <div class="group-label g-dim">
+                <span class="g-text font-mono text-xs tracking-[0.35em]">── // ARCHIVED // 休眠 · 弃坑 ──</span>
+                <span class="g-line" />
+              </div>
+              <div class="flex flex-col gap-2 mt-5">
+                {[...groups.dormant, ...groups.abandoned].map((q) => <QuestCard quest={q} logs={logs} />)}
+              </div>
+            </section>
+          )}
+        </>
+      )}
+    </main>
+  </main>
+
+  <footer class="py-8 px-6 border-t" style="border-color: rgba(0,255,255,0.1);">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <span class="font-mono text-xs opacity-30 tracking-widest">
+        © 2024-2026 Echo009 // ALL_SYSTEMS_NOMINAL
+      </span>
+      <div class="flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full" style="background: var(--cyber-cyan); animation: pulseNeon 2s ease-in-out infinite;"></span>
+        <span class="font-mono text-xs opacity-30 tracking-widest">ONLINE</span>
+      </div>
+    </div>
+  </footer>
+</Layout>
+
+<style>
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--cyber-cyan);
+    box-shadow: var(--glow-cyan);
+    transition: width 0.3s ease;
+  }
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    width: 100%;
+  }
+  .nav-link.active {
+    color: var(--cyber-cyan) !important;
+    text-shadow: var(--glow-cyan);
+  }
+
+  /* ── Hero Title Gradient + Glitch ── */
+  .hero-title-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+
+  .hero-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2.8rem, 9vw, 4rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    background: linear-gradient(90deg, #00ffff, #7b2fff 50%, #ff006e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 24px rgba(0, 255, 255, 0.18)) drop-shadow(0 0 16px rgba(255, 0, 110, 0.12));
+    white-space: nowrap;
+  }
+
+  /* Glitch 伪元素覆盖渐变色（全局 .glitch-text 默认用纯色） */
+  .hero-title.glitch-text::before {
+    color: var(--cyber-pink);
+    opacity: 0.7;
+    clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
+  }
+
+  .hero-title.glitch-text::after {
+    color: var(--cyber-cyan);
+    opacity: 0.7;
+    clip-path: polygon(0 60%, 100% 60%, 100% 75%, 0 75%);
+  }
+
+  /* ── Scanline ── */
+  .hero-scanline {
+    position: absolute;
+    left: -5%;
+    width: 110%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.25), rgba(255, 0, 110, 0.15), transparent);
+    animation: heroScan 3s linear infinite;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  @keyframes heroScan {
+    0% { top: -10%; }
+    100% { top: 110%; }
+  }
+
+  /* ── Divider ── */
+  .hero-divider {
+    position: relative;
+    width: 180px;
+    height: 2px;
+    margin: 0 auto 0.75rem;
+    background: linear-gradient(90deg, rgba(0, 255, 255, 0.15), rgba(255, 0, 110, 0.15));
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .hero-divider-sweep {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.7), rgba(255, 0, 110, 0.5), transparent);
+    animation: dividerSweep 2s ease-in-out infinite;
+  }
+
+  @keyframes dividerSweep {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  /* ── Background Glow ── */
+  .hero-glow {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 200px;
+    background: radial-gradient(ellipse, rgba(0, 255, 255, 0.04) 0%, rgba(255, 0, 110, 0.03) 40%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ── Group Labels ── */
+  .group-label { display: flex; align-items: center; gap: 12px; }
+  .group-label .g-line { flex: 1; height: 1px; opacity: 0.35; }
+  .g-active .g-text { color: var(--cyber-cyan); }
+  .g-active .g-line { background: linear-gradient(90deg, rgba(0,255,255,0.4), transparent); }
+  .g-cleared .g-text { color: var(--cyber-yellow); }
+  .g-cleared .g-line { background: linear-gradient(90deg, rgba(245,255,0,0.4), transparent); }
+  .g-dim .g-text { color: rgba(255,255,255,0.4); }
+  .g-dim .g-line { background: linear-gradient(90deg, rgba(255,255,255,0.15), transparent); }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .hero-glow {
+      width: 100%;
+      opacity: 0.6;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.fromTo(
+    '.hud-panel, .row',
+    { opacity: 0, y: 40 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      stagger: 0.12,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: 'main', start: 'top 80%' },
+    },
+  );
+</script>
