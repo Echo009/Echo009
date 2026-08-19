@@ -6,6 +6,7 @@ import TechArsenal from '../components/TechArsenal.astro';
 import CoreProtocol from '../components/CoreProtocol.astro';
 import NetworkNode from '../components/NetworkNode.astro';
 import Signal from '../components/Signal.astro';
+import QuestsSummary from '../components/quests/QuestsSummary.astro';
 ---
 
 <Layout>
@@ -23,6 +24,7 @@ import Signal from '../components/Signal.astro';
         { href: '#arsenal', label: 'ARSENAL' },
         { href: '#protocol', label: 'PROTOCOL' },
         { href: '#network', label: 'NETWORK' },
+        { href: '#quests', label: 'QUESTS' },
         { href: '#signal', label: 'SIGNAL' },
         { href: '/slides', label: 'SLIDES' },
       ].map(({ href, label }) => (
@@ -55,6 +57,7 @@ import Signal from '../components/Signal.astro';
     <TechArsenal />
     <CoreProtocol />
     <NetworkNode />
+    <QuestsSummary />
     <Signal />
   </main>
 </Layout>
@@ -111,7 +114,7 @@ import Signal from '../components/Signal.astro';
   });
 
   // Active nav link highlight
-  const sections = ['hero', 'profile', 'arsenal', 'protocol', 'network', 'signal'];
+  const sections = ['hero', 'profile', 'arsenal', 'protocol', 'network', 'quests', 'signal'];
   sections.forEach((id) => {
     ScrollTrigger.create({
       trigger: `#${id}`,
