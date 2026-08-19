@@ -8,6 +8,15 @@
 - **幻灯片**：Slidev 0.50 + 自定义赛博朋克主题，位于 `slides-source/`
 - **构建脚本**：`scripts/build-slides.sh`，遍历 `slides-source/content/*.md` 构建到 `public/slides/`
 
+## 人生副本模块（Quest Log）
+
+- 内容源：`src/content/quests/<slug>/`（index.md 元数据+宣言；logs/*.md 打卡记录；images/、media/ 媒体）
+- 派生逻辑：`src/lib/quests.ts`（进度/排序/时间线合成，进度自动计算勿手填）
+- 页面：`/quests/` 列表、`/quests/[slug]/` 详情；首页 `#quests` 摘要 section
+- 脚手架：`npm run quest:new <slug>` 开副本、`npm run quest:log <slug>` 写记录
+- 日常记录：quest:log 生成模板 → 编辑放图 → push（CI 自动部署）；视频单文件 <50MB
+- 多图画廊：同一段落内连续 `![]()` 自动聚合（rehype-log-gallery 插件）
+
 ## 开发环境
 
 - Node.js 项目，开发前确认 Node 版本
