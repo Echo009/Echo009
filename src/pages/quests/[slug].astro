@@ -88,8 +88,8 @@ const statusLabel = { active: '● ACTIVE', dormant: '◌ DORMANT', cleared: '�
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
   gsap.registerPlugin(ScrollTrigger);
-  gsap.fromTo('article .gsap-reveal', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' });
-  gsap.utils.toArray<HTMLElement>('.timeline .entry').forEach((el, i) => {
+  gsap.fromTo('article.gsap-reveal', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' });
+  gsap.utils.toArray<HTMLElement>('.qst-entry').forEach((el, i) => {
     gsap.fromTo(el, { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.4, delay: 0.3 + i * 0.08, ease: 'power1.out', scrollTrigger: { trigger: el, start: 'top 95%' } });
   });
 </script>
