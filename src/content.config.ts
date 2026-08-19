@@ -38,4 +38,4 @@ const questLogs = defineCollection({
   }),
 });
 
-export const collections = { quests, questLogs };
+export const collections = { quests, 'quest-logs': questLogs };
