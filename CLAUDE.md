@@ -16,6 +16,7 @@
 - 脚手架：`npm run quest:new <slug>` 开副本、`npm run quest:log <slug>` 写记录
 - 日常记录：quest:log 生成模板 → 编辑放图 → push（CI 自动部署）；视频单文件 <50MB
 - 多图画廊：同一段落内连续 `![]()` 自动聚合（rehype-log-gallery 插件）
+- 内容指南：`docs/guide/quest-log.md`（frontmatter 字段表、记录工作流、媒体规则）
 
 ## 开发环境
 
