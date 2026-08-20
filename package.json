@@ -7,16 +7,25 @@
     "build": "astro build",
     "preview": "astro preview",
     "quest:new": "node scripts/quest.mjs new",
-    "quest:log": "node scripts/quest.mjs log"
+    "quest:log": "node scripts/quest.mjs log",
+    "og:generate": "node scripts/generate-og.mjs",
+    "verify:homepage": "node scripts/verify-homepage.mjs"
   },
   "dependencies": {
-    "astro": "^5.4.0",
     "@astrojs/tailwind": "^5.1.4",
+    "astro": "^5.4.0",
     "gsap": "^3.12.7",
     "three": "^0.173.0"
   },
   "devDependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "@fontsource/orbitron": "^5.3.0",
+    "@fontsource/share-tech-mono": "^5.3.0",
+    "@iconify-json/simple-icons": "^1.2.93",
+    "@resvg/resvg-js": "^2.6.2",
     "@types/three": "^0.173.0",
+    "astro-icon": "^1.2.0",
+    "satori": "^0.29.1",
     "tailwindcss": "^3.4.17"
   }
 }
