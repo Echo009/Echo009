@@ -1,0 +1,91 @@
+---
+/**
+ * @author Echo009
+ * @since 2026-08-20
+ */
+import { projects } from '../data/projects';
+
+const ACCENTS = ['var(--cyber-cyan)', 'var(--cyber-pink)', 'var(--cyber-purple)', 'var(--cyber-yellow)'];
+const items = projects.map((p, i) => ({ ...p, accent: p.accent ?? ACCENTS[i % ACCENTS.length] }));
+---
+
+<section id="projects" class="py-24 px-6 relative">
+  <!-- 背景装饰：斜向细线 -->
+  <div
+    class="absolute inset-0 opacity-[0.04] pointer-events-none"
+    aria-hidden="true"
+    style="background-image: repeating-linear-gradient(-45deg, var(--cyber-purple) 0 1px, transparent 1px 24px);"
+  ></div>
+
+  <div class="max-w-6xl mx-auto relative z-10">
+    <!-- Section header -->
+    <div class="mb-16 gsap-reveal">
+      <p class="section-label mb-2">// SECTION_04</p>
+      <h2 class="font-display font-bold text-4xl md:text-5xl text-white">
+        PROJECT
+        <span
+          style="color: var(--cyber-purple); text-shadow: 0 0 10px #7b2fff, 0 0 30px #7b2fff66, 0 0 60px #7b2fff33;"
+        >
+          SHOWCASE
+        </span>
+      </h2>
+      <div class="mt-3 h-px w-48" style="background: linear-gradient(90deg, var(--cyber-purple), transparent);"></div>
+    </div>
+
+    <!-- Cards grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {items.map((project) => (
+        <a
+          href={project.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hud-panel hud-corner p-6 group flex flex-col gap-4 gsap-reveal transition-transform duration-300 hover:-translate-y-1"
+          style={`border-color: ${project.accent}40; box-shadow: 0 0 15px ${project.accent}15;`}
+        >
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="section-label mb-1" style={`color: ${project.accent};`}>[ {project.tagline} ]</p>
+              <h3 class="font-display font-bold text-xl text-white">{project.name}</h3>
+            </div>
+            <span
+              class="font-mono text-xs opacity-40 group-hover:opacity-100 transition-opacity whitespace-nowrap"
+              style={`color: ${project.accent};`}
+            >
+              VIEW_SOURCE ↗
+            </span>
+          </div>
+
+          <p class="font-mono text-sm text-white/60 leading-relaxed">{project.description}</p>
+
+          <div class="flex flex-wrap gap-2 mt-auto pt-2">
+            {project.tech.map((t) => (
+              <span class="font-mono text-xs px-2 py-0.5" style={`border: 1px solid ${project.accent}55; color: ${project.accent};`}>
+                {t}
+              </span>
+            ))}
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.fromTo(
+    '#projects .gsap-reveal',
+    { opacity: 0, y: 40 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: '#projects', start: 'top 80%' },
+    },
+  );
+</script>
