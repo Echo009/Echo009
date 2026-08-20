@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import SystemProfile from '../components/SystemProfile.astro';
 import TechArsenal from '../components/TechArsenal.astro';
+import ProjectsShowcase from '../components/ProjectsShowcase.astro';
 import CoreProtocol from '../components/CoreProtocol.astro';
 import NetworkNode from '../components/NetworkNode.astro';
 import Signal from '../components/Signal.astro';
@@ -22,6 +23,7 @@ import QuestsSummary from '../components/quests/QuestsSummary.astro';
       {[
         { href: '#profile', label: 'PROFILE' },
         { href: '#arsenal', label: 'ARSENAL' },
+        { href: '#projects', label: 'PROJECTS' },
         { href: '#protocol', label: 'PROTOCOL' },
         { href: '#network', label: 'NETWORK' },
         { href: '#quests', label: 'QUESTS' },
@@ -37,6 +39,19 @@ import QuestsSummary from '../components/quests/QuestsSummary.astro';
       ))}
     </div>
 
+    <!-- Mobile menu button -->
+    <button
+      id="mobile-menu-btn"
+      class="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.5"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span class="menu-line w-6 h-px" style="background: var(--cyber-cyan); box-shadow: var(--glow-cyan);"></span>
+      <span class="menu-line w-6 h-px" style="background: var(--cyber-cyan); box-shadow: var(--glow-cyan);"></span>
+      <span class="menu-line w-6 h-px" style="background: var(--cyber-cyan); box-shadow: var(--glow-cyan);"></span>
+    </button>
+
     <!-- Status indicator -->
     <div class="flex items-center gap-2">
       <span class="w-2 h-2 rounded-full" style="background: var(--cyber-cyan); animation: pulseNeon 2s ease-in-out infinite;"></span>
@@ -50,11 +65,38 @@ import QuestsSummary from '../components/quests/QuestsSummary.astro';
     backdrop-filter: blur(8px);
   "></div>
 
+  <!-- Mobile menu drawer -->
+  <div
+    id="mobile-menu"
+    class="fixed inset-0 z-[60] hidden flex-col items-center justify-center gap-1 px-8"
+    style="background: rgba(5,5,16,0.96); backdrop-filter: blur(8px);"
+    role="dialog"
+    aria-modal="true"
+    aria-label="站点导航"
+  >
+    {[
+      { href: '#profile', label: 'PROFILE' },
+      { href: '#arsenal', label: 'ARSENAL' },
+      { href: '#projects', label: 'PROJECTS' },
+      { href: '#protocol', label: 'PROTOCOL' },
+      { href: '#network', label: 'NETWORK' },
+      { href: '#quests', label: 'QUESTS' },
+      { href: '#signal', label: 'SIGNAL' },
+      { href: '/slides', label: 'SLIDES' },
+    ].map(({ href, label }) => (
+      <a href={href} class="mobile-nav-link font-mono text-base tracking-widest text-white/70 hover:text-white py-3 transition-colors">
+        {label}
+      </a>
+    ))}
+    <p class="section-label mt-8" aria-hidden="true">// NAVIGATION_MENU</p>
+  </div>
+
   <!-- Main sections -->
   <main>
     <Hero />
     <SystemProfile />
     <TechArsenal />
+    <ProjectsShowcase />
     <CoreProtocol />
     <NetworkNode />
     <QuestsSummary />
@@ -80,6 +122,9 @@ import QuestsSummary from '../components/quests/QuestsSummary.astro';
   }
   .nav-link:hover::after {
     width: 100%;
+  }
+  .menu-line {
+    transition: transform 0.3s ease, opacity 0.3s ease;
   }
 </style>
 
@@ -114,7 +159,7 @@ import QuestsSummary from '../components/quests/QuestsSummary.astro';
   });
 
   // Active nav link highlight
-  const sections = ['hero', 'profile', 'arsenal', 'protocol', 'network', 'quests', 'signal'];
+  const sections = ['hero', 'profile', 'arsenal', 'projects', 'protocol', 'network', 'quests', 'signal'];
   sections.forEach((id) => {
     ScrollTrigger.create({
       trigger: `#${id}`,
@@ -135,4 +180,28 @@ import QuestsSummary from '../components/quests/QuestsSummary.astro';
       }
     });
   }
+
+  // ─── Mobile menu ──────────────────────────────────────────────────────────
+
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  function setMenu(open: boolean) {
+    if (!menuBtn || !mobileMenu) return;
+    mobileMenu.classList.toggle('hidden', !open);
+    mobileMenu.classList.toggle('flex', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    const lines = menuBtn.querySelectorAll('.menu-line');
+    (lines[0] as HTMLElement).style.transform = open ? 'translateY(6.5px) rotate(45deg)' : '';
+    (lines[1] as HTMLElement).style.opacity = open ? '0' : '';
+    (lines[2] as HTMLElement).style.transform = open ? 'translateY(-6.5px) rotate(-45deg)' : '';
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  menuBtn?.addEventListener('click', () => setMenu(!mobileMenu?.classList.contains('flex')));
+  mobileMenu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setMenu(false);
+  });
 </script>
