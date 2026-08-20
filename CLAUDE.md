@@ -18,11 +18,22 @@
 - 多图画廊：同一段落内连续 `![]()` 自动聚合（rehype-log-gallery 插件）
 - 内容指南：`docs/guide/quest-log.md`（frontmatter 字段表、记录工作流、媒体规则）
 
+## 主页 Projects 区
+
+- 数据源：`src/data/projects.ts`（手工维护精选项目，构建时静态渲染）
+- 组件：`src/components/ProjectsShowcase.astro`（位于 ARSENAL 之后）；nav 链接与 section 编号在 `src/pages/index.astro` 及各 section 组件头部维护
+
 ## 开发环境
 
 - Node.js 项目，开发前确认 Node 版本
 - 幻灯片开发：`cd slides-source && npx slidev content/xxx.md`（默认端口 3030）
 - 主站开发：`npm run dev`（默认端口 4321）
+- og 分享图：`npm run og:generate` 重生成 `public/og.png`（改风格后重跑并提交产物）
+- 主页验收断言：`npm run build && npm run verify:homepage`（20 项断言，改动主页后应全绿）
+
+## 过程文档
+
+hands-free/superpowers 工作流产出的设计、计划、决策与验证文档位于 `docs/superpowers/`（该目录整体在 .gitignore 中，入库需 `git add -f`）。
 
 ## 自定义赛博朋克主题
 
