@@ -15,7 +15,7 @@
   <div class="max-w-6xl mx-auto relative z-10">
     <!-- Section header -->
     <div class="mb-16 gsap-reveal">
-      <p class="section-label mb-2">// SECTION_05</p>
+      <p class="section-label mb-2">// SECTION_06</p>
       <h2 class="font-display font-bold text-4xl md:text-5xl text-white">
         NETWORK <span class="neon-cyan">NODE</span>
       </h2>
@@ -34,7 +34,11 @@
             class="max-w-full mx-auto block"
             style="min-height: 140px;"
             loading="lazy"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
           />
+          <span class="font-mono text-xs opacity-40 block mx-auto py-10" style="display:none;">
+            [ SIGNAL_OFFLINE — EXTERNAL_FEED_UNAVAILABLE ]
+          </span>
         </div>
       </div>
 
@@ -56,8 +60,12 @@
               alt="GitHub contribution grid snake animation"
               class="max-w-full mx-auto block"
               loading="lazy"
+              onerror="this.style.display='none';this.closest('picture').nextElementSibling.style.display='block'"
             />
           </picture>
+          <span class="font-mono text-xs opacity-40 block mx-auto py-10" style="display:none;">
+            [ SIGNAL_OFFLINE — EXTERNAL_FEED_UNAVAILABLE ]
+          </span>
         </div>
       </div>
 
