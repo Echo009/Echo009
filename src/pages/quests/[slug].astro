@@ -26,12 +26,12 @@ const statusLabel = { active: '● ACTIVE', dormant: '◌ DORMANT', cleared: '�
 
 <Layout title={`${d.title} // Quests // Echo009`} description={d.summary ?? `${d.title} — 人生副本`}>
   <nav id="nav" class="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between">
-    <a href="/quests/" class="font-mono text-xs tracking-widest text-white/50 hover:text-white transition-colors">← QUEST_LOG</a>
-    <a href="/" class="font-display font-bold text-sm tracking-widest neon-cyan hover:opacity-80 transition-opacity">Echo009</a>
+    <a href="/quests/" class="font-mono text-caption tracking-widest text-white/50 hover:text-white transition-colors">← QUEST_LOG</a>
+    <a href="/" class="font-display font-bold text-meta tracking-widest neon-cyan hover:opacity-80 transition-opacity">Echo009</a>
     <div class="flex items-center gap-8">
-      <a href="/" class="font-mono text-xs tracking-widest text-white/50 hover:text-white transition-colors">HOME</a>
-      <a href="/slides" class="font-mono text-xs tracking-widest text-white/50 hover:text-white transition-colors">SLIDES</a>
-      <a href="/quests" class="font-mono text-xs tracking-widest neon-cyan">QUESTS</a>
+      <a href="/" class="font-mono text-caption tracking-widest text-white/50 hover:text-white transition-colors">HOME</a>
+      <a href="/slides" class="font-mono text-caption tracking-widest text-white/50 hover:text-white transition-colors">SLIDES</a>
+      <a href="/quests" class="font-mono text-caption tracking-widest neon-cyan">QUESTS</a>
     </div>
   </nav>
   <div id="nav-backdrop" class="fixed top-0 left-0 right-0 h-16 z-40 opacity-100 pointer-events-none" style="background: linear-gradient(180deg, rgba(5,5,16,0.9) 0%, transparent 100%); backdrop-filter: blur(8px);"></div>
@@ -41,15 +41,15 @@ const statusLabel = { active: '● ACTIVE', dormant: '◌ DORMANT', cleared: '�
       <header class="detail-header hud-panel hud-corner p-8 mb-8">
         <div class="flex items-center gap-4 mb-3">
           <span class="stars">{starFull}<span class="stars-empty">{starEmpty}</span></span>
-          {d.category && <span class="cat font-mono text-xs tracking-[0.25em] text-white/50">{d.category}</span>}
-          <span class="status-badge font-mono text-[0.6rem] px-2 py-1 border border-cyan-400/50 text-cyan-300 rounded-sm">{statusLabel[d.status]}</span>
+          {d.category && <span class="cat font-mono text-caption tracking-[0.25em] text-white/50">{d.category}</span>}
+          <span class="status-badge font-mono text-caption px-2 py-1 border border-cyan-400/50 text-cyan-300 rounded-sm">{statusLabel[d.status]}</span>
         </div>
-        <h1 class="text-3xl md:text-4xl font-bold mb-2" style="font-family: 'Noto Sans SC', sans-serif;">{d.title}</h1>
-        <div class="declaration text-sm text-white/60 leading-relaxed mb-6"><Declaration /></div>
+        <h1 class="text-h2 font-bold mb-2" style="font-family: 'Noto Sans SC', sans-serif;">{d.title}</h1>
+        <div class="declaration text-body text-white/60 leading-relaxed mb-6"><Declaration /></div>
         <div class="flex items-center gap-4">
           <div class="prog-track flex-1"><div class="prog-fill" style={`width:${prog.pct}%`}></div></div>
-          <span class="prog-num font-mono text-cyan-300">{prog.pct}%</span>
-          <span class="dates font-mono text-xs text-white/40 whitespace-nowrap">{fmtDate(d.started)} → {d.cleared ? fmtDate(d.cleared) : (d.status === 'active' ? '攻略中' : statusLabel[d.status])}</span>
+          <span class="prog-num font-mono text-meta text-cyan-300">{prog.pct}%</span>
+          <span class="dates font-mono text-caption text-white/40 whitespace-nowrap">{fmtDate(d.started)} → {d.cleared ? fmtDate(d.cleared) : (d.status === 'active' ? '攻略中' : statusLabel[d.status])}</span>
         </div>
       </header>
 
@@ -68,8 +68,8 @@ const statusLabel = { active: '● ACTIVE', dormant: '◌ DORMANT', cleared: '�
 
   <footer class="py-8 px-6 border-t" style="border-color: rgba(0,255,255,0.1);">
     <div class="max-w-6xl mx-auto flex items-center justify-between">
-      <a href="/quests/" class="font-mono text-xs tracking-widest text-white/40 hover:text-cyan-300 transition-colors">← 返回 QUEST_LOG</a>
-      <span class="font-mono text-xs opacity-30 tracking-widest">© 2024-2026 Echo009</span>
+      <a href="/quests/" class="font-mono text-caption tracking-widest text-white/40 hover:text-cyan-300 transition-colors">← 返回 QUEST_LOG</a>
+      <span class="font-mono text-caption opacity-30 tracking-widest">© 2024-2026 Echo009</span>
     </div>
   </footer>
 </Layout>

@@ -14,7 +14,7 @@ import QuestsSummary from '../components/quests/QuestsSummary.astro';
   <!-- Navigation -->
   <nav id="nav" class="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between">
     <!-- Logo -->
-    <a href="#hero" class="font-display font-bold text-sm tracking-widest neon-cyan hover:opacity-80 transition-opacity">
+    <a href="#hero" class="font-display font-bold text-meta tracking-widest neon-cyan hover:opacity-80 transition-opacity">
       Echo009
     </a>
 
@@ -32,7 +32,7 @@ import QuestsSummary from '../components/quests/QuestsSummary.astro';
       ].map(({ href, label }) => (
         <a
           href={href}
-          class="font-mono text-xs tracking-widest text-white/50 hover:text-white transition-colors relative nav-link"
+          class="font-mono text-caption tracking-widest text-white/50 hover:text-white transition-colors relative nav-link"
         >
           {label}
         </a>
@@ -55,7 +55,7 @@ import QuestsSummary from '../components/quests/QuestsSummary.astro';
     <!-- Status indicator -->
     <div class="flex items-center gap-2">
       <span class="w-2 h-2 rounded-full" style="background: var(--cyber-cyan); animation: pulseNeon 2s ease-in-out infinite;"></span>
-      <span class="font-mono text-xs opacity-40 hidden sm:block">SYS::ONLINE</span>
+      <span class="font-mono text-caption opacity-40 hidden sm:block">SYS::ONLINE</span>
     </div>
   </nav>
 
@@ -84,7 +84,7 @@ import QuestsSummary from '../components/quests/QuestsSummary.astro';
       { href: '#signal', label: 'SIGNAL' },
       { href: '/slides', label: 'SLIDES' },
     ].map(({ href, label }) => (
-      <a href={href} class="mobile-nav-link font-mono text-base tracking-widest text-white/70 hover:text-white py-3 transition-colors">
+      <a href={href} class="mobile-nav-link font-mono text-body tracking-widest text-white/70 hover:text-white py-3 transition-colors">
         {label}
       </a>
     ))}

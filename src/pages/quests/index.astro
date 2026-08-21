@@ -15,23 +15,23 @@ const groups = groupByStatus(quests);
 
 <Layout title="Quests // Echo009" description="Echo009 的人生副本：目标拆解与打卡记录">
   <nav id="nav" class="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between">
-    <a href="/" class="font-display font-bold text-sm tracking-widest neon-cyan hover:opacity-80 transition-opacity">
+    <a href="/" class="font-display font-bold text-meta tracking-widest neon-cyan hover:opacity-80 transition-opacity">
       Echo009
     </a>
     <div class="flex items-center gap-8">
-      <a href="/" class="font-mono text-xs tracking-widest text-white/50 hover:text-white transition-colors relative nav-link">
+      <a href="/" class="font-mono text-caption tracking-widest text-white/50 hover:text-white transition-colors relative nav-link">
         HOME
       </a>
-      <a href="/slides" class="font-mono text-xs tracking-widest text-white/50 hover:text-white transition-colors relative nav-link">
+      <a href="/slides" class="font-mono text-caption tracking-widest text-white/50 hover:text-white transition-colors relative nav-link">
         SLIDES
       </a>
-      <a href="/quests" class="font-mono text-xs tracking-widest neon-cyan transition-colors relative nav-link active">
+      <a href="/quests" class="font-mono text-caption tracking-widest neon-cyan transition-colors relative nav-link active">
         QUESTS
       </a>
     </div>
     <div class="flex items-center gap-2">
       <span class="w-2 h-2 rounded-full" style="background: var(--cyber-cyan); animation: pulseNeon 2s ease-in-out infinite;"></span>
-      <span class="font-mono text-xs opacity-40 hidden sm:block">SYS::ONLINE</span>
+      <span class="font-mono text-caption opacity-40 hidden sm:block">SYS::ONLINE</span>
     </div>
   </nav>
 
@@ -65,7 +65,7 @@ const groups = groupByStatus(quests);
         <div class="hero-divider-sweep" aria-hidden="true"></div>
       </div>
 
-      <p class="font-mono text-white/40 text-sm tracking-widest">
+      <p class="font-mono text-white/40 text-body tracking-widest">
         人生副本 // 目标拆解 // 打卡记录 // 通关成就
       </p>
     </section>
@@ -73,8 +73,8 @@ const groups = groupByStatus(quests);
     <main class="pt-20 pb-20 max-w-6xl mx-auto px-6">
       {quests.length === 0 ? (
         <div class="text-center py-20">
-          <p class="font-mono text-white/30 text-sm tracking-widest">NO_QUEST_DETECTED</p>
-          <p class="font-mono text-white/20 text-xs mt-2">尚未开启任何人生副本…</p>
+          <p class="font-mono text-white/30 text-body tracking-widest">NO_QUEST_DETECTED</p>
+          <p class="font-mono text-white/20 text-caption mt-2">尚未开启任何人生副本…</p>
         </div>
       ) : (
         <>
@@ -82,7 +82,7 @@ const groups = groupByStatus(quests);
             groups[key].length > 0 && (
               <section class="mb-12">
                 <div class:list={['group-label', cls]}>
-                  <span class="g-text font-mono text-xs tracking-[0.35em]">{label}</span>
+                  <span class="g-text font-mono text-caption tracking-[0.35em]">{label}</span>
                   <span class="g-line" />
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
@@ -94,7 +94,7 @@ const groups = groupByStatus(quests);
           {(groups.dormant.length > 0 || groups.abandoned.length > 0) && (
             <section class="mb-12">
               <div class="group-label g-dim">
-                <span class="g-text font-mono text-xs tracking-[0.35em]">── // ARCHIVED // 休眠 · 弃坑 ──</span>
+                <span class="g-text font-mono text-caption tracking-[0.35em]">── // ARCHIVED // 休眠 · 弃坑 ──</span>
                 <span class="g-line" />
               </div>
               <div class="flex flex-col gap-2 mt-5">
@@ -109,12 +109,12 @@ const groups = groupByStatus(quests);
 
   <footer class="py-8 px-6 border-t" style="border-color: rgba(0,255,255,0.1);">
     <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-      <span class="font-mono text-xs opacity-30 tracking-widest">
+      <span class="font-mono text-caption opacity-30 tracking-widest">
         © 2024-2026 Echo009 // ALL_SYSTEMS_NOMINAL
       </span>
       <div class="flex items-center gap-2">
         <span class="w-1.5 h-1.5 rounded-full" style="background: var(--cyber-cyan); animation: pulseNeon 2s ease-in-out infinite;"></span>
-        <span class="font-mono text-xs opacity-30 tracking-widest">ONLINE</span>
+        <span class="font-mono text-caption opacity-30 tracking-widest">ONLINE</span>
       </div>
     </div>
   </footer>

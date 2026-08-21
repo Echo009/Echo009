@@ -76,6 +76,17 @@ const ogImage = new URL('/og.png', site).href;
     --glow-cyan: 0 0 10px #00ffff, 0 0 30px #00ffff66, 0 0 60px #00ffff33;
     --glow-pink: 0 0 10px #ff006e, 0 0 30px #ff006e66, 0 0 60px #ff006e33;
     --glow-yellow: 0 0 10px #f5ff00, 0 0 30px #f5ff0066, 0 0 60px #f5ff0033;
+
+    /* 字号分级（等比放大：基准=用户默认字号，大屏随根字号增至 1.25rem 封顶） */
+    --fs-display: clamp(4rem, 14vw, 12rem); /* Hero 主标题 */
+    --fs-h1: clamp(3rem, 1.25rem + 7vw, 8rem); /* 终章/页面大标题 */
+    --fs-h2: clamp(2.25rem, 2rem + 1.8vw, 3.25rem); /* section 大标题 */
+    --fs-h3: 1.5rem; /* 卡片/条目标题 */
+    --fs-lead: clamp(1.125rem, 1rem + 0.4vw, 1.5rem); /* 副标题 */
+    --fs-body: 1rem; /* 正文 */
+    --fs-meta: 0.875rem; /* 元信息/导航/按钮 */
+    --fs-caption: 0.75rem; /* chip/badge/标签 */
+    --fs-decor: 0.55rem; /* 纯装饰水印 */
   }
 
   * {
@@ -85,6 +96,8 @@ const ogImage = new URL('/og.png', site).href;
   html {
     font-family: 'Share Tech Mono', monospace;
     background-color: var(--cyber-black);
+    /* 双端 rem 尊重用户字号偏好；默认 16px 基准，大屏最大 20px */
+    font-size: clamp(1rem, 12.5px + 0.3vw, 1.25rem);
   }
 
   body {
@@ -142,7 +155,7 @@ const ogImage = new URL('/og.png', site).href;
   /* Section heading pattern */
   .section-label {
     font-family: 'Orbitron', monospace;
-    font-size: 0.65rem;
+    font-size: var(--fs-caption);
     letter-spacing: 0.4em;
     text-transform: uppercase;
     color: var(--cyber-cyan);

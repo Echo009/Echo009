@@ -26,7 +26,7 @@
         class="glitch-text font-display font-black select-none gsap-reveal"
         data-text="Echo009"
         style="
-          font-size: clamp(4rem, 14vw, 12rem);
+          font-size: var(--fs-display);
           line-height: 1;
           color: #fff;
           letter-spacing: -0.02em;
@@ -38,7 +38,7 @@
 
     <!-- Typewriter subtitle -->
     <div
-      class="font-mono text-lg md:text-xl lg:text-2xl mb-8 h-8 flex items-center justify-center gap-2 gsap-reveal"
+      class="font-mono text-lead mb-8 min-h-8 flex items-center justify-center gap-2 gsap-reveal"
     >
       <span id="typewriter" class="neon-cyan"></span>
       <span class="cursor-blink" aria-hidden="true"></span>
@@ -49,7 +49,7 @@
       {
         ['AI-AUGMENTED', 'FULL-STACK', 'OPEN SOURCE'].map((tag) => (
           <span
-            class="text-xs font-mono px-3 py-1"
+            class="text-caption font-mono px-3 py-1"
             style="
               border: 1px solid var(--cyber-pink);
               color: var(--cyber-pink);
@@ -69,13 +69,13 @@
         href="https://github.com/Echo009"
         target="_blank"
         rel="noopener noreferrer"
-        class="cyber-btn-primary font-mono text-sm tracking-widest px-8 py-3"
+        class="cyber-btn-primary font-mono text-meta tracking-widest px-8 py-3"
       >
         [ GITHUB_PROFILE ]
       </a>
       <a
         href="mailto:ech0.extreme@foxmail.com"
-        class="cyber-btn-secondary font-mono text-sm tracking-widest px-8 py-3"
+        class="cyber-btn-secondary font-mono text-meta tracking-widest px-8 py-3"
       >
         [ SEND_SIGNAL ]
       </a>
@@ -88,7 +88,7 @@
     class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer gsap-reveal"
     aria-label="Scroll down"
   >
-    <span class="section-label text-xs">SCROLL</span>
+    <span class="section-label text-caption">SCROLL</span>
     <div class="scroll-arrow">
       <svg width="24" height="32" viewBox="0 0 24 32" fill="none">
         <line x1="12" y1="0" x2="12" y2="24" stroke="#00FFFF" stroke-width="1" opacity="0.5" />

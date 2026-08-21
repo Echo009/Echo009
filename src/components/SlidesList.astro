@@ -150,7 +150,7 @@ function truncateTitle(title: string, max: number = 12): string {
   .slide-card.featured .slide-cover {
     width: 55%;
     aspect-ratio: auto;
-    min-height: 240px;
+    min-height: 15rem;
   }
 
   .slide-card.featured .slide-info {
@@ -159,10 +159,6 @@ function truncateTitle(title: string, max: number = 12): string {
     flex-direction: column;
     justify-content: center;
     padding: 2.25rem;
-  }
-
-  .slide-card.featured .slide-title {
-    font-size: 1.3rem;
   }
 
   /* ── Cover Area ── */
@@ -345,7 +341,7 @@ function truncateTitle(title: string, max: number = 12): string {
 
   .slide-tag {
     font-family: 'Share Tech Mono', monospace;
-    font-size: 0.55rem;
+    font-size: var(--fs-decor);
     letter-spacing: 0.15em;
     text-transform: uppercase;
     margin-bottom: 0.55rem;
@@ -359,7 +355,7 @@ function truncateTitle(title: string, max: number = 12): string {
 
   .slide-title {
     font-family: 'Orbitron', monospace;
-    font-size: 1rem;
+    font-size: var(--fs-h3);
     font-weight: 700;
     color: var(--cyber-cyan, #00ffff);
     text-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
@@ -370,7 +366,7 @@ function truncateTitle(title: string, max: number = 12): string {
 
   .slide-desc {
     font-family: 'Inter', 'Noto Sans SC', sans-serif;
-    font-size: 0.82rem;
+    font-size: var(--fs-meta);
     color: rgba(224, 224, 224, 0.55);
     line-height: 1.65;
     margin: 0 0 0.6rem;
@@ -378,7 +374,7 @@ function truncateTitle(title: string, max: number = 12): string {
 
   .slide-date {
     font-family: 'Share Tech Mono', monospace;
-    font-size: 0.7rem;
+    font-size: var(--fs-meta);
     color: rgba(224, 224, 224, 0.35);
     letter-spacing: 0.1em;
   }
@@ -461,7 +457,7 @@ function truncateTitle(title: string, max: number = 12): string {
     background: transparent;
     color: rgba(224, 224, 224, 0.5);
     font-family: 'Orbitron', monospace;
-    font-size: 0.65rem;
+    font-size: var(--fs-caption);
     cursor: pointer;
     transition: all 0.3s ease;
   }
@@ -487,7 +483,7 @@ function truncateTitle(title: string, max: number = 12): string {
     border-radius: 4px;
     background: transparent;
     color: rgba(224, 224, 224, 0.4);
-    font-size: 0.85rem;
+    font-size: var(--fs-meta);
     cursor: pointer;
     transition: all 0.3s ease;
   }
@@ -499,7 +495,7 @@ function truncateTitle(title: string, max: number = 12): string {
 
   .page-info {
     font-family: 'Share Tech Mono', monospace;
-    font-size: 0.5rem;
+    font-size: var(--fs-decor);
     color: rgba(224, 224, 224, 0.35);
     letter-spacing: 0.15em;
     margin: 0 0.5rem;

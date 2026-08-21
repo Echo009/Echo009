@@ -21,7 +21,7 @@ const items = projects.map((p, i) => ({ ...p, accent: p.accent ?? ACCENTS[i % AC
     <!-- Section header -->
     <div class="mb-16 gsap-reveal">
       <p class="section-label mb-2">// SECTION_04</p>
-      <h2 class="font-display font-bold text-4xl md:text-5xl text-white">
+      <h2 class="font-display font-bold text-h2 text-white">
         PROJECT
         <span
           style="color: var(--cyber-purple); text-shadow: 0 0 10px #7b2fff, 0 0 30px #7b2fff66, 0 0 60px #7b2fff33;"
@@ -45,21 +45,21 @@ const items = projects.map((p, i) => ({ ...p, accent: p.accent ?? ACCENTS[i % AC
           <div class="flex items-start justify-between gap-4">
             <div>
               <p class="section-label mb-1" style={`color: ${project.accent};`}>[ {project.tagline} ]</p>
-              <h3 class="font-display font-bold text-xl text-white">{project.name}</h3>
+              <h3 class="font-display font-bold text-h3 text-white">{project.name}</h3>
             </div>
             <span
-              class="font-mono text-xs opacity-40 group-hover:opacity-100 transition-opacity whitespace-nowrap"
+              class="font-mono text-caption opacity-40 group-hover:opacity-100 transition-opacity whitespace-nowrap"
               style={`color: ${project.accent};`}
             >
               VIEW_SOURCE ↗
             </span>
           </div>
 
-          <p class="font-mono text-sm text-white/60 leading-relaxed">{project.description}</p>
+          <p class="font-mono text-body text-white/60 leading-relaxed">{project.description}</p>
 
           <div class="flex flex-wrap gap-2 mt-auto pt-2">
             {project.tech.map((t) => (
-              <span class="font-mono text-xs px-2 py-0.5" style={`border: 1px solid ${project.accent}55; color: ${project.accent};`}>
+              <span class="font-mono text-caption px-2 py-0.5" style={`border: 1px solid ${project.accent}55; color: ${project.accent};`}>
                 {t}
               </span>
             ))}

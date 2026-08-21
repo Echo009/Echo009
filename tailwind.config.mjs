@@ -18,6 +18,18 @@ export default {
         display: ['Orbitron', 'monospace'],
         mono: ['"Share Tech Mono"', 'monospace'],
       },
+      fontSize: {
+        // 语义字号 token（值引用 Layout.astro :root 中的 --fs-* 变量）
+        display: ['var(--fs-display)', { lineHeight: '1' }],
+        h1: ['var(--fs-h1)', { lineHeight: '1' }],
+        h2: ['var(--fs-h2)', { lineHeight: '1.1' }],
+        h3: ['var(--fs-h3)', { lineHeight: '1.3' }],
+        lead: ['var(--fs-lead)', { lineHeight: '1.5' }],
+        body: ['var(--fs-body)', { lineHeight: '1.6' }],
+        meta: ['var(--fs-meta)', { lineHeight: '1.5' }],
+        caption: ['var(--fs-caption)', { lineHeight: '1.5' }],
+        decor: ['var(--fs-decor)', { lineHeight: '1' }],
+      },
       animation: {
         'glitch': 'glitch 3s infinite',
         'scan': 'scan 8s linear infinite',

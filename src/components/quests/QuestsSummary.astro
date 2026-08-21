@@ -17,7 +17,7 @@ const active = groupByStatus(quests).active.slice(0, 3);
   <div class="max-w-6xl mx-auto">
     <div class="mb-12 gsap-reveal">
       <p class="section-label mb-2">// SECTION_07</p>
-      <h2 class="font-display font-bold text-4xl md:text-5xl text-white">
+      <h2 class="font-display font-bold text-h2 text-white">
         LIFE <span class="neon-yellow">QUESTS</span>
       </h2>
       <div class="mt-3 h-px w-48" style="background: linear-gradient(90deg, var(--cyber-yellow), transparent);"></div>
@@ -27,31 +27,31 @@ const active = groupByStatus(quests).active.slice(0, 3);
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
         {active.map((q, i) => (
           <a href={`/quests/${questSlug(q)}/`} class:list={['q-card', 'hud-panel', 'hud-corner', 'p-6', 'gsap-reveal']} data-index={i}>
-            <div class="flex items-center justify-between mb-3 font-mono text-xs tracking-[0.2em]">
+            <div class="flex items-center justify-between mb-3 font-mono text-caption tracking-[0.2em]">
               <span class="text-yellow-300">{'★'.repeat(q.data.difficulty)}<span class="opacity-30">{'☆'.repeat(5 - q.data.difficulty)}</span></span>
               {q.data.category && <span class="text-white/40">{q.data.category}</span>}
             </div>
-            <div class="font-bold text-white mb-1" style="font-family: 'Noto Sans SC', sans-serif;">{q.data.title}</div>
-            {q.data.summary && <div class="text-xs text-white/40 mb-4">{q.data.summary}</div>}
+            <div class="font-bold text-h3 text-white mb-1" style="font-family: 'Noto Sans SC', sans-serif;">{q.data.title}</div>
+            {q.data.summary && <div class="text-meta text-white/40 mb-4">{q.data.summary}</div>}
             <div class="flex items-center gap-3">
               <div class="flex-1 h-1 rounded-full bg-white/10 overflow-hidden">
                 <div class="h-full" style={`width:${calcProgress(q).pct}%; background: linear-gradient(90deg, var(--cyber-cyan), var(--cyber-purple)); box-shadow: 0 0 8px rgba(0,255,255,0.5);`}></div>
               </div>
-              <span class="font-mono text-xs text-cyan-300">{calcProgress(q).pct}%</span>
+              <span class="font-mono text-meta text-cyan-300">{calcProgress(q).pct}%</span>
             </div>
-            <div class="mt-3 font-mono text-[0.6rem] text-white/30 tracking-widest">最近活动 {fmtDate(lastActivityDate(q, logs))}</div>
+            <div class="mt-3 font-mono text-caption text-white/30 tracking-widest">最近活动 {fmtDate(lastActivityDate(q, logs))}</div>
           </a>
         ))}
       </div>
     ) : (
       <div class="gsap-reveal hud-panel p-10 text-center">
-        <p class="font-mono text-white/30 text-sm tracking-widest">NO_ACTIVE_QUEST</p>
-        <p class="font-mono text-white/20 text-xs mt-2">当前没有攻略中的副本</p>
+        <p class="font-mono text-white/30 text-body tracking-widest">NO_ACTIVE_QUEST</p>
+        <p class="font-mono text-white/20 text-caption mt-2">当前没有攻略中的副本</p>
       </div>
     )}
 
     <div class="mt-8 gsap-reveal">
-      <a href="/quests/" class="font-mono text-xs tracking-widest text-white/50 hover:text-cyan-300 transition-colors">[ 进入 QUEST_LOG → ]</a>
+      <a href="/quests/" class="font-mono text-caption tracking-widest text-white/50 hover:text-cyan-300 transition-colors">[ 进入 QUEST_LOG → ]</a>
     </div>
   </div>
 </section>

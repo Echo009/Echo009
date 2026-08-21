@@ -14,7 +14,7 @@
     <!-- Section header -->
     <div class="mb-16 gsap-reveal">
       <p class="section-label mb-2">// SECTION_02</p>
-      <h2 class="font-display font-bold text-4xl md:text-5xl text-white">
+      <h2 class="font-display font-bold text-h2 text-white">
         SYSTEM <span class="neon-cyan">PROFILE</span>
       </h2>
       <div class="mt-3 h-px w-48" style="background: linear-gradient(90deg, var(--cyber-cyan), transparent);"></div>
@@ -25,7 +25,7 @@
       <!-- IDENTITY column -->
       <div class="hud-panel hud-corner p-6 gsap-reveal">
         <div class="section-label mb-4">[ IDENTITY ]</div>
-        <ul class="space-y-3 font-mono text-sm">
+        <ul class="space-y-3 font-mono text-body">
           {[
             { label: 'DESIGNATION', value: 'Echo / Echo009' },
             { label: 'ROLE_01', value: 'AI-Augmented Dev' },
@@ -34,7 +34,7 @@
             { label: 'STATUS', value: 'ONLINE ●' },
           ].map(({ label, value }) => (
             <li class="flex flex-col gap-1">
-              <span class="text-xs opacity-40 tracking-widest">{label}</span>
+              <span class="text-caption opacity-40 tracking-widest">{label}</span>
               <span class="text-white" style={label === 'STATUS' ? 'color: var(--cyber-cyan); text-shadow: var(--glow-cyan);' : ''}>{value}</span>
             </li>
           ))}
@@ -44,7 +44,7 @@
       <!-- AI STACK column -->
       <div class="hud-panel hud-corner p-6 gsap-reveal" style="border-color: var(--cyber-pink); box-shadow: 0 0 20px var(--cyber-dim-pink), inset 0 0 20px rgba(255,0,110,0.02);">
         <div class="section-label mb-4" style="color: var(--cyber-pink);">[ AI_STACK ]</div>
-        <ul class="space-y-3 font-mono text-sm">
+        <ul class="space-y-3 font-mono text-body">
           {[
             { name: 'Claude Code', level: 95 },
             { name: 'Cursor IDE', level: 90 },
@@ -52,7 +52,7 @@
             { name: 'ChatGPT', level: 85 },
           ].map(({ name, level }) => (
             <li class="space-y-1">
-              <div class="flex justify-between text-xs">
+              <div class="flex justify-between text-caption">
                 <span class="text-white">{name}</span>
                 <span style="color: var(--cyber-pink);">{level}%</span>
               </div>
@@ -69,7 +69,7 @@
 
         <!-- AI philosophy tagline -->
         <div class="mt-6 pt-4 border-t border-white/10">
-          <p class="text-xs font-mono opacity-60 italic leading-relaxed">
+          <p class="text-caption font-mono opacity-60 italic leading-relaxed">
             "AI doesn't replace developers;<br />
             it amplifies their capabilities."
           </p>
@@ -79,9 +79,9 @@
       <!-- CONTACT column -->
       <div class="hud-panel hud-corner p-6 gsap-reveal" style="border-color: var(--cyber-yellow); box-shadow: 0 0 20px rgba(245,255,0,0.1), inset 0 0 20px rgba(245,255,0,0.02);">
         <div class="section-label mb-4" style="color: var(--cyber-yellow);">[ CONTACT ]</div>
-        <ul class="space-y-4 font-mono text-sm">
+        <ul class="space-y-4 font-mono text-body">
           <li>
-            <span class="text-xs opacity-40 tracking-widest block mb-1">GITHUB</span>
+            <span class="text-caption opacity-40 tracking-widest block mb-1">GITHUB</span>
             <a
               href="https://github.com/Echo009"
               target="_blank"
@@ -93,7 +93,7 @@
             </a>
           </li>
           <li>
-            <span class="text-xs opacity-40 tracking-widest block mb-1">EMAIL</span>
+            <span class="text-caption opacity-40 tracking-widest block mb-1">EMAIL</span>
             <a
               href="mailto:ech0.extreme@foxmail.com"
               class="text-white hover:text-cyber-yellow transition-colors break-all"
@@ -107,7 +107,7 @@
         <div class="mt-6 pt-4 border-t border-white/10">
           <div class="flex items-center gap-2">
             <span class="block w-2 h-2 rounded-full" style="background: var(--cyber-yellow); box-shadow: var(--glow-yellow); animation: pulseNeon 2s ease-in-out infinite;"></span>
-            <span class="text-xs font-mono opacity-60">SYSTEM UPTIME: ACTIVE</span>
+            <span class="text-caption font-mono opacity-60">SYSTEM UPTIME: ACTIVE</span>
           </div>
         </div>
       </div>

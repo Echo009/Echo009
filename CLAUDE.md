@@ -35,6 +35,27 @@
 
 hands-free/superpowers 工作流产出的设计、计划、决策与验证文档位于 `docs/superpowers/`（该目录整体在 .gitignore 中，入库需 `git add -f`）。
 
+## 主站字号分级（Typography Scale）
+
+全站字号统一为 9 级语义 token，定义在 `src/layouts/Layout.astro` 的 `:root`（单一来源，调字号只改这里）；Tailwind 侧在 `tailwind.config.mjs` 注册了同名语义类（`text-h2`、`text-body`、`text-meta` 等，值引用同一批 var，含默认 line-height）：
+
+| token | 值 | 用途 | 对应类 |
+|------|------|------|------|
+| `--fs-display` | clamp(4rem, 14vw, 12rem) | Hero 主标题 | `text-display` |
+| `--fs-h1` | clamp(3rem, 1.25rem + 7vw, 8rem) | 终章大标题 | `text-h1` |
+| `--fs-h2` | clamp(2.25rem, 2rem + 1.8vw, 3.25rem) | section 大标题 | `text-h2` |
+| `--fs-h3` | 1.5rem | 卡片/条目标题 | `text-h3` |
+| `--fs-lead` | clamp(1.125rem, 1rem + 0.4vw, 1.5rem) | 副标题 | `text-lead` |
+| `--fs-body` | 1rem | 正文 | `text-body` |
+| `--fs-meta` | 0.875rem | 元信息/导航/按钮 | `text-meta` |
+| `--fs-caption` | 0.75rem | chip/badge/标签 | `text-caption` |
+| `--fs-decor` | 0.55rem | 纯装饰水印 | `text-decor` |
+
+- **大屏放大旋钮**：`html { font-size: clamp(1rem, 12.5px + 0.3vw, 1.25rem) }`（Layout.astro）——大屏根字号 16→20px，全站 rem（文字/间距/容器）等比放大；双端 rem 保持用户浏览器字号偏好生效
+- **规则**：新增样式禁止再写裸 `font-size: 0.xrem` 或 `text-xs/sm/base/...` 旧刻度类，一律用 token；展示级（display/h1/h2/lead）自带 clamp，不要加 `md:` 断点前缀
+- **白名单**（刻意保留原值，勿"修复"）：TechArsenal emoji `text-2xl`（图标尺寸）、SlidesList 海报装饰小字、列表页大标题 clamp(2.8rem, 9vw, 4rem)、QuestCard `.abbr` 1.6rem
+- 尺寸相关 padding/尺寸优先 rem（勿用 px），保证随根字号等比；og.png 由 satori 独立渲染，不受站内字号影响
+
 ## 自定义赛博朋克主题
 
 注意：主题必须符合赛博朋克风格，可以微调配色和字体，但整体风格要保持一致。
