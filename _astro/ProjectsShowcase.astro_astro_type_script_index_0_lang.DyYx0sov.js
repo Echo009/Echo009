@@ -1,0 +1,1 @@
+import{g as r}from"./index.CzGW6FVa.js";import{S as o}from"./ScrollTrigger.DNECHiyU.js";r.registerPlugin(o);r.fromTo("#projects .gsap-reveal",{opacity:0,y:40},{opacity:1,y:0,duration:.8,stagger:.15,ease:"power2.out",scrollTrigger:{trigger:"#projects",start:"top 80%"}});

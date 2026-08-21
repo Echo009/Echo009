@@ -1,0 +1,1 @@
+import{g as r}from"./index.CzGW6FVa.js";import{S as o}from"./ScrollTrigger.DNECHiyU.js";r.registerPlugin(o);r.fromTo(".hud-panel, .row",{opacity:0,y:40},{opacity:1,y:0,duration:.7,stagger:.12,ease:"power3.out",scrollTrigger:{trigger:"main",start:"top 80%"}});

@@ -1,0 +1,1 @@
+import{g as r}from"./index.CzGW6FVa.js";import{S as t}from"./ScrollTrigger.DNECHiyU.js";r.registerPlugin(t);r.fromTo("#quests .gsap-reveal",{opacity:0,y:40},{opacity:1,y:0,duration:.8,stagger:.15,ease:"power2.out",scrollTrigger:{trigger:"#quests",start:"top 80%"}});
